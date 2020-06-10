@@ -18,7 +18,7 @@ function App() {
         }
         {
           component === "Select" &&
-          <Select label={"Programs"}>check</Select>
+          <Select label={"Programs"}><div onClick={console.log}>click me!</div></Select>
         }
         
       </div>
