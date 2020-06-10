@@ -1,0 +1,14 @@
+.menu {
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 240px;
+    background-color: #2196f3;
+}
+
+.menu-header {
+    color: white;
+    font-size: 1.25rem;
+    border-bottom: 1px solid #64b5f6;
+    margin-bottom: 10px;
+}
