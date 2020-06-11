@@ -36,6 +36,9 @@ export interface Props {
 
   /** *Optional* - Forced state of open */
   open?: boolean;
+
+  /** *Optional* - Placeholder to display in the input */
+  placholder?: string | undefined;
 }
 
 let lastPressTab: boolean = false;
@@ -126,12 +129,13 @@ export default function Select(props: Props) {
 
   return (
     <Base {...styles}>
-      <Label visible={!!props.error}>{props.label && props.label}</Label>
-      <InputBase>
+      <Label visible={!!props.label}>{props.label && props.label}</Label>
+      <InputBase disabled={props.disabled} errorOutline={props.errorOutline}>
         <Input
           ref={base}
           disabled={props.disabled}
           errorOutline={props.errorOutline}
+          placeholder={props.placholder}
           open={open}
           onFocus={tryFocus}
           value={props.value || ""}

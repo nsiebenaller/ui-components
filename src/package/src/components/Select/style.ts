@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { grey, red } from '../../colors/index.json'
 
 interface Props {
   open?: boolean;
@@ -26,21 +27,21 @@ export const InputBase = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    fill: #9e9e9e;
+    fill: ${grey[500]};
     transition: all 0.2s ease-out;
   }
   &:hover > div {
     cursor: pointer;
     fill: ${(props: Props) => {
-      if (props.errorOutline) return "1px solid #f44336";
-      if (props.disabled) return "#9e9e9e";
+      if (props.errorOutline) return `1px solid ${red[500]}`;
+      if (props.disabled) return `${grey[500]}`; 
       return "black";
     }};
   }
   &:hover > input {
     border: ${(props: Props) => {
-      if (props.errorOutline) return "1px solid #f44336";
-      if (props.disabled) return "1px solid #9e9e9e";
+      if (props.errorOutline) return `1px solid ${red[500]}`;
+      if (props.disabled) return `1px solid ${grey[500]}`;
       return "1px solid black";
     }};
   }
@@ -55,16 +56,17 @@ export const Input = styled.input`
   transition: all 0.2s ease-out;
   width: 100%;
   cursor: ${(props: Props) => (props.disabled ? "default" : "pointer")};
+  background: ${(props: Props) => (props.disabled ? grey[200] : "white")};
   &:hover,
   &:focus {
     border: ${(props: Props) => {
-      if (props.errorOutline) return "1px solid #f44336";
-      if (props.disabled) return "1px solid #9e9e9e";
+      if (props.errorOutline) return `1px solid ${red[500]}`;
+      if (props.disabled) return `1px solid ${grey[500]}`;
       return "1px solid black";
     }};
   }
   border: ${(props: Props) => {
-    if (props.errorOutline) return "1px solid #f44336";
+    if (props.errorOutline) return `1px solid ${red[500]}`;
     if (props.open) return "1px solid black;";
     return "1px solid #9e9e9e";
   }};
@@ -89,6 +91,6 @@ export const List = styled.div`
 
 export const Error = styled.div`
   font-size: 0.75rem;
-  color: #f44336;
+  color: ${red[500]};
   opacity: ${(props: Props) => (props.visible ? "1" : "0")};
 `;

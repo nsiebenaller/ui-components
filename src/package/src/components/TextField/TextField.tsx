@@ -1,9 +1,9 @@
 import React, { FormEventHandler, KeyboardEvent } from "react";
-import { Base, Input } from "./style";
+import { Base, Input, Label, Error } from "./style";
 
 interface Props {
-  /** *Required* - Current value of the input */
-  value: string;
+  /** *Optional* - Current value of the input */
+  value?: string | number | string[] | undefined;
 
   /** *Optional* - Class to apply to the component */
   className?: string;
@@ -20,7 +20,7 @@ interface Props {
   /** *Optional* - Defines element as block style (width 100%) */
   fullWidth?: boolean;
 
-  /** *Optional* - Defines the input as a certain type (number, password) */
+  /** *Optional* - Defines the input as a certain type (number, password) Default: "text" */
   type?: "password" | "number" | "text";
 
   /** *Optional* - Function to call when input changes */
@@ -28,6 +28,12 @@ interface Props {
 
   /** *Optional* - Function to call when enter is pressed */
   onEnter?: Function;
+
+  /** *Optional* - Error text to display under the input */
+  error?: string;
+
+  /** *Optional* - Flag to disable this input */
+  disabled?: boolean;
 }
 
 export default function TextField(props: Props) {
@@ -41,7 +47,7 @@ export default function TextField(props: Props) {
 
   return (
     <Base>
-      {props.label && <div>{props.label}</div>}
+      <Label visible={!!props.label}>{props.label ? props.label : 'hidden'}</Label>
       <Input
         defaultValue={props.value}
         placeholder={props.placeholder}
@@ -49,8 +55,10 @@ export default function TextField(props: Props) {
         onKeyPress={handleEnter}
         type={props.type || "text"}
         fullWidth={props.fullWidth}
+        disabled={props.disabled}
         {...styles}
       />
+      <Error visible={!!props.error}>{props.error ? props.error : 'hidden'}</Error>
     </Base>
   );
 }

@@ -2,20 +2,26 @@ import React, { useState } from "react";
 import "./App.css";
 import Menu from "./Menu/Menu";
 
-import DropdownPage from "./pages/DropdownPage";
-import MultiselectPage from "./pages/MultiselectPage";
-import SelectPage from "./pages/SelectPage";
-import TextFieldPage from "./pages/TextFieldPage";
+import {
+  DropdownPage,
+  IconPage,
+  MultiselectPage,
+  SelectPage,
+  TextAreaPage,
+  TextFieldPage
+} from './pages'
 
-const components = ["Dropdown", "Multiselect", "Select", "TextField"];
 const componentMap = new Map();
 componentMap.set("Dropdown", DropdownPage);
+componentMap.set("Icon", IconPage);
 componentMap.set("Multiselect", MultiselectPage);
 componentMap.set("Select", SelectPage);
+componentMap.set("TextArea", TextAreaPage)
 componentMap.set("TextField", TextFieldPage);
+const components = Array.from(componentMap.keys())
 
 export default function App() {
-  const [component, setComponent] = useState("Multiselect");
+  const [component, setComponent] = useState("TextArea");
 
   const Page = componentMap.get(component);
 

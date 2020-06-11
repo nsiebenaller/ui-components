@@ -1,5 +1,3 @@
-export { Dropdown, Multiselect, Option, Select, TextField } from "./components";
-
-export function doThing(): number {
-  return 1;
-}
+import Icon from './icons/Icon'
+export { Dropdown, Multiselect, Option, Select, TextArea, TextField } from "./components";
+export { Icon }

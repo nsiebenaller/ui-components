@@ -30,10 +30,14 @@ interface Props extends SelectProps {
 
   /** *Optional* - Selected input will recieve a background (similar to the Dropdown component) */
   fillSelected?: boolean;
+
+  /** *Optional* - Sets the maximum number of options to be displayed. comma deliminated before the abbreviated text is displayed */
+  rolloverLimit?: number;
 }
 let targetText: string = "";
 const CHECKED = "CheckBox";
 const UNCHECKED = "CheckBoxOutlineBlank";
+const ROLLOVER_LIMIT = 3
 export default function Mutliselect(props: Props) {
   const [target, _setTarget] = useState<number | undefined>(undefined);
   const [open, _setOpen] = useState(false);
@@ -109,15 +113,17 @@ export default function Mutliselect(props: Props) {
     // eslint-disable-next-line
   }, []);
 
+  const value = getValue(props.selected, props.rolloverLimit)
   return (
     <Select
       onToggle={setOpen}
       open={open}
-      value={props.selected.length + " selected"}
+      value={value}
       disabled={props.disabled}
       error={props.error}
       errorOutline={props.errorOutline}
       label={props.label}
+      placholder={props.placholder}
     >
       {props.options.map((option, idx) => {
         return (
@@ -164,4 +170,11 @@ function findFirstMatchingIndex(
     if (optionValue.startsWith(targetText)) return i;
   }
   return undefined;
+}
+
+function getValue(selected: Array<OptionFormat>, rollover: number | undefined) : string {
+  const rolloverLimit = rollover || ROLLOVER_LIMIT
+  if(selected.length > rolloverLimit) return `${selected.length} selected`
+  if(selected.length === 0) return ""
+  return selected.join(", ")
 }

@@ -9,7 +9,8 @@ export default function MultiselectPage() {
         label={"multiselect label"}
         error={"error"}
         options={["Option 1", "Option 2", "Option 3"]}
-        selected={["Option 1"]}
+        selected={[]}
+        placholder={"Select Report"}
         onChange={(e: any) => console.log(e)}
       />
       <Multiselect
