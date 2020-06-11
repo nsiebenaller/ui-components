@@ -1,5 +1,5 @@
 import React from "react";
-import { Multiselect } from "../../components/index";
+import { Multiselect } from "../../package/dist";
 
 export default function MultiselectPage() {
   return (

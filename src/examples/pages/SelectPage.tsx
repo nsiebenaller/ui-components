@@ -1,5 +1,5 @@
 import React from "react";
-import { Select } from "../../components/index";
+import { Select } from "../../package/dist";
 
 export default function SelectPage() {
   return (

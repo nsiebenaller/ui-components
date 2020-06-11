@@ -1,5 +1,5 @@
 import React from "react";
-import { Dropdown } from "../../components/index";
+import { Dropdown } from "../../package/dist";
 
 export default function DropdownPage() {
   return (

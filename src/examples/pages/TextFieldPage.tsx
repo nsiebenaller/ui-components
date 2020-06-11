@@ -1,5 +1,5 @@
 import React from "react";
-import { TextField } from "../../components/index";
+import { TextField } from "../../package/dist";
 
 export default function TextFieldPage() {
   return (

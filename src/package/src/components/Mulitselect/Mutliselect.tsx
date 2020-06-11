@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Select, Option } from "../index";
 import { Props as SelectProps } from "../Select/Select";
-import Icon from "../../icons/index";
+import Icon from "../../icons/Icon";
 
 interface Option {
   value: string;
