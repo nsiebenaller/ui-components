@@ -1,0 +1,20 @@
+.menu-item {
+  padding: 15px;
+  padding-left: 10px;
+  display: flex;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+.menu-item:hover {
+  background: #64b5f6;
+  color: white;
+}
+.menu-item-selected {
+  background: #42a5f5;
+}
+.menu-item > span {
+  padding: 2px 15px;
+  color: #e3f2fd;
+  font-weight: bold;
+  font-size: 1rem;
+}
