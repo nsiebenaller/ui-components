@@ -4,18 +4,22 @@
   "description": "Simple UI Components in React",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "peerDependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  },
   "dependencies": {
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
     "@types/styled-components": "^5.1.0",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
+    "react-calendar": "^3.1.0",
     "styled-components": "^5.1.1"
   },
   "devDependencies": {
     "typescript": "^3.5.3"
   },
   "scripts": {
+    "watch": "tsc -w",
     "build": "tsc",
     "prepublish": "tsc",
     "watch": "tsc -w",

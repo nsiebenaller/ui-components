@@ -2,6 +2,7 @@ import Icon from './icons/Icon'
 export { 
     Autocomplete, 
     Button, 
+    Datepicker,
     Dropdown, 
     Multiselect, 
     Option, 
@@ -10,3 +11,4 @@ export {
     TextField 
 } from "./components";
 export { Icon };
+
