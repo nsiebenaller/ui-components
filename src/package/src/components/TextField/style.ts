@@ -24,7 +24,6 @@ export const Label = styled.div`
 `;
 
 export const Input = styled.input`
-<<<<<<< HEAD
     border-radius: 5px;
     border: 1px solid ${grey[500]};
     padding: 10px 14px;
@@ -41,29 +40,10 @@ export const Input = styled.input`
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 `
-=======
-  border-radius: 5px;
-  border: 1px solid ${grey[500]};
-  padding: 10px 14px;
-  outline: 0;
-  transition: all 0.2s ease-out;
-  background: ${(props: Props) => (props.disabled ? grey[200] : "white")};
-  &:hover,
-  &:focus {
-    border: ${(props: Props) =>
-      props.disabled ? `1px solid ${grey[500]}` : "1px solid black"};
-  }
-  width: ${(props: Props) => (props.fullWidth ? "100%" : "auto")};
-`;
->>>>>>> f7cfaceb8e088ea5f50fb6c9ae4d8e1200dd1cc7
 
 export const Error = styled.div`
   font-size: 0.75rem;
   color: ${red[500]};
   opacity: ${(props: Props) => (props.visible ? "1" : "0")};
-<<<<<<< HEAD
   cursor: ${(props: Props) => (props.visible ? "auto" : "default")};
 `;
-=======
-`;
->>>>>>> f7cfaceb8e088ea5f50fb6c9ae4d8e1200dd1cc7

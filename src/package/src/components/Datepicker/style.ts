@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import { grey, red } from "../../colors/index.json";
+import colors from '../../colors/index'
+const { grey, red } = colors
 
 interface Props {
   fullWidth?: boolean;
