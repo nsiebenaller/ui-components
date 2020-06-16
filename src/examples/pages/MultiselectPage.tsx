@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { Multiselect } from "../../package/dist";
 
 export default function MultiselectPage() {
+
+  const [selected, setSelected] = useState([])
+
   return (
     <div>
       <h1>Multiselect Component</h1>
@@ -9,9 +12,10 @@ export default function MultiselectPage() {
         label={"multiselect label"}
         error={"error"}
         options={["Option 1", "Option 2", "Option 3"]}
-        selected={[]}
+        selected={selected}
         placholder={"Select Report"}
-        onChange={(e: any) => console.log(e)}
+        rolloverLimit={2}
+        onChange={(e: any) => setSelected(e)}
       />
       <Multiselect
         label={"fill selected"}

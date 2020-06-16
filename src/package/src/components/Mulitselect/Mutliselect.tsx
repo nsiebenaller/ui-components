@@ -116,7 +116,6 @@ export default function Mutliselect(props: Props) {
   const value = getValue(props.selected, props.rolloverLimit)
   return (
     <Select
-      onToggle={setOpen}
       open={open}
       value={value}
       disabled={props.disabled}
@@ -124,6 +123,8 @@ export default function Mutliselect(props: Props) {
       errorOutline={props.errorOutline}
       label={props.label}
       placholder={props.placholder}
+      noWrap={props.noWrap}
+      onToggle={setOpen}
     >
       {props.options.map((option, idx) => {
         return (

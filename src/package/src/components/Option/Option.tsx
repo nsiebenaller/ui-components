@@ -16,14 +16,24 @@ interface Props {
 
   /** *Optional* - Centers the option horizontally */
   centered?: boolean;
+
+  /** *Optional* - Disables this option, adding additonal styles & preventing click handlers */
+  disabled?: boolean;
 }
 export default function Option(props: Props) {
+
+
+  const handleClick = (event: React.MouseEvent) => {
+    if(!props.disabled && props.onClick) props.onClick(event)
+  }
+
   return (
     <OptionBase
-      onClick={props.onClick}
+      disabled={props.disabled}
       selected={props.selected}
       targeted={props.targeted}
       centered={props.centered}
+      onClick={handleClick}
     >
       {props.children}
     </OptionBase>

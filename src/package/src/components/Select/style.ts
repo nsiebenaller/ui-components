@@ -1,19 +1,27 @@
 import styled from "styled-components";
-import { grey, red } from '../../colors/index.json'
+import colors from '../../colors'
+const { grey, red } = colors
 
 interface Props {
   open?: boolean;
   disabled?: boolean;
   errorOutline?: boolean;
   visible?: boolean;
+  allowInput?: boolean;
 }
 export const Base = styled.div`
   position: relative;
   display: inline-block;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+        "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+        sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 `;
 
 export const Label = styled.div`
   opacity: ${(props: Props) => (props.visible ? "1" : "0")};
+  cursor: ${(props: Props) => (props.visible ? "auto" : "default")};
 `;
 
 export const InputBase = styled.div`
@@ -31,7 +39,6 @@ export const InputBase = styled.div`
     transition: all 0.2s ease-out;
   }
   &:hover > div {
-    cursor: pointer;
     fill: ${(props: Props) => {
       if (props.errorOutline) return `1px solid ${red[500]}`;
       if (props.disabled) return `${grey[500]}`; 
@@ -55,7 +62,11 @@ export const Input = styled.input`
   outline: 0;
   transition: all 0.2s ease-out;
   width: 100%;
-  cursor: ${(props: Props) => (props.disabled ? "default" : "pointer")};
+  cursor: ${(props: Props) => {
+    if(props.disabled) return "default"
+    if(props.allowInput) return "auto"
+    return"pointer"
+  }};
   background: ${(props: Props) => (props.disabled ? grey[200] : "white")};
   &:hover,
   &:focus {
@@ -87,10 +98,16 @@ export const List = styled.div`
   box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
   outline: 0;
   display: ${(props: Props) => (props.open ? "block;" : "none;")};
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+        "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+        sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 `;
 
 export const Error = styled.div`
   font-size: 0.75rem;
   color: ${red[500]};
   opacity: ${(props: Props) => (props.visible ? "1" : "0")};
+  cursor: ${(props: Props) => (props.visible ? "auto" : "default")};
 `;

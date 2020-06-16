@@ -20,6 +20,14 @@ export default function DropdownPage() {
         onChange={(e: any) => console.log(e)}
         disabled
       />
+      <Dropdown
+        label={"No Wrap"}
+        error={"error"}
+        options={["Option 1", "Very Long option name that will be too long for one line", "Option 3"]}
+        selected={"Option 1"}
+        onChange={(e: any) => console.log(e)}
+        noWrap
+      />
     </div>
   );
 }

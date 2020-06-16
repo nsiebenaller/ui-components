@@ -1,4 +1,11 @@
-{
+
+interface ColorMap {
+  [property: string]: Hue
+}
+interface Hue {
+  [property: string]: string
+}
+const colors: ColorMap = {
     "red": {
       "50": "#ffebee",
       "100": "#ffcdd2",
@@ -292,3 +299,4 @@
       "900": "#263238"
     }
   }
+  export default colors

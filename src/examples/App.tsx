@@ -3,6 +3,8 @@ import "./App.css";
 import Menu from "./Menu/Menu";
 
 import {
+  AutocompletePage,
+  ButtonPage,
   DropdownPage,
   IconPage,
   MultiselectPage,
@@ -12,6 +14,8 @@ import {
 } from './pages'
 
 const componentMap = new Map();
+componentMap.set("Autocomplete", AutocompletePage);
+componentMap.set("Button", ButtonPage);
 componentMap.set("Dropdown", DropdownPage);
 componentMap.set("Icon", IconPage);
 componentMap.set("Multiselect", MultiselectPage);
@@ -21,7 +25,7 @@ componentMap.set("TextField", TextFieldPage);
 const components = Array.from(componentMap.keys())
 
 export default function App() {
-  const [component, setComponent] = useState("TextArea");
+  const [component, setComponent] = useState("Button");
 
   const Page = componentMap.get(component);
 

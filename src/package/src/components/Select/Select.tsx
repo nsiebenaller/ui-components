@@ -39,13 +39,23 @@ export interface Props {
 
   /** *Optional* - Placeholder to display in the input */
   placholder?: string | undefined;
+
+  /** *Optional* - Callback function to call when input is changed */
+  onInput?: ((value: string) => void) | undefined;
+
+  /** *Optional* - Allows input to be entered in the input & allows use of "onInput" prop */
+  allowInput?: boolean;
+  
+  /** *Optional* - Disables constrained width of option list */
+  noWrap?: boolean;
 }
 
 let lastPressTab: boolean = false;
 export default function Select(props: Props) {
   const list = useRef<HTMLDivElement>(null);
-  const base = useRef<HTMLInputElement>(null);
-  const [open, _setOpen] = useState<boolean>(false);
+  const input = useRef<HTMLInputElement>(null);
+  const [_open, _setOpen] = useState<boolean>(false);
+  const open = props.open !== undefined ? props.open : _open
   const openRef = useRef(open);
   const setOpen = (value: boolean) => {
     openRef.current = value;
@@ -54,7 +64,7 @@ export default function Select(props: Props) {
 
   const toggleOpen = () => {
     if (props.disabled) return;
-    updateDimensions(base.current, list.current);
+    updateDimensions(input.current, list.current, props.allowInput, props.noWrap);
     setOpen(true);
     if (props.onToggle) props.onToggle(true);
   };
@@ -62,6 +72,11 @@ export default function Select(props: Props) {
     setOpen(false);
     if (props.onToggle) props.onToggle(false);
   };
+
+  const handleInput = (e: React.FormEvent) => {
+    if(props.onInput) props.onInput(input.current?.value || "")
+    if(props.autoClose) toggleClose()
+  }
 
   useEffect(() => {
     if (props.open !== undefined) {
@@ -72,7 +87,7 @@ export default function Select(props: Props) {
   }, [props.open]);
 
   useEffect(() => {
-    updateDimensions(base.current, list.current);
+    updateDimensions(input.current, list.current, props.allowInput, props.noWrap);
 
     // Event handlers
     function handleKeyDown(e: KeyboardEvent) {
@@ -84,9 +99,9 @@ export default function Select(props: Props) {
     }
     function handleClick(e: MouseEvent) {
       lastPressTab = false;
-      const clickedBase = isEventContained(e, base.current);
+      const clickedInput = isEventContained(e, input.current);
       const clickedList = isEventContained(e, list.current);
-      if (clickedBase || clickedList) {
+      if (clickedInput || clickedList) {
         if (openRef.current && clickedList && props.autoClose) {
           toggleClose();
           return;
@@ -98,7 +113,7 @@ export default function Select(props: Props) {
     }
     function handleResize() {
       if (openRef.current) {
-        updateDimensions(base.current, list.current);
+        updateDimensions(input.current, list.current, props.allowInput, props.noWrap);
       }
     }
 
@@ -129,17 +144,19 @@ export default function Select(props: Props) {
 
   return (
     <Base {...styles}>
-      <Label visible={!!props.label}>{props.label && props.label}</Label>
+      <Label visible={!!props.label}>{props.label ? props.label : 'hidden'}</Label>
       <InputBase disabled={props.disabled} errorOutline={props.errorOutline}>
         <Input
-          ref={base}
+          ref={input}
+          open={open}
+          defaultValue={props.value || ""}
           disabled={props.disabled}
           errorOutline={props.errorOutline}
           placeholder={props.placholder}
-          open={open}
+          allowInput={props.allowInput}
+          readOnly={!props.allowInput}
           onFocus={tryFocus}
-          value={props.value || ""}
-          readOnly
+          onInput={handleInput}
         />
         {createPortal(
           <List ref={list} open={open}>
@@ -147,7 +164,11 @@ export default function Select(props: Props) {
           </List>,
           document.getElementsByTagName("BODY")[0]
         )}
-        <Icon iconName={"ArrowDropDown"} />
+        {
+          !props.allowInput && (
+            <Icon iconName={"ArrowDropDown"} />
+          )
+        }
       </InputBase>
       <Error visible={!!props.error}>
         {props.error ? props.error : "hidden"}
@@ -157,15 +178,17 @@ export default function Select(props: Props) {
 }
 
 function updateDimensions(
-  base: HTMLInputElement | null,
-  list: HTMLDivElement | null
+  input: HTMLInputElement | null,
+  list: HTMLDivElement | null,
+  allowInput: boolean | undefined,
+  noWrap: boolean | undefined
 ) {
-  if (base === null || list === null) return;
-
-  const domRect: DOMRect = base.getBoundingClientRect();
-  list.style.top = `${domRect.top + window.scrollY}px`;
+  if (input === null || list === null) return;
+  const domRect: DOMRect = input.getBoundingClientRect();
+  const inputHeight = allowInput ? domRect.height : 0
+  list.style.top = `${inputHeight + domRect.top + window.scrollY}px`;
   list.style.left = `${domRect.left + window.scrollX}px`;
-  list.style.width = `${base.offsetWidth - 2}px`;
+  list.style.width = noWrap ? 'auto' : `${input.offsetWidth - 2}px`;
 }
 
 function isEventContained(

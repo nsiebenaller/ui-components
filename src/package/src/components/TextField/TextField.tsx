@@ -1,4 +1,4 @@
-import React, { FormEventHandler, KeyboardEvent } from "react";
+import React, { FormEventHandler, KeyboardEvent, useRef } from "react";
 import { Base, Input, Label, Error } from "./style";
 
 interface Props {
@@ -24,7 +24,7 @@ interface Props {
   type?: "password" | "number" | "text";
 
   /** *Optional* - Function to call when input changes */
-  onChange?: FormEventHandler;
+  onChange?: ((value: string) => void) | undefined;
 
   /** *Optional* - Function to call when enter is pressed */
   onEnter?: Function;
@@ -37,6 +37,8 @@ interface Props {
 }
 
 export default function TextField(props: Props) {
+  const input = useRef<HTMLInputElement>(null)
+
   const styles = {
     id: props.id || undefined,
     className: props.className || undefined,
@@ -45,17 +47,22 @@ export default function TextField(props: Props) {
   const handleEnter = (e: KeyboardEvent) =>
     props.onEnter && e.key === "Enter" && props.onEnter(e);
 
+    const handleInput = (e: React.FormEvent<HTMLInputElement>) => {
+      if(props.onChange) props.onChange(input.current?.value || "")
+    }
+
   return (
     <Base>
       <Label visible={!!props.label}>{props.label ? props.label : 'hidden'}</Label>
       <Input
         defaultValue={props.value}
         placeholder={props.placeholder}
-        onInput={props.onChange || undefined}
+        onInput={handleInput}
         onKeyPress={handleEnter}
         type={props.type || "text"}
         fullWidth={props.fullWidth}
         disabled={props.disabled}
+        ref={input}
         {...styles}
       />
       <Error visible={!!props.error}>{props.error ? props.error : 'hidden'}</Error>

@@ -99,6 +99,7 @@ export default function Dropdown(props: Props) {
       errorOutline={props.errorOutline}
       label={props.label}
       placholder={props.placholder}
+      noWrap={props.noWrap}
       autoClose
     >
       {props.options.map((option, idx) => {

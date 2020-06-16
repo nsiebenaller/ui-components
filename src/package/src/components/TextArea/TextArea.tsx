@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef, useEffect } from 'react'
 import { Base, TextArea as Input, Label, Error } from './style'
 
 interface Props {
@@ -25,8 +25,32 @@ interface Props {
 
     /** *Optional* - Flag to disable this input */
     disabled?: boolean;
+
+    /** *Optional* - Flag to prevent resizing of the input */
+    noResize?: boolean;
+
+    /** *Optional* - Callback function to run when input has changed */
+    onChange?: ((input: string, event: React.FormEvent) => void) | undefined;
 }
 export default function TextArea(props: Props) {
+
+    const input = useRef<HTMLTextAreaElement>(null);
+
+    const handleInput = (e: React.FormEvent) => {
+        resize(input.current)
+        if(props.onChange) props.onChange(input.current?.value || '', e)
+    }
+
+    const resize = (textArea: HTMLTextAreaElement | null) => {
+        if(textArea === null) return
+        textArea.style.height = '17px'
+        textArea.style.height = `${textArea.scrollHeight}px`
+    }
+
+    useEffect(() => {
+        resize(input.current)
+        
+    }, [])
 
     const styles = {
         id: props.id || undefined,
@@ -35,7 +59,7 @@ export default function TextArea(props: Props) {
     return (
         <Base>
             <Label visible={!!props.label}>{props.label ? props.label : 'hidden'}</Label>
-            <Input defaultValue={props.value} cols={props.cols} rows={props.rows} disabled={props.disabled} {...styles} />
+            <Input defaultValue={props.value} cols={props.cols} rows={props.rows} disabled={props.disabled} noResize={props.noResize} onInput={handleInput} ref={input} {...styles} />
             <Error visible={!!props.error}>{props.error ? props.error : 'hidden'}</Error>
         </Base>
     )
