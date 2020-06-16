@@ -3,25 +3,27 @@ import "./App.css";
 import Menu from "./Menu/Menu";
 
 import {
+  DatepickerPage,
   DropdownPage,
   IconPage,
   MultiselectPage,
   SelectPage,
   TextAreaPage,
-  TextFieldPage
-} from './pages'
+  TextFieldPage,
+} from "./pages";
 
 const componentMap = new Map();
+componentMap.set("Datepicker", DatepickerPage);
 componentMap.set("Dropdown", DropdownPage);
 componentMap.set("Icon", IconPage);
 componentMap.set("Multiselect", MultiselectPage);
 componentMap.set("Select", SelectPage);
-componentMap.set("TextArea", TextAreaPage)
+componentMap.set("TextArea", TextAreaPage);
 componentMap.set("TextField", TextFieldPage);
-const components = Array.from(componentMap.keys())
+const components = Array.from(componentMap.keys());
 
 export default function App() {
-  const [component, setComponent] = useState("TextArea");
+  const [component, setComponent] = useState("Datepicker");
 
   const Page = componentMap.get(component);
 

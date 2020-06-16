@@ -5,9 +5,18 @@ export default function TextAreaPage() {
   return (
     <div>
       <h1>TextArea Component</h1>
-      <TextArea label={"TextArea label"} value={"hello world"} error={"error"} />
+      <TextArea
+        label={"TextArea label"}
+        value={"hello world"}
+        error={"error"}
+      />
       <br />
-      <TextArea label={"TextArea label"} value={"disabled"} disabled error={"error"} />
+      <TextArea
+        label={"TextArea label"}
+        value={"disabled"}
+        disabled
+        error={"error"}
+      />
     </div>
   );
 }
