@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import { createPortal } from "react-dom";
 import { Base, Label, InputBase, Input, List, Error } from "./style";
-import Icon from "../../icons/Icon";
+import { Icon } from "../../index";
 
 export interface Props {
     /** *Optional* - Class to apply to the component */

@@ -1,5 +1,5 @@
 import React from "react";
-import { Datepicker, TextField } from "../../package/dist";
+import { Datepicker, TextField } from "../../../package/dist";
 
 export default function DatepickerPage() {
     return (

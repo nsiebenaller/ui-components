@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button } from "../../package/dist";
+import { Button } from "../../../package/dist";
 
 export default function ButtonPage() {
     const [count, setCount] = useState(0);

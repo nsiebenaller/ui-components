@@ -32,6 +32,12 @@ interface Props {
 export default function Icon(props: Props) {
     const IconSVG = components.get(props.iconName || "ArrowDropDown");
 
+    const handleMouseDown = (e: React.MouseEvent) => {
+        // Disable text highlighting for nearby text when double clicking
+        e.preventDefault();
+        e.stopPropagation();
+    };
+
     const styles = {
         id: props.id || undefined,
         className: props.className || undefined,
@@ -40,6 +46,7 @@ export default function Icon(props: Props) {
         <Base
             {...styles}
             onClick={props.onClick}
+            onMouseDown={handleMouseDown}
             cursorPointer={props.cursorPointer}
         >
             <IconSVG />

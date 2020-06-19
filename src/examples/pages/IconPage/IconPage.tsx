@@ -1,5 +1,5 @@
 import React from "react";
-import { Icon } from "../../package/dist";
+import { Icon } from "../../../package/dist";
 
 export default function IconPage() {
     return (

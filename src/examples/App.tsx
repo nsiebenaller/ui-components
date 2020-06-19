@@ -9,6 +9,7 @@ import {
     DropdownPage,
     IconPage,
     MultiselectPage,
+    RadioButtonPage,
     SelectPage,
     TextAreaPage,
     TextFieldPage,
@@ -21,13 +22,14 @@ componentMap.set("Datepicker", DatepickerPage);
 componentMap.set("Dropdown", DropdownPage);
 componentMap.set("Icon", IconPage);
 componentMap.set("Multiselect", MultiselectPage);
+componentMap.set("RadioButton", RadioButtonPage);
 componentMap.set("Select", SelectPage);
 componentMap.set("TextArea", TextAreaPage);
 componentMap.set("TextField", TextFieldPage);
 const components = Array.from(componentMap.keys());
 
 export default function App() {
-    const [component, setComponent] = useState("Button");
+    const [component, setComponent] = useState("RadioButton");
 
     const Page = componentMap.get(component);
 
