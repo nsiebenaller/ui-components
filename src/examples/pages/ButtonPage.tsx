@@ -1,40 +1,80 @@
-import React from "react";
-import { Button, TextField } from "../../package/dist";
+import React, { useState } from "react";
+import { Button } from "../../package/dist";
 
 export default function ButtonPage() {
-  return (
-    <div>
-      <h1>Button Component</h1>
+    const [count, setCount] = useState(0);
+    const handleClick = () => setCount(count + 1);
 
-      {/* <TextField /> */}
-      <Button 
-        color={"blue"}
-        colorHue={"900"}
-        botPad 
-        topPad
-      >Dark Button</Button>
+    return (
+        <div>
+            <h1>Button Component</h1>
 
-      <Button 
-        color={"red"}
-        colorHue={"700"}
-        botPad 
-        topPad
-      >Light Button</Button>
+            <h4>Regular Buttons</h4>
+            <Button
+                color={"blue"}
+                colorHue={"900"}
+                botPad
+                topPad
+                onClick={handleClick}
+            >
+                Dark Button
+            </Button>
 
-      <Button 
-        color={"indigo"}
-        botPad 
-        topPad
-      >Indigo</Button>
+            <Button
+                color={"red"}
+                colorHue={"700"}
+                botPad
+                topPad
+                onClick={handleClick}
+            >
+                Light Button
+            </Button>
 
-      <Button 
-        color={"blue"}
-        colorHue={"700"}
-        variant={"outlined"}
-        botPad 
-        topPad
-      >Indigo</Button>
-      
-    </div>
-  );
+            <Button
+                color={"indigo"}
+                botPad
+                topPad
+                onClick={handleClick}
+                disabled
+            >
+                Disabled
+            </Button>
+
+            <p>Clicked {count} times!</p>
+
+            <h4>Outlined Buttons</h4>
+            <Button
+                color={"blue"}
+                colorHue={"700"}
+                variant={"outlined"}
+                botPad
+                topPad
+                onClick={handleClick}
+            >
+                Indigo
+            </Button>
+            <Button
+                color={"blue"}
+                colorHue={"900"}
+                botPad
+                topPad
+                variant={"outlined"}
+                onClick={handleClick}
+            >
+                Dark Button
+            </Button>
+
+            <Button
+                color={"red"}
+                colorHue={"700"}
+                botPad
+                topPad
+                variant={"outlined"}
+                onClick={handleClick}
+                disabled
+            >
+                Disabled Button
+            </Button>
+        </div>
+    );
 }

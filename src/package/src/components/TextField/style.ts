@@ -31,6 +31,7 @@ export const Input = styled.input`
     outline: 0;
     transition: all 0.2s ease-out;
     background: ${(props: Props) => (props.disabled ? grey[200] : "white")};
+    text-overflow: ellipsis;
     &:hover,
     &:focus {
         border: ${(props: Props) =>

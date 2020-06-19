@@ -3,15 +3,15 @@ import "./App.css";
 import Menu from "./Menu/Menu";
 
 import {
-  AutocompletePage,
-  ButtonPage,
-  DatepickerPage,
-  DropdownPage,
-  IconPage,
-  MultiselectPage,
-  SelectPage,
-  TextAreaPage,
-  TextFieldPage,
+    AutocompletePage,
+    ButtonPage,
+    DatepickerPage,
+    DropdownPage,
+    IconPage,
+    MultiselectPage,
+    SelectPage,
+    TextAreaPage,
+    TextFieldPage,
 } from "./pages";
 
 const componentMap = new Map();
@@ -27,20 +27,20 @@ componentMap.set("TextField", TextFieldPage);
 const components = Array.from(componentMap.keys());
 
 export default function App() {
-  const [component, setComponent] = useState("Datepicker");
+    const [component, setComponent] = useState("Button");
 
-  const Page = componentMap.get(component);
+    const Page = componentMap.get(component);
 
-  return (
-    <div className="App">
-      <Menu
-        components={components}
-        component={component}
-        setComponent={setComponent}
-      />
-      <div className="content">
-        <Page />
-      </div>
-    </div>
-  );
+    return (
+        <div className="App">
+            <Menu
+                components={components}
+                component={component}
+                setComponent={setComponent}
+            />
+            <div className="content">
+                <Page />
+            </div>
+        </div>
+    );
 }
