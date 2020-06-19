@@ -22,6 +22,7 @@ npm install ebrap-ui
 - Dropdown
 - Multiselect
 - Option (used by Dropdown & Multiselect)
+- RadioButton
 - Select (used by Dropdown & Multiselect)
 - TextArea
 - TextField
@@ -60,7 +61,7 @@ For _how-to_ questions and issues, open an issue with the repo or contact Nichol
 
 ## Roadmap
 
-- Radio Buttons
+- Radio Groups
 - Checkboxes
 - Table & Table Variants
 - Tooltips
