@@ -190,7 +190,9 @@ export default function Select(props: Props) {
                     </List>,
                     document.getElementsByTagName("BODY")[0]
                 )}
-                {!props.allowInput && <Icon iconName={"ArrowDropDown"} />}
+                {!props.allowInput && (
+                    <Icon iconName={"ArrowDropDown"} cursorPointer />
+                )}
             </InputBase>
             <Error visible={!!props.error}>
                 {props.error ? props.error : "hidden"}

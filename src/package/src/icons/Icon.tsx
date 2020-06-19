@@ -21,6 +21,9 @@ interface Props {
     /** *Optional* - ID to apply to the component */
     id?: string;
 
+    /** *Optional* - Changes the cursor of the icon to pointer */
+    cursorPointer?: boolean;
+
     /** *Optional* - Callback function to call when the base is clicked */
     onClick?:
         | ((event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void)
@@ -34,7 +37,11 @@ export default function Icon(props: Props) {
         className: props.className || undefined,
     };
     return (
-        <Base {...styles} onClick={props.onClick}>
+        <Base
+            {...styles}
+            onClick={props.onClick}
+            cursorPointer={props.cursorPointer}
+        >
             <IconSVG />
         </Base>
     );
