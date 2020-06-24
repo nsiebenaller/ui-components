@@ -3,10 +3,47 @@ import { Multiselect } from "../../../package/dist";
 
 export default function MultiselectPage() {
     const [selected, setSelected] = useState([]);
+    const [allSelected, setAllSelected] = useState([]);
 
     return (
         <div>
             <h1>Multiselect Component</h1>
+            <Multiselect
+                label={"sticky all value"}
+                error={"error text"}
+                options={[
+                    "Option 1",
+                    "Option 2",
+                    "Option 3",
+                    "Option 11",
+                    "Option 22",
+                    "Option 33",
+                ]}
+                selected={allSelected}
+                placholder={"All"}
+                rolloverLimit={2}
+                includeAll
+                stickyAll
+                allText={"All Programs"}
+                onChange={(e: any) => setAllSelected(e)}
+            />
+            <Multiselect
+                label={"multiselect with all value"}
+                error={"error text"}
+                options={[
+                    "Option 1",
+                    "Option 2",
+                    "Option 3",
+                    "Option 11",
+                    "Option 22",
+                    "Option 33",
+                ]}
+                selected={allSelected}
+                placholder={"All"}
+                rolloverLimit={2}
+                includeAll
+                onChange={(e: any) => setAllSelected(e)}
+            />
             <Multiselect
                 label={"multiselect label"}
                 error={"error"}
@@ -24,9 +61,16 @@ export default function MultiselectPage() {
                 fillSelected
             />
             <Multiselect
-                label={"multiselect label"}
+                label={"disabled with error outline"}
                 error={"error"}
                 errorOutline
+                options={["Option 1", "Option 2", "Option 3"]}
+                selected={["Option 1"]}
+                disabled
+            />
+            <Multiselect
+                label={"multiselect disabled"}
+                error={"error"}
                 options={["Option 1", "Option 2", "Option 3"]}
                 selected={["Option 1"]}
                 disabled

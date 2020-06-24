@@ -2,6 +2,12 @@ import React, { useState, useEffect, useRef } from "react";
 import { Select, Option } from "../index";
 import { Props as SelectProps } from "../Select/Select";
 import { Icon } from "../../index";
+import {
+    multiselectOption,
+    allOption,
+    multiselectList,
+    stickyAll,
+} from "./style";
 
 interface Option {
     value: string;
@@ -33,6 +39,15 @@ interface Props extends SelectProps {
 
     /** *Optional* - Sets the maximum number of options to be displayed. comma deliminated before the abbreviated text is displayed */
     rolloverLimit?: number;
+
+    /** *Optional* - Includes an option called 'Select All' which will return all given options */
+    includeAll?: boolean;
+
+    /** *Optional* - Overwrites the default text for 'includeAll' property */
+    allText?: string;
+
+    /** *Optional* - Makes the 'Select All' all option sticky */
+    stickyAll?: boolean;
 }
 let targetText: string = "";
 const CHECKED = "CheckBox";
@@ -60,6 +75,16 @@ export default function Mutliselect(props: Props) {
             } else {
                 const selected = props.selected.concat(option);
                 props.onChange(selected, e);
+            }
+        }
+    };
+
+    const handleAllClick = (e: React.MouseEvent) => {
+        if (props.onChange !== undefined && !props.disabled) {
+            if (props.options.length === props.selected.length) {
+                props.onChange([], e);
+            } else {
+                props.onChange(props.options, e);
             }
         }
     };
@@ -116,6 +141,8 @@ export default function Mutliselect(props: Props) {
     }, []);
 
     const value = getValue(props.selected, props.rolloverLimit);
+    const allValue = props.allText || "Select All";
+
     return (
         <Select
             open={open}
@@ -127,7 +154,24 @@ export default function Mutliselect(props: Props) {
             placholder={props.placholder}
             noWrap={props.noWrap}
             onToggle={setOpen}
+            styledCSSList={multiselectList}
         >
+            {props.includeAll && (
+                <Option
+                    styledCSS={allOption + (props.stickyAll ? stickyAll : "")}
+                    onClick={handleAllClick}
+                >
+                    <Icon
+                        cursorPointer
+                        iconName={
+                            props.options.length === props.selected.length
+                                ? CHECKED
+                                : UNCHECKED
+                        }
+                    />
+                    <b>{allValue}</b>
+                </Option>
+            )}
             {props.options.map((option, idx) => {
                 return (
                     <Option
@@ -139,8 +183,10 @@ export default function Mutliselect(props: Props) {
                         targeted={idx === target}
                         onClick={handleClick(option)}
                         centered={props.centered}
+                        styledCSS={multiselectOption}
                     >
                         <Icon
+                            cursorPointer
                             iconName={
                                 isSelected(option, props.selected)
                                     ? CHECKED

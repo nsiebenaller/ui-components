@@ -29,7 +29,7 @@ componentMap.set("TextField", TextFieldPage);
 const components = Array.from(componentMap.keys());
 
 export default function App() {
-    const [component, setComponent] = useState("RadioButton");
+    const [component, setComponent] = useState("Multiselect");
 
     const Page = componentMap.get(component);
 

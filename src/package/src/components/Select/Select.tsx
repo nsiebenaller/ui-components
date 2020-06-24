@@ -10,6 +10,9 @@ export interface Props {
     /** *Optional* - ID to apply to the component */
     id?: string;
 
+    /** *Optional* - CSS to apply to the List component */
+    styledCSSList?: string;
+
     /** *Optional* - Label to display above the input */
     label?: React.ReactNode;
 
@@ -185,7 +188,11 @@ export default function Select(props: Props) {
                     onChange={handleChange}
                 />
                 {createPortal(
-                    <List ref={list} open={open}>
+                    <List
+                        ref={list}
+                        open={open}
+                        styledCSSList={props.styledCSSList}
+                    >
                         {props.children}
                     </List>,
                     document.getElementsByTagName("BODY")[0]

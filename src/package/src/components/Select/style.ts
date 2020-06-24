@@ -8,6 +8,7 @@ interface Props {
     errorOutline?: boolean;
     visible?: boolean;
     allowInput?: boolean;
+    styledCSSList?: string;
 }
 export const Base = styled.div`
     position: relative;
@@ -104,6 +105,7 @@ export const List = styled.div`
         "Helvetica Neue", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    ${(props: Props) => props.styledCSSList}
 `;
 
 export const Error = styled.div`

@@ -2,40 +2,54 @@ import React from "react";
 import { OptionBase } from "./style";
 
 interface Props {
-  /** *Optional* - Callback function to call when the container is clicked */
-  onClick?: ((event: React.MouseEvent) => void) | undefined;
+    /** *Optional* - Class to apply to the component */
+    className?: string;
 
-  /** *Optional* - What to render in the container */
-  children?: React.ReactNode;
+    /** *Optional* - ID to apply to the component */
+    id?: string;
 
-  /** *Optional* - Whether or not this option is selected */
-  selected?: boolean;
+    /** *Optional* - Styled Component CSS to apply to the component */
+    styledCSS?: string;
 
-  /** *Optional* - Whether or not this option is targeted */
-  targeted?: boolean;
+    /** *Optional* - Callback function to call when the container is clicked */
+    onClick?: ((event: React.MouseEvent) => void) | undefined;
 
-  /** *Optional* - Centers the option horizontally */
-  centered?: boolean;
+    /** *Optional* - What to render in the container */
+    children?: React.ReactNode;
 
-  /** *Optional* - Disables this option, adding additonal styles & preventing click handlers */
-  disabled?: boolean;
+    /** *Optional* - Whether or not this option is selected */
+    selected?: boolean;
+
+    /** *Optional* - Whether or not this option is targeted */
+    targeted?: boolean;
+
+    /** *Optional* - Centers the option horizontally */
+    centered?: boolean;
+
+    /** *Optional* - Disables this option, adding additonal styles & preventing click handlers */
+    disabled?: boolean;
 }
 export default function Option(props: Props) {
+    const handleClick = (event: React.MouseEvent) => {
+        if (!props.disabled && props.onClick) props.onClick(event);
+    };
 
+    const styles = {
+        id: props.id || undefined,
+        className: props.className || undefined,
+    };
 
-  const handleClick = (event: React.MouseEvent) => {
-    if(!props.disabled && props.onClick) props.onClick(event)
-  }
-
-  return (
-    <OptionBase
-      disabled={props.disabled}
-      selected={props.selected}
-      targeted={props.targeted}
-      centered={props.centered}
-      onClick={handleClick}
-    >
-      {props.children}
-    </OptionBase>
-  );
+    return (
+        <OptionBase
+            disabled={props.disabled}
+            selected={props.selected}
+            targeted={props.targeted}
+            centered={props.centered}
+            css={props.styledCSS}
+            onClick={handleClick}
+            {...styles}
+        >
+            {props.children}
+        </OptionBase>
+    );
 }
