@@ -1,0 +1,15 @@
+.doc-table {
+    min-width: 1000px;
+    border-collapse: collapse;
+}
+.doc-table th,
+.doc-table td {
+    padding: 2px 10px;
+}
+.doc-table th {
+    background: lightgrey;
+    text-align: left;
+}
+.doc-table td {
+    border: 1px solid lightgrey;
+}
