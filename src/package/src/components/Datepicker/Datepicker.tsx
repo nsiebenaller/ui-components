@@ -162,7 +162,7 @@ export default function Datepicker(props: Props) {
                     errorOutline={!valid}
                     onClick={toggleOpen}
                 >
-                    <Icon iconName={"CalendarToday"} />
+                    <Icon cursorPointer iconName={"CalendarToday"} />
                 </ButtonContainer>
             </InputBase>
             <Error visible={!valid}>Invalid Date</Error>

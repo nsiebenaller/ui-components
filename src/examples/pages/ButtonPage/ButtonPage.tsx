@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Button } from "../../../package/dist";
+import { properties } from "./doc";
+import Documentation from "../../Documentation/Documentation";
 
 export default function ButtonPage() {
     const [count, setCount] = useState(0);
@@ -75,6 +77,7 @@ export default function ButtonPage() {
             >
                 Disabled Button
             </Button>
+            <Documentation title={"Properties"} properties={properties} />
         </div>
     );
 }

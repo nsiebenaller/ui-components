@@ -1,5 +1,7 @@
 import React from "react";
-import { Datepicker, TextField } from "../../../package/dist";
+import { Datepicker } from "../../../package/dist";
+import { properties } from "./doc";
+import Documentation from "../../Documentation/Documentation";
 
 export default function DatepickerPage() {
     return (
@@ -12,6 +14,7 @@ export default function DatepickerPage() {
                 value={new Date()}
                 includeTime
             />
+            <Documentation title={"Properties"} properties={properties} />
         </div>
     );
 }

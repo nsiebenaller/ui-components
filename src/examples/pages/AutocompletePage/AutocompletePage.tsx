@@ -1,5 +1,7 @@
 import React from "react";
 import { Autocomplete } from "../../../package/dist";
+import { properties, impliedProperties } from "./doc";
+import Documentation from "../../Documentation/Documentation";
 
 export default function AutocompletePage() {
     return (
@@ -30,6 +32,11 @@ export default function AutocompletePage() {
                 options={["Jim", "Mike", "Julia"]}
                 onChange={(e: any) => console.log(e)}
                 disabled
+            />
+            <Documentation title={"Properties"} properties={properties} />
+            <Documentation
+                title={"Implied Properties"}
+                properties={impliedProperties}
             />
         </div>
     );
