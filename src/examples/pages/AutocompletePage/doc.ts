@@ -46,6 +46,19 @@ export const impliedProperties = [
         description: "Flag to disable this input",
     },
     {
+        name: "label",
+        format: "string",
+        required: false,
+        description: "Label to display above the input",
+    },
+    {
+        name: "placeholder",
+        format: "string",
+        required: false,
+        description:
+            "Text to display in the input when no options are selected",
+    },
+    {
         name: "error",
         format: "string",
         required: false,

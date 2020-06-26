@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { Multiselect } from "../../../package/dist";
+import { properties, impliedProperties } from "./doc";
+import Documentation from "../../Documentation/Documentation";
 
 export default function MultiselectPage() {
     const [selected, setSelected] = useState([]);
@@ -74,6 +76,11 @@ export default function MultiselectPage() {
                 options={["Option 1", "Option 2", "Option 3"]}
                 selected={["Option 1"]}
                 disabled
+            />
+            <Documentation title={"Properties"} properties={properties} />
+            <Documentation
+                title={"Implied Properties"}
+                properties={impliedProperties}
             />
         </div>
     );

@@ -25,4 +25,10 @@ export const properties = [
         description:
             "Includes time in the input that allows the end user to change",
     },
+    {
+        name: "disabled",
+        format: "boolean",
+        required: false,
+        description: "Disables the component, preventing any input",
+    },
 ];

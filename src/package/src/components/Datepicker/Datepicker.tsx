@@ -25,6 +25,9 @@ interface Props {
 
     /** *Optional* - Includes time in the input that allows the end user to change */
     includeTime?: boolean;
+
+    /** *Optional* - Disables the component, preventing any input */
+    disabled?: boolean;
 }
 export default function Datepicker(props: Props) {
     const calendarRef = useRef<HTMLDivElement>(null);
@@ -36,6 +39,7 @@ export default function Datepicker(props: Props) {
     const [open, __setOpen] = useState(false);
     const openRef = useRef(open);
     const _setOpen = (value: boolean) => {
+        if (props.disabled) return;
         openRef.current = value;
         __setOpen(value);
     };
@@ -121,11 +125,9 @@ export default function Datepicker(props: Props) {
             if (props.onChange) props.onChange(e);
             if (props.includeTime) {
                 setDateString(e.toLocaleString("en-US"));
-                //setOpen(false);
                 return;
             }
             setDateString(e.toLocaleDateString("en-US"));
-            //setOpen(false);
         }
     };
 
@@ -155,14 +157,19 @@ export default function Datepicker(props: Props) {
                     onChange={handleChange}
                     errorOutline={!valid}
                     focused={focused}
+                    disabled={props.disabled}
                 />
                 <ButtonContainer
                     focused={focused}
                     open={open}
                     errorOutline={!valid}
                     onClick={toggleOpen}
+                    disabled={props.disabled}
                 >
-                    <Icon cursorPointer iconName={"CalendarToday"} />
+                    <Icon
+                        cursorPointer={!props.disabled}
+                        iconName={"CalendarToday"}
+                    />
                 </ButtonContainer>
             </InputBase>
             <Error visible={!valid}>Invalid Date</Error>

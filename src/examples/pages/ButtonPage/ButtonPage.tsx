@@ -6,7 +6,6 @@ import Documentation from "../../Documentation/Documentation";
 export default function ButtonPage() {
     const [count, setCount] = useState(0);
     const handleClick = () => setCount(count + 1);
-
     return (
         <div>
             <h1>Button Component</h1>

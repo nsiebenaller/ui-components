@@ -1,5 +1,7 @@
 import React from "react";
 import { TextArea } from "../../../package/dist";
+import { properties } from "./doc";
+import Documentation from "../../Documentation/Documentation";
 
 export default function TextAreaPage() {
     return (
@@ -27,6 +29,7 @@ export default function TextAreaPage() {
                 }
                 error={"error"}
             />
+            <Documentation title={"Properties"} properties={properties} />
         </div>
     );
 }

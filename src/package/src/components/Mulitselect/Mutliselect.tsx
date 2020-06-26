@@ -20,7 +20,7 @@ interface Props extends SelectProps {
     /** *Required* - Options to display that are available to select */
     options: Array<OptionFormat>;
 
-    /** *Required* - Options to display that are available to select */
+    /** *Required* - Options to display that are currently selected */
     selected: Array<OptionFormat>;
 
     /** *Optional* - Callback function to call when an option is selected */

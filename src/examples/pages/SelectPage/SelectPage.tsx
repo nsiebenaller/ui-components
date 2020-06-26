@@ -1,5 +1,7 @@
 import React from "react";
 import { Select } from "../../../package/dist";
+import { properties } from "./doc";
+import Documentation from "../../Documentation/Documentation";
 
 export default function SelectPage() {
     return (
@@ -18,6 +20,7 @@ export default function SelectPage() {
                 <div>Option 2</div>
                 <div>Option 3</div>
             </Select>
+            <Documentation title={"Properties"} properties={properties} />
         </div>
     );
 }

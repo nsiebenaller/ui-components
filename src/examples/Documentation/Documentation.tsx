@@ -25,8 +25,8 @@ export default function Documentation(props: Props) {
                     </tr>
                 </thead>
                 <tbody>
-                    {props.properties.map((property) => (
-                        <tr>
+                    {props.properties.map((property, idx) => (
+                        <tr key={`doc-row-${idx}`}>
                             <td>{property.name}</td>
                             <td>{property.format}</td>
                             <td>{property.required ? "Yes" : ""}</td>

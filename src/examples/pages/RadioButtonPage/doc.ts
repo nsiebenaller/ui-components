@@ -1,28 +1,33 @@
 export const properties = [
     {
         name: "value",
-        format: "Date",
-        required: false,
-        description: "Currently selected date",
-    },
-    {
-        name: "label",
-        format: "React.ReactNode",
-        required: false,
-        description: "Label to display above the input",
+        format: "boolean",
+        required: true,
+        description: "Currently selected value of the radio button",
     },
     {
         name: "onChange",
         format: "Function",
         required: false,
         description:
-            "Callback function to call when the input changes to a valid input",
+            "Callback function to call when the radio button is toggled",
     },
     {
-        name: "includeTime",
-        format: "boolean",
+        name: "label",
+        format: "string",
         required: false,
-        description:
-            "Includes time in the input that allows the end user to change",
+        description: "Label to display associated with the input",
+    },
+    {
+        name: "color",
+        format: "ColorType",
+        required: false,
+        description: "Color to use for the icon",
+    },
+    {
+        name: "colorHue",
+        format: "string",
+        required: false,
+        description: "Color value (shade, hue) to use for the icon",
     },
 ];

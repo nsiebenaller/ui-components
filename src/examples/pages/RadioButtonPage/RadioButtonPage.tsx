@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { RadioButton } from "../../../package/dist";
+import { properties } from "./doc";
+import Documentation from "../../Documentation/Documentation";
 
 export default function RadioButtonPage() {
     const [first, setFirst] = useState(false);
@@ -25,6 +27,7 @@ export default function RadioButtonPage() {
                 onChange={setThird}
                 label={"Am I selected by default?"}
             />
+            <Documentation title={"Properties"} properties={properties} />
         </div>
     );
 }

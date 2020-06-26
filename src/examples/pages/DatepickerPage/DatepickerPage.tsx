@@ -13,6 +13,7 @@ export default function DatepickerPage() {
                 label={"Current DateTime"}
                 value={new Date()}
                 includeTime
+                disabled
             />
             <Documentation title={"Properties"} properties={properties} />
         </div>

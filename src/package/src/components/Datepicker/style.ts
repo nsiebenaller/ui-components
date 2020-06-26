@@ -18,9 +18,14 @@ export const Base = styled.div`
 export const ButtonContainer = styled.div`
     transition: all 0.2s ease-out;
     border: ${(props: Props) => {
+        if (props.disabled) return `1px solid ${grey[500]} !important`;
         if (props.errorOutline) return `1px solid ${red[500]} !important`;
         if (props.focused) return `1px solid black`;
         return `1px solid ${grey[500]}`;
+    }};
+    background: ${(props: Props) => {
+        if (props.disabled) return grey[200];
+        return "white";
     }};
     border-left: 1px solid transparent !important;
     border-radius: 5px;
@@ -29,7 +34,7 @@ export const ButtonContainer = styled.div`
     margin: 0;
     display: flex;
     align-items: center;
-    cursor: pointer;
+    cursor: ${(props: Props) => (props.disabled ? "default" : "pointer")};
     padding-left: 2px;
     padding-right: 2px;
     svg {
@@ -39,7 +44,7 @@ export const ButtonContainer = styled.div`
         }};
     }
     &:hover svg {
-        fill: black;
+        fill: ${(props: Props) => (props.disabled ? grey[500] : "black")};
     }
 `;
 
@@ -48,6 +53,7 @@ export const Input = styled.input`
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
     border: ${(props: Props) => {
+        if (props.disabled) return `1px solid ${grey[500]} !important`;
         if (props.errorOutline) return `1px solid ${red[500]} !important`;
         if (props.focused) return `1px solid black`;
         return `1px solid ${grey[500]}`;
@@ -59,8 +65,10 @@ export const Input = styled.input`
     background: ${(props: Props) => (props.disabled ? grey[200] : "white")};
     &:hover,
     &:focus {
-        border: ${(props: Props) =>
-            props.disabled ? `1px solid ${grey[500]}` : "1px solid black"};
+        border: ${(props: Props) => {
+            if (props.disabled) return `1px solid ${grey[500]}`;
+            return "1px solid black";
+        }};
     }
     width: ${(props: Props) => (props.fullWidth ? "100%" : "auto")};
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
