@@ -1,6 +1,5 @@
 import styled from "styled-components";
-import colors from "../../colors/index";
-const { grey } = colors;
+import { colors } from "../../colors";
 
 interface Props {
     color: string;
@@ -17,11 +16,11 @@ export const Base = styled.div`
         transition: all 0.2s ease-out;
         fill: ${(props: Props) => {
             if (props.value) return props.color;
-            return grey[700];
+            return colors["grey-700"];
         }};
     }
     > div:first-child:hover {
-        background: ${grey[200]};
+        background: ${colors["grey-200"]};
         fill: ${(props: Props) => {
             return props.color;
         }};

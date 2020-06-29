@@ -24,10 +24,4 @@ export const properties = [
         required: false,
         description: "Color to use for the icon",
     },
-    {
-        name: "colorHue",
-        format: "string",
-        required: false,
-        description: "Color value (shade, hue) to use for the icon",
-    },
 ];

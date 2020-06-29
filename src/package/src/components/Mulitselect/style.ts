@@ -1,5 +1,4 @@
-import colors from "../../colors";
-const { grey, red } = colors;
+import { colors } from "../../colors";
 
 export const multiselectOption = `
     > span {
@@ -18,7 +17,7 @@ export const stickyAll = `
     top: 0;
     z-index: 1;
     padding-top: 10px;
-    border-bottom: 1px solid ${grey[300]};
+    border-bottom: 1px solid ${colors["grey-300"]};
 `;
 
 export const multiselectList = `

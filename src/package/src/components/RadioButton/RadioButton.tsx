@@ -1,8 +1,13 @@
 import React from "react";
 import { Base, Label } from "./style";
 import { Icon } from "../../index";
-import colors from "../../colors";
-import { ColorType } from "../../colors/types";
+import {
+    textColors,
+    getHoverColor,
+    colorOrDefault,
+    standardizeColor,
+} from "../../colors";
+const textColorMap: any = textColors;
 
 interface Props {
     /** *Required* - Currently selected value of the radio button */
@@ -15,22 +20,17 @@ interface Props {
     label?: string;
 
     /** *Optional* - Color to use for the icon */
-    color?: ColorType;
-
-    /** *Optional* - Color value (shade, hue) to use for the icon */
-    colorHue?: string;
+    color?: string;
 }
 export default function RadioButton(props: Props) {
     const handleClick = () => {
         if (props.onChange) props.onChange(!props.value);
     };
 
-    const colorType: ColorType = props.color || "grey";
-    const colorHue = props.colorHue || "900";
-    const color = colors[colorType][colorHue];
+    const colorHex = colorOrDefault(props.color, "grey-900");
 
     return (
-        <Base color={color} value={props.value}>
+        <Base color={colorHex} value={props.value}>
             <Icon
                 iconName={props.value ? "CheckBox" : "CheckBoxOutlineBlank"}
                 onClick={handleClick}

@@ -1,6 +1,5 @@
 import styled from "styled-components";
-import colors from "../../colors";
-const { grey, red } = colors;
+import { colors } from "../../colors";
 
 interface Props {
     open?: boolean;
@@ -36,20 +35,20 @@ export const InputBase = styled.div`
         display: flex;
         justify-content: center;
         align-items: center;
-        fill: ${grey[500]};
+        fill: ${colors["grey-500"]};
         transition: all 0.2s ease-out;
     }
     &:hover > div {
         fill: ${(props: Props) => {
-            if (props.errorOutline) return `1px solid ${red[500]}`;
-            if (props.disabled) return `${grey[500]}`;
+            if (props.errorOutline) return `1px solid ${colors["red-500"]}`;
+            if (props.disabled) return `${colors["grey-500"]}`;
             return "black";
         }};
     }
     &:hover > input {
         border: ${(props: Props) => {
-            if (props.errorOutline) return `1px solid ${red[500]}`;
-            if (props.disabled) return `1px solid ${grey[500]}`;
+            if (props.errorOutline) return `1px solid ${colors["red-500"]}`;
+            if (props.disabled) return `1px solid ${colors["grey-500"]}`;
             return "1px solid black";
         }};
     }
@@ -69,17 +68,18 @@ export const Input = styled.input`
         if (props.allowInput) return "auto";
         return "pointer";
     }};
-    background: ${(props: Props) => (props.disabled ? grey[200] : "white")};
+    background: ${(props: Props) =>
+        props.disabled ? colors["grey-200"] : "white"};
     &:hover,
     &:focus {
         border: ${(props: Props) => {
-            if (props.errorOutline) return `1px solid ${red[500]}`;
-            if (props.disabled) return `1px solid ${grey[500]}`;
+            if (props.errorOutline) return `1px solid ${colors["red-500"]}`;
+            if (props.disabled) return `1px solid ${colors["grey-500"]}`;
             return "1px solid black";
         }};
     }
     border: ${(props: Props) => {
-        if (props.errorOutline) return `1px solid ${red[500]}`;
+        if (props.errorOutline) return `1px solid ${colors["red-500"]}`;
         if (props.open) return "1px solid black;";
         return "1px solid #9e9e9e";
     }};
@@ -110,7 +110,7 @@ export const List = styled.div`
 
 export const Error = styled.div`
     font-size: 0.75rem;
-    color: ${red[500]};
+    color: ${colors["red-500"]};
     opacity: ${(props: Props) => (props.visible ? "1" : "0")};
     cursor: ${(props: Props) => (props.visible ? "auto" : "default")};
 `;

@@ -5,6 +5,7 @@ import Menu from "./Menu/Menu";
 import {
     AutocompletePage,
     ButtonPage,
+    ColorsPage,
     DatepickerPage,
     DropdownPage,
     IconPage,
@@ -18,6 +19,7 @@ import {
 const componentMap = new Map();
 componentMap.set("Autocomplete", AutocompletePage);
 componentMap.set("Button", ButtonPage);
+componentMap.set("Colors", ColorsPage);
 componentMap.set("Datepicker", DatepickerPage);
 componentMap.set("Dropdown", DropdownPage);
 componentMap.set("Icon", IconPage);
@@ -29,7 +31,7 @@ componentMap.set("TextField", TextFieldPage);
 const components = Array.from(componentMap.keys());
 
 export default function App() {
-    const [component, setComponent] = useState("TextArea");
+    const [component, setComponent] = useState("Colors");
 
     const Page = componentMap.get(component);
 

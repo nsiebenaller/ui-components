@@ -1,6 +1,5 @@
 import styled from "styled-components";
-import colors from "../../colors/index";
-const { grey, red } = colors;
+import { colors } from "../../colors/index";
 
 interface Props {
     visible?: boolean;
@@ -18,13 +17,14 @@ export const Base = styled.div`
 export const ButtonContainer = styled.div`
     transition: all 0.2s ease-out;
     border: ${(props: Props) => {
-        if (props.disabled) return `1px solid ${grey[500]} !important`;
-        if (props.errorOutline) return `1px solid ${red[500]} !important`;
+        if (props.disabled) return `1px solid ${colors["grey-500"]} !important`;
+        if (props.errorOutline)
+            return `1px solid ${colors["red-500"]} !important`;
         if (props.focused) return `1px solid black`;
-        return `1px solid ${grey[500]}`;
+        return `1px solid ${colors["grey-500"]}`;
     }};
     background: ${(props: Props) => {
-        if (props.disabled) return grey[200];
+        if (props.disabled) return colors["grey-200"];
         return "white";
     }};
     border-left: 1px solid transparent !important;
@@ -40,11 +40,12 @@ export const ButtonContainer = styled.div`
     svg {
         fill: ${(props: Props) => {
             if (props.open) return "black";
-            return grey[500];
+            return colors["grey-500"];
         }};
     }
     &:hover svg {
-        fill: ${(props: Props) => (props.disabled ? grey[500] : "black")};
+        fill: ${(props: Props) =>
+            props.disabled ? colors["grey-500"] : "black"};
     }
 `;
 
@@ -53,20 +54,22 @@ export const Input = styled.input`
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
     border: ${(props: Props) => {
-        if (props.disabled) return `1px solid ${grey[500]} !important`;
-        if (props.errorOutline) return `1px solid ${red[500]} !important`;
+        if (props.disabled) return `1px solid ${colors["grey-500"]} !important`;
+        if (props.errorOutline)
+            return `1px solid ${colors["red-500"]} !important`;
         if (props.focused) return `1px solid black`;
-        return `1px solid ${grey[500]}`;
+        return `1px solid ${colors["grey-500"]}`;
     }};
     padding: 10px 14px;
     margin: 0;
     outline: 0;
     transition: all 0.2s ease-out;
-    background: ${(props: Props) => (props.disabled ? grey[200] : "white")};
+    background: ${(props: Props) =>
+        props.disabled ? colors["grey-200"] : "white"};
     &:hover,
     &:focus {
         border: ${(props: Props) => {
-            if (props.disabled) return `1px solid ${grey[500]}`;
+            if (props.disabled) return `1px solid ${colors["grey-500"]}`;
             return "1px solid black";
         }};
     }
@@ -101,7 +104,7 @@ export const Label = styled.div`
 
 export const Error = styled.div`
     font-size: 0.75rem;
-    color: ${red[500]};
+    color: ${colors["red-500"]};
     opacity: ${(props: Props) => (props.visible ? "1" : "0")};
 `;
 

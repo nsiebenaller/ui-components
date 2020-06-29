@@ -1,6 +1,5 @@
 import styled from "styled-components";
-import colors from "../../colors";
-const { grey } = colors;
+import { colors } from "../../colors";
 
 interface Props {
     selected?: boolean;
@@ -15,7 +14,7 @@ export const OptionBase = styled.div`
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     display: flex;
     align-items: center;
-    color: ${(props: Props) => (props.disabled ? grey[500] : "black")};
+    color: ${(props: Props) => (props.disabled ? colors["grey-500"] : "black")};
     cursor: ${(props: Props) => (props.disabled ? "default" : "pointer")};
     background: ${({ targeted, selected }: Props) =>
         targeted || selected ? "#e0e0e0" : "white"};

@@ -19,8 +19,7 @@ export default function RadioButtonPage() {
                 value={second}
                 onChange={setSecond}
                 label={"Am I colored differently?"}
-                color={"blue"}
-                colorHue={"500"}
+                color={"blue-500"}
             />
             <RadioButton
                 value={third}

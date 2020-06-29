@@ -1,6 +1,5 @@
 import styled from "styled-components";
-import colors from "../../colors/index";
-const { grey } = colors;
+import { colors } from "../../colors/index";
 
 interface Props {
     color: string;
@@ -21,19 +20,21 @@ export const Base = styled.div`
 
 export const ButtonBase = styled.button`
     background: ${(props: Props) => {
-        if (props.disabled && props.variant === "default") return grey[400];
+        if (props.disabled && props.variant === "default")
+            return colors["grey-400"];
         if (props.variant === "default") return props.color;
         return "white";
     }};
     border: ${(props: Props) => {
         if (props.disabled && props.variant === "outlined")
-            return `1px solid ${grey[500]}`;
+            return `1px solid ${colors["grey-500"]}`;
         if (props.variant === "default") return "none";
         return `1px solid ${props.color}`;
     }};
     color: ${(props: Props) => {
         if (props.disabled && props.variant === "default") return "white";
-        if (props.disabled && props.variant === "outlined") return grey[500];
+        if (props.disabled && props.variant === "outlined")
+            return colors["grey-500"];
         if (props.variant === "default") return props.textColor;
         return props.color;
     }};
@@ -55,7 +56,8 @@ export const ButtonBase = styled.button`
     &:hover {
         box-shadow: none;
         background: ${(props: Props) => {
-            if (props.disabled && props.variant === "default") return grey[400];
+            if (props.disabled && props.variant === "default")
+                return colors["grey-400"];
             if (props.disabled && props.variant === "outlined") return "white";
             return props.hoverColor;
         }};

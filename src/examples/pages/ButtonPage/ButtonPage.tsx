@@ -11,23 +11,11 @@ export default function ButtonPage() {
             <h1>Button Component</h1>
 
             <h4>Regular Buttons</h4>
-            <Button
-                color={"blue"}
-                colorHue={"900"}
-                botPad
-                topPad
-                onClick={handleClick}
-            >
+            <Button color={"blue-900"} botPad topPad onClick={handleClick}>
                 Dark Button
             </Button>
 
-            <Button
-                color={"red"}
-                colorHue={"700"}
-                botPad
-                topPad
-                onClick={handleClick}
-            >
+            <Button color={"red-700"} botPad topPad onClick={handleClick}>
                 Light Button
             </Button>
 
@@ -45,8 +33,7 @@ export default function ButtonPage() {
 
             <h4>Outlined Buttons</h4>
             <Button
-                color={"blue"}
-                colorHue={"700"}
+                color={"blue-700"}
                 variant={"outlined"}
                 botPad
                 topPad
@@ -55,8 +42,7 @@ export default function ButtonPage() {
                 Indigo
             </Button>
             <Button
-                color={"blue"}
-                colorHue={"900"}
+                color={"blue-900"}
                 botPad
                 topPad
                 variant={"outlined"}
@@ -66,8 +52,7 @@ export default function ButtonPage() {
             </Button>
 
             <Button
-                color={"red"}
-                colorHue={"700"}
+                color={"red-700"}
                 botPad
                 topPad
                 variant={"outlined"}

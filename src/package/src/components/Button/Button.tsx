@@ -1,7 +1,12 @@
 import React from "react";
 import { Base, ButtonBase, TopPad, BotPad } from "./style";
-import colors from "../../colors";
-import { ColorType, getTextColor, getHoverColor } from "../../colors/types";
+import {
+    textColors,
+    getHoverColor,
+    colorOrDefault,
+    standardizeColor,
+} from "../../colors";
+const textColorMap: any = textColors;
 
 interface Props {
     /** *Optional* - Class to apply to the component */
@@ -20,10 +25,7 @@ interface Props {
     botPad?: boolean;
 
     /** *Optional* - Color to use for the button */
-    color?: ColorType;
-
-    /** *Optional* - Color value (shade, hue) to use for the button */
-    colorHue?: string;
+    color?: string;
 
     /** *Optional* - Disables the button preventing further clicks */
     disabled?: boolean;
@@ -38,23 +40,18 @@ interface Props {
 }
 
 export default function Button(props: Props) {
+    const variant = props.variant || "default";
     const styles = {
         id: props.id || undefined,
         className: props.className || undefined,
     };
 
-    const colorType: ColorType = props.color || "grey";
-    const colorHue = props.colorHue || "500";
-    const color = colors[colorType][colorHue];
-
-    const variant = props.variant || "default";
-    let hoverColor = "white";
-    if (variant === "default") {
-        hoverColor = getHoverColor(colorType, colorHue);
-    }
-    if (variant === "outlined") {
-        hoverColor = colors[colorType]["50"];
-    }
+    const color = standardizeColor(props.color);
+    const colorHex = colorOrDefault(props.color);
+    const hoverColorHex = getHoverColor(
+        color === "" ? "grey-500" : color,
+        variant
+    );
 
     const handleClick = (
         event: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -66,10 +63,10 @@ export default function Button(props: Props) {
         <Base>
             {props.topPad && <TopPad>hidden</TopPad>}
             <ButtonBase
-                color={color}
+                color={colorHex}
                 variant={variant}
-                textColor={getTextColor(colorType, colorHue)}
-                hoverColor={hoverColor}
+                textColor={textColorMap[color]}
+                hoverColor={hoverColorHex}
                 onClick={handleClick}
                 disabled={props.disabled}
                 {...styles}

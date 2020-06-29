@@ -1,5 +1,6 @@
 export { default as AutocompletePage } from "./AutocompletePage/AutocompletePage";
 export { default as ButtonPage } from "./ButtonPage/ButtonPage";
+export { default as ColorsPage } from "./ColorsPage/ColorsPage";
 export { default as DatepickerPage } from "./DatepickerPage/DatepickerPage";
 export { default as DropdownPage } from "./DropdownPage/DropdownPage";
 export { default as IconPage } from "./IconPage/IconPage";
