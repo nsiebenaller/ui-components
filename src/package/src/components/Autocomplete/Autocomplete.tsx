@@ -40,7 +40,7 @@ export default function Autocomplete(props: Props) {
 
     const minLength = props.minLength || 0;
     const displayOptions = value.length >= minLength;
-    const isOpen = minLength === 0 ? open : displayOptions;
+    const isOpen = minLength === 0 ? open : open && displayOptions;
 
     const options = filterOptions(value, props.options);
 
