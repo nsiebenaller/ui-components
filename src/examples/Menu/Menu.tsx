@@ -12,7 +12,7 @@ export default function Menu(props: Props) {
     return (
         <div className={"menu"}>
             <div className={"menu-header"}>EBRAP-UI</div>
-            <div className={"menu-subheader"}>v1.0.6</div>
+            <div className={"menu-subheader"}>v1.0.7</div>
             {props.components.map((comp, idx) => (
                 <MenuItem
                     key={`menu-item-${idx}`}

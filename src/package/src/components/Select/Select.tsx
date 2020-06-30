@@ -81,11 +81,6 @@ export default function Select(props: Props) {
         if (props.onToggle) props.onToggle(false);
     };
 
-    const handleInput = (e: React.FormEvent<HTMLInputElement>) => {
-        if (props.onInput) props.onInput(e.currentTarget.value);
-        if (props.autoClose) toggleClose();
-    };
-
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         if (props.onInput) props.onInput(e.currentTarget.value);
         if (props.autoClose) toggleClose();
@@ -184,7 +179,6 @@ export default function Select(props: Props) {
                     allowInput={props.allowInput}
                     readOnly={!props.allowInput}
                     onFocus={tryFocus}
-                    onInput={handleInput}
                     onChange={handleChange}
                 />
                 {createPortal(

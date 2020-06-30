@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Select, Option } from "../index";
 import { Props as SelectProps } from "../Select/Select";
-import Icon from "../../icons/Icon";
 
 interface Option {
     value: string;
@@ -21,7 +20,7 @@ interface Props extends SelectProps {
     onChange?:
         | ((
               selected: OptionFormat,
-              event: React.MouseEvent | KeyboardEvent
+              event: React.MouseEvent | KeyboardEvent | undefined
           ) => void)
         | undefined;
 
@@ -44,6 +43,13 @@ export default function Autocomplete(props: Props) {
 
     const options = filterOptions(value, props.options);
 
+    const handleInput = (value: string) => {
+        if (props.onChange !== undefined && !props.disabled) {
+            props.onChange(value, undefined);
+            setValue(value);
+        }
+    };
+
     const handleClick = (option: OptionFormat) => (e: React.MouseEvent) => {
         if (props.onChange !== undefined && !props.disabled) {
             props.onChange(option, e);
@@ -55,7 +61,7 @@ export default function Autocomplete(props: Props) {
     return (
         <Select
             value={value}
-            onInput={setValue}
+            onInput={handleInput}
             allowInput
             open={open && displayOptions}
             onToggle={setOpen}
