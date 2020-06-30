@@ -4,7 +4,6 @@ import "./style.css";
 const colorMap: any = colors;
 
 export default function ColorsPage() {
-    console.log(colors);
     return (
         <div>
             <h1>Colors</h1>

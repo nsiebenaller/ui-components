@@ -3,6 +3,21 @@ import { Multiselect } from "../../../package/dist";
 import { properties, impliedProperties } from "./doc";
 import Documentation from "../../Documentation/Documentation";
 
+const options = [
+    {
+        value: "Option 1",
+        label: "Option 1",
+    },
+    {
+        value: "Option 2",
+        label: "Option 2",
+    },
+    {
+        value: "Option 3",
+        label: "Option 3",
+    },
+];
+
 export default function MultiselectPage() {
     const [selected, setSelected] = useState([]);
     const [allSelected, setAllSelected] = useState([]);
@@ -13,14 +28,7 @@ export default function MultiselectPage() {
             <Multiselect
                 label={"sticky all value"}
                 error={"error text"}
-                options={[
-                    "Option 1",
-                    "Option 2",
-                    "Option 3",
-                    "Option 11",
-                    "Option 22",
-                    "Option 33",
-                ]}
+                options={options}
                 selected={allSelected}
                 placholder={"All"}
                 rolloverLimit={2}
@@ -32,14 +40,7 @@ export default function MultiselectPage() {
             <Multiselect
                 label={"multiselect with all value"}
                 error={"error text"}
-                options={[
-                    "Option 1",
-                    "Option 2",
-                    "Option 3",
-                    "Option 11",
-                    "Option 22",
-                    "Option 33",
-                ]}
+                options={options}
                 selected={allSelected}
                 placholder={"All"}
                 rolloverLimit={2}

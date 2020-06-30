@@ -233,5 +233,6 @@ function getValue(
     const rolloverLimit = rollover || ROLLOVER_LIMIT;
     if (selected.length > rolloverLimit) return `${selected.length} selected`;
     if (selected.length === 0) return "";
-    return selected.join(", ");
+    const selectedLabels = selected.map((s) => valueOf(s));
+    return selectedLabels.join(", ");
 }

@@ -1,16 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
 import { Dropdown } from "../../../package/dist";
 import { properties, impliedProperties } from "./doc";
 import Documentation from "../../Documentation/Documentation";
 
+const options = [
+    {
+        value: "Option 1",
+        label: "Option 1",
+    },
+    {
+        value: "Option 2",
+        label: "Option 2",
+    },
+    {
+        value: "Option 3",
+        label: "Option 3",
+    },
+];
+
 export default function DropdownPage() {
+    const [selected, setSelected] = useState(undefined);
+
     return (
         <div>
             <h1>Dropdown Component</h1>
             <Dropdown
                 label={"dropdown with placeholder"}
-                options={["Option 1", "Option 2", "Option 3"]}
-                selected={undefined}
+                options={options}
+                selected={selected}
+                onChange={(e: any) => setSelected(e)}
                 placholder={"I am a placeholder"}
             />
             <Dropdown
