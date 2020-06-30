@@ -66,6 +66,7 @@ export const Input = styled.input`
     width: 100%;
     text-overflow: ellipsis;
     width: ${(props: Props) => (props.fullWidth ? "100%" : "auto")};
+    height: 39px;
     cursor: ${(props: Props) => {
         if (props.disabled) return "default";
         if (props.allowInput) return "auto";

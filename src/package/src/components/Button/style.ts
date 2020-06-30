@@ -43,7 +43,7 @@ export const ButtonBase = styled.button`
     cursor: ${(props: Props) => (props.disabled ? "default" : "pointer")};
     padding: 10px 14px;
     margin: 0;
-    min-height: 39px;
+    height: 39px;
     font-weight: bold;
     letter-spacing: 0.5px;
     box-shadow: ${(props: Props) => {
