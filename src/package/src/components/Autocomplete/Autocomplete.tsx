@@ -40,6 +40,7 @@ export default function Autocomplete(props: Props) {
 
     const minLength = props.minLength || 0;
     const displayOptions = value.length >= minLength;
+    const isOpen = minLength === 0 ? open : displayOptions;
 
     const options = filterOptions(value, props.options);
 
@@ -63,7 +64,7 @@ export default function Autocomplete(props: Props) {
             value={value}
             onInput={handleInput}
             allowInput
-            open={open && displayOptions}
+            open={isOpen}
             onToggle={setOpen}
             disabled={props.disabled}
             error={props.error}
