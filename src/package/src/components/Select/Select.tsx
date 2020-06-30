@@ -51,6 +51,9 @@ export interface Props {
 
     /** *Optional* - Disables constrained width of option list */
     noWrap?: boolean;
+
+    /** *Optional* - Defines element as block style (width 100%) */
+    fullWidth?: boolean;
 }
 
 let lastPressTab: boolean = false;
@@ -161,13 +164,14 @@ export default function Select(props: Props) {
     };
 
     return (
-        <Base {...styles}>
+        <Base {...styles} fullWidth={props.fullWidth}>
             <Label visible={!!props.label}>
                 {props.label ? props.label : "hidden"}
             </Label>
             <InputBase
                 disabled={props.disabled}
                 errorOutline={props.errorOutline}
+                fullWidth={props.fullWidth}
             >
                 <Input
                     ref={input}
@@ -178,6 +182,7 @@ export default function Select(props: Props) {
                     placeholder={props.placholder}
                     allowInput={props.allowInput}
                     readOnly={!props.allowInput}
+                    fullWidth={props.fullWidth}
                     onFocus={tryFocus}
                     onChange={handleChange}
                 />

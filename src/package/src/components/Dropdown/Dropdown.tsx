@@ -100,6 +100,7 @@ export default function Dropdown(props: Props) {
             label={props.label}
             placholder={props.placholder}
             noWrap={props.noWrap}
+            fullWidth={props.fullWidth}
             autoClose
         >
             {props.options.map((option, idx) => {

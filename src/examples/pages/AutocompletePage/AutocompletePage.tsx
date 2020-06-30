@@ -8,6 +8,19 @@ export default function AutocompletePage() {
         <div>
             <h1>Autocomplete Component</h1>
             <Autocomplete
+                label={"autocomplete full width"}
+                error={"error"}
+                options={[
+                    "Ant",
+                    "Aardvark",
+                    "Very Long animal name that is hard to fit on one line",
+                ]}
+                onChange={(e: any) => console.log(e)}
+                minLength={3}
+                fullWidth
+                noWrap
+            />
+            <Autocomplete
                 label={"autocomplete label"}
                 error={"error"}
                 options={[

@@ -10,12 +10,14 @@ export default function TextFieldPage() {
         <div>
             <h1>TextField Component</h1>
             <TextField
-                className={"custom class"}
+                className={"full width input"}
                 value={text}
                 onChange={setText}
                 label={"label"}
+                fullWidth
             />
             <TextField
+                label={"regular textfield"}
                 value={""}
                 placeholder={"placeholder text"}
                 error={"error text"}

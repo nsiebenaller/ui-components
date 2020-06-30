@@ -10,7 +10,7 @@ interface Props {
 
 export const Base = styled.div`
     position: relative;
-    display: inline-block;
+    display: ${(props: Props) => (props.fullWidth ? "block" : "inline-block")};
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
         "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
         "Helvetica Neue", sans-serif;

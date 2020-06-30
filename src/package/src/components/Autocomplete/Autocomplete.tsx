@@ -72,6 +72,7 @@ export default function Autocomplete(props: Props) {
             placholder={props.placholder}
             label={props.label}
             noWrap={props.noWrap}
+            fullWidth={props.fullWidth}
         >
             {displayOptions &&
                 options.length > 0 &&

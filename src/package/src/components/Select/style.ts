@@ -7,11 +7,12 @@ interface Props {
     errorOutline?: boolean;
     visible?: boolean;
     allowInput?: boolean;
+    fullWidth?: boolean;
     styledCSSList?: string;
 }
 export const Base = styled.div`
     position: relative;
-    display: inline-block;
+    display: ${(props: Props) => (props.fullWidth ? "block" : "inline-block")};
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
         "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
         "Helvetica Neue", sans-serif;
@@ -26,7 +27,8 @@ export const Label = styled.div`
 
 export const InputBase = styled.div`
     position: relative;
-    display: inline-block;
+    display: ${(props: Props) => (props.fullWidth ? "block" : "inline-block")};
+    width: ${(props: Props) => (props.fullWidth ? "100%" : "auto")};
     > div {
         position: absolute;
         top: 0;
@@ -63,6 +65,7 @@ export const Input = styled.input`
     transition: all 0.2s ease-out;
     width: 100%;
     text-overflow: ellipsis;
+    width: ${(props: Props) => (props.fullWidth ? "100%" : "auto")};
     cursor: ${(props: Props) => {
         if (props.disabled) return "default";
         if (props.allowInput) return "auto";

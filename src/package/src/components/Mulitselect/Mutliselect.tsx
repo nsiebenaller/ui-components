@@ -153,6 +153,7 @@ export default function Mutliselect(props: Props) {
             label={props.label}
             placholder={props.placholder}
             noWrap={props.noWrap}
+            fullWidth={props.fullWidth}
             onToggle={setOpen}
             styledCSSList={multiselectList}
         >

@@ -34,6 +34,19 @@ export default function MultiselectPage() {
                 rolloverLimit={2}
                 includeAll
                 stickyAll
+                fullWidth
+                allText={"All Programs"}
+                onChange={(e: any) => setAllSelected(e)}
+            />
+            <Multiselect
+                label={"sticky all value"}
+                error={"error text"}
+                options={options}
+                selected={allSelected}
+                placholder={"All"}
+                rolloverLimit={2}
+                includeAll
+                stickyAll
                 allText={"All Programs"}
                 onChange={(e: any) => setAllSelected(e)}
             />

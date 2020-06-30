@@ -56,7 +56,7 @@ export default function TextField(props: Props) {
     };
 
     return (
-        <Base>
+        <Base fullWidth={props.fullWidth}>
             <Label visible={!!props.label}>
                 {props.label ? props.label : "hidden"}
             </Label>

@@ -63,4 +63,10 @@ export const impliedProperties = [
         required: false,
         description: "Disables constrained width of option list",
     },
+    {
+        name: "fullWidth",
+        format: "boolean",
+        required: false,
+        description: "Defines element as block style (width 100%)",
+    },
 ];

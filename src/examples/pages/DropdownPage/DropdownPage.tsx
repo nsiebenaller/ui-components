@@ -30,7 +30,9 @@ export default function DropdownPage() {
                 selected={selected}
                 onChange={(e: any) => setSelected(e)}
                 placholder={"I am a placeholder"}
+                fullWidth
             />
+            <br />
             <Dropdown
                 label={"dropdown label"}
                 error={"error"}

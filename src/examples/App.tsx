@@ -31,7 +31,7 @@ componentMap.set("TextField", TextFieldPage);
 const components = Array.from(componentMap.keys());
 
 export default function App() {
-    const [component, setComponent] = useState("Colors");
+    const [component, setComponent] = useState("Dropdown");
 
     const Page = componentMap.get(component);
 
