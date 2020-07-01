@@ -71,6 +71,7 @@
     },
     "scripts": {
         "start": "node scripts/start.js",
+        "watch": "concurrently \"npm run start\" \"cd ./src/package/ && npm run watch\"",
         "build": "node scripts/build.js"
     },
     "eslintConfig": {
