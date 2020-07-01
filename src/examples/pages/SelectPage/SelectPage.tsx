@@ -11,8 +11,9 @@ export default function SelectPage() {
                 <div>children content here!</div>
             </Select>
             <Select
-                label={"Disabled input"}
-                value={"Disabled input"}
+                label={"Select statuses"}
+                value={""}
+                placholder={"temp"}
                 error={"disabled"}
                 disabled
             >

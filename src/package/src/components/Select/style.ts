@@ -8,6 +8,7 @@ interface Props {
     visible?: boolean;
     allowInput?: boolean;
     fullWidth?: boolean;
+    placeholder?: string;
     styledCSSList?: string;
 }
 export const Base = styled.div`

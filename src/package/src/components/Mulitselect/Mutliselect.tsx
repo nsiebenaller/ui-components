@@ -40,7 +40,7 @@ interface Props extends SelectProps {
     /** *Optional* - Sets the maximum number of options to be displayed. comma deliminated before the abbreviated text is displayed */
     rolloverLimit?: number;
 
-    /** *Optional* - Includes an option called 'Select All' which will return all given options */
+    /** *Optional* - Includes an option called 'All' which will return all given options */
     includeAll?: boolean;
 
     /** *Optional* - Overwrites the default text for 'includeAll' property */
@@ -140,8 +140,13 @@ export default function Mutliselect(props: Props) {
         // eslint-disable-next-line
     }, []);
 
-    const value = getValue(props.selected, props.rolloverLimit);
-    const allValue = props.allText || "Select All";
+    const allValue = props.allText || "All";
+    let value = "";
+    if (props.selected.length === props.options.length) {
+        value = allValue;
+    } else {
+        value = getValue(props.selected, props.rolloverLimit);
+    }
 
     return (
         <Select

@@ -54,7 +54,7 @@ export const properties = [
         name: "stickyAll",
         format: "boolean",
         required: false,
-        description: "Makes the 'Select All' all option sticky",
+        description: "Makes the 'All' all option sticky",
     },
 ];
 
