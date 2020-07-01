@@ -142,7 +142,9 @@ export default function Mutliselect(props: Props) {
 
     const allValue = props.allText || "All";
     let value = "";
-    if (props.selected.length === props.options.length) {
+    if (props.value) {
+        value = props.value;
+    } else if (props.selected.length === props.options.length) {
         value = allValue;
     } else {
         value = getValue(props.selected, props.rolloverLimit);

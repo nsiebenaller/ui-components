@@ -69,4 +69,10 @@ export const impliedProperties = [
         required: false,
         description: "Defines element as block style (width 100%)",
     },
+    {
+        name: "value",
+        format: "string",
+        required: false,
+        description: "Overrides the value displayed in the input",
+    },
 ];

@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { Autocomplete } from "../../../package/dist";
 import { properties, impliedProperties } from "./doc";
 import Documentation from "../../Documentation/Documentation";
 
 export default function AutocompletePage() {
+    const [value, setValue] = useState("");
     return (
         <div>
             <h1>Autocomplete Component</h1>
+            <h4>Full Width Autocomplete</h4>
             <Autocomplete
                 label={"autocomplete full width"}
                 error={"error"}
@@ -20,17 +22,21 @@ export default function AutocompletePage() {
                 fullWidth
                 noWrap
             />
+            <h4>Clearing Autocomplete</h4>
             <Autocomplete
                 label={"autocomplete label"}
                 error={"error"}
+                selected={value}
                 options={[
                     "Ant",
                     "Aardvark",
                     "Very Long animal name that is hard to fit on one line",
                 ]}
-                onChange={(e: any) => console.log(e)}
+                onChange={(e: any) => setValue(e)}
                 noWrap
             />
+            <button onClick={() => setValue("")}>Clear</button>
+            <h4>Custom 'no-match' Text</h4>
             <Autocomplete
                 label={"autocomplete label"}
                 error={"error"}
@@ -39,6 +45,7 @@ export default function AutocompletePage() {
                 noMatchText={"No Matching"}
                 centered
             />
+            <h4>Disabled Autocomplete</h4>
             <Autocomplete
                 label={"autocomplete label"}
                 error={"error"}

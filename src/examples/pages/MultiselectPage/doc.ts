@@ -8,7 +8,7 @@ export const properties = [
     {
         name: "selected",
         format: "Array<OptionFormat>",
-        required: false,
+        required: true,
         description: "Options to display that are currently selected",
     },
     {
@@ -101,5 +101,11 @@ export const impliedProperties = [
         format: "boolean",
         required: false,
         description: "Defines element as block style (width 100%)",
+    },
+    {
+        name: "value",
+        format: "string",
+        required: false,
+        description: "Overrides the value displayed in the input",
     },
 ];

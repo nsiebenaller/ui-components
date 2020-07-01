@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { Select, Option } from "../index";
 import { Props as SelectProps } from "../Select/Select";
 
@@ -43,6 +43,11 @@ export default function Autocomplete(props: Props) {
     const isOpen = minLength === 0 ? open : open && displayOptions;
 
     const options = filterOptions(value, props.options);
+
+    useEffect(() => {
+        const value = valueOf(props.selected);
+        setValue(value);
+    }, [props.selected]);
 
     const handleInput = (value: string) => {
         if (props.onChange !== undefined && !props.disabled) {
@@ -105,6 +110,7 @@ function filterOptions(
     });
 }
 
-function valueOf(item: OptionFormat) {
+function valueOf(item: OptionFormat | undefined) {
+    if (!item) return "";
     return typeof item === "string" ? item : item.label || item.value;
 }

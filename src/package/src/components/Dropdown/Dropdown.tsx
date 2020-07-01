@@ -93,7 +93,7 @@ export default function Dropdown(props: Props) {
         <Select
             onToggle={setOpen}
             open={open}
-            value={valueOf(props.selected)}
+            value={props.value || valueOf(props.selected)}
             disabled={props.disabled}
             error={props.error}
             errorOutline={props.errorOutline}
