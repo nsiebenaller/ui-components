@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Button } from "../../../package/dist";
+import { Button, Icon } from "../../../package/dist";
 import { properties } from "./doc";
 import Documentation from "../../Documentation/Documentation";
 
@@ -60,6 +60,25 @@ export default function ButtonPage() {
                 disabled
             >
                 Disabled Button
+            </Button>
+            <h4>Button with Icon</h4>
+            <Button color={"red"} onClick={handleClick} botPad topPad>
+                <Icon
+                    iconName={"CalendarToday"}
+                    color={"white"}
+                    cursorPointer
+                    rightPad
+                />
+                Icon
+            </Button>
+            <Button color={"blue-900"} variant={"outlined"} botPad topPad>
+                <Icon
+                    iconName={"CalendarToday"}
+                    color={"blue-900"}
+                    cursorPointer
+                    rightPad
+                />
+                Outlined Icon
             </Button>
             <Documentation title={"Properties"} properties={properties} />
         </div>

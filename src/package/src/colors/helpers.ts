@@ -18,6 +18,7 @@ export function colorOrDefault(
 }
 export function standardizeColor(colorString: string | undefined): string {
     if (!colorString) return "";
+    if (colorMap[colorString]) return colorString;
     return extractColorValue(colorString) + "-" + extractColorHue(colorString);
 }
 export function extractColorValue(colorString: string) {

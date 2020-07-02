@@ -46,6 +46,10 @@ export const ButtonBase = styled.button`
     height: 39px;
     font-weight: bold;
     letter-spacing: 0.5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
     box-shadow: ${(props: Props) => {
         if (props.disabled) return "none";
         if (props.variant === "default")

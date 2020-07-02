@@ -1,28 +1,62 @@
 export const properties = [
     {
-        name: "value",
-        format: "Date",
-        required: false,
-        description: "Currently selected date",
+        name: "iconName",
+        format: "string",
+        required: true,
+        description: `Icon to display in Capital-Case (ex: "ArrowDropDown")`,
     },
     {
-        name: "label",
-        format: "React.ReactNode",
+        name: "className",
+        format: "string",
         required: false,
-        description: "Label to display above the input",
+        description: `Class to apply to the component`,
     },
     {
-        name: "onChange",
-        format: "Function",
+        name: "id",
+        format: "string",
         required: false,
-        description:
-            "Callback function to call when the input changes to a valid input",
+        description: `ID to apply to the component`,
     },
     {
-        name: "includeTime",
+        name: "cursorPointer",
         format: "boolean",
         required: false,
-        description:
-            "Includes time in the input that allows the end user to change",
+        description: `Changes the cursor of the icon to pointer`,
+    },
+    {
+        name: "color",
+        format: "string",
+        required: false,
+        description: `Color of the icon`,
+    },
+    {
+        name: "topPad",
+        format: "boolean",
+        required: false,
+        description: `Pads the top of the icon`,
+    },
+    {
+        name: "botPad",
+        format: "boolean",
+        required: false,
+        description: `Pads the bottom of the icon`,
+    },
+    {
+        name: "rightPad",
+        format: "boolean",
+        required: false,
+        description: `Pads the right of the icon`,
+    },
+    {
+        name: "leftPad",
+        format: "boolean",
+        required: false,
+        description: `Pads the left of the icon`,
+    },
+    {
+        name: "onClick",
+        format: "Function",
+        required: false,
+        description: ` Callback function to call when the base is clicked`,
     },
 ];

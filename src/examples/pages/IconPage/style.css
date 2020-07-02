@@ -1,0 +1,14 @@
+.icon-table {
+    border-collapse: collapse;
+    border: 1px solid black;
+}
+
+.icon-table tr {
+    border-bottom: 1px solid black;
+}
+.icon-table th {
+    border-right: 1px solid black;
+}
+.icon-table td {
+    border-right: 1px solid black;
+}
