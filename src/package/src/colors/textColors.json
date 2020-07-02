@@ -252,5 +252,7 @@
     "bluegrey-600": "white",
     "bluegrey-700": "white",
     "bluegrey-800": "white",
-    "bluegrey-900": "white"
+    "bluegrey-900": "white",
+    "white": "black",
+    "black": "white"
 }
