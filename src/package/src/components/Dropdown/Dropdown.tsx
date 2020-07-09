@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import { Select, Option } from "../index";
 import { Props as SelectProps } from "../Select/Select";
+import useRefState from "../../helpers/RefState";
 
 interface Option {
     value: string;
@@ -26,21 +27,17 @@ interface Props extends SelectProps {
 
     /** *Optional* - Centers the options displayed in the list */
     centered?: boolean;
+
+    /** *Optional* - Pads the top of the input (similar to as if a label was defined) */
+    topPad?: boolean;
+
+    /** *Optional* - Pads the bottom of the input (similar to as if an error was defined) */
+    botPad?: boolean;
 }
 let targetText: string = "";
 export default function Dropdown(props: Props) {
-    const [target, _setTarget] = useState<number | undefined>(undefined);
-    const [open, _setOpen] = useState(false);
-    const targetRef = useRef(target);
-    const setTarget = (value: number | undefined) => {
-        targetRef.current = value;
-        _setTarget(value);
-    };
-    const openRef = useRef(open);
-    const setOpen = (value: boolean) => {
-        openRef.current = value;
-        _setOpen(value);
-    };
+    const [targetRef, setTarget] = useRefState<number | undefined>(undefined);
+    const [openRef, setOpen] = useRefState<boolean>(false);
 
     const handleClick = (option: OptionFormat) => (e: React.MouseEvent) => {
         if (props.onChange !== undefined && !props.disabled) {
@@ -92,7 +89,7 @@ export default function Dropdown(props: Props) {
     return (
         <Select
             onToggle={setOpen}
-            open={open}
+            open={openRef.current}
             value={props.value || valueOf(props.selected)}
             disabled={props.disabled}
             error={props.error}
@@ -101,6 +98,8 @@ export default function Dropdown(props: Props) {
             placholder={props.placholder}
             noWrap={props.noWrap}
             fullWidth={props.fullWidth}
+            topPad={props.topPad}
+            botPad={props.botPad}
             autoClose
         >
             {props.options.map((option, idx) => {
@@ -108,7 +107,7 @@ export default function Dropdown(props: Props) {
                     <Option
                         key={`dropdown-${idx}`}
                         selected={isSelected(option, props.selected)}
-                        targeted={idx === target}
+                        targeted={idx === targetRef.current}
                         onClick={handleClick(option)}
                         centered={props.centered}
                     >

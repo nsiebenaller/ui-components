@@ -20,6 +20,7 @@ const options = [
 
 export default function DropdownPage() {
     const [selected, setSelected] = useState(undefined);
+    const [disabled, setDisabled] = useState(false);
 
     return (
         <div>
@@ -31,10 +32,12 @@ export default function DropdownPage() {
                 onChange={(e: any) => setSelected(e)}
                 placholder={"I am a placeholder"}
                 fullWidth
+                disabled={disabled}
             />
+            <button onClick={() => setDisabled(!disabled)}>disable</button>
             <br />
             <Dropdown
-                label={"dropdown label"}
+                topPad
                 error={"error"}
                 options={["Option 1", "Option 2", "Option 3"]}
                 selected={"Option 1"}
@@ -42,7 +45,7 @@ export default function DropdownPage() {
             />
             <Dropdown
                 label={"dropdown label"}
-                error={"error"}
+                botPad
                 options={["Option 1", "Option 2", "Option 3"]}
                 selected={"Option 1"}
                 onChange={(e: any) => console.log(e)}

@@ -12,6 +12,7 @@ import {
     CalendarHook,
 } from "./style";
 import { Icon } from "../../index";
+import useRefState from "../../helpers/RefState";
 
 interface Props {
     /** *Optional* - Currently selected date */
@@ -36,20 +37,16 @@ export default function Datepicker(props: Props) {
     const [valid, setValid] = useState(true);
     const [focused, setFocus] = useState(false);
     const handleFocus = () => setFocus(true);
-    const [open, __setOpen] = useState(false);
-    const openRef = useRef(open);
-    const _setOpen = (value: boolean) => {
-        if (props.disabled) return;
-        openRef.current = value;
-        __setOpen(value);
-    };
+    const [openRef, setOpen] = useRefState<boolean>(false);
+
     const toggleOpen = () => {
-        const value = !open;
+        if (props.disabled) return;
+        const value = !openRef.current;
         if (value && calendarRef.current && inputRef.current) {
             updateDimensions(inputRef.current, calendarRef.current);
         }
         setFocus(value);
-        _setOpen(value);
+        setOpen(value);
     };
 
     const validateDate = (): boolean => {
@@ -86,7 +83,7 @@ export default function Datepicker(props: Props) {
             const clickedInput = isEventContained(e, inputRef.current);
             const clickedCalendar = isEventContained(e, calendarRef.current);
             if (opened && !clickedInput && !clickedCalendar) {
-                _setOpen(false);
+                setOpen(false);
                 setFocus(false);
             }
         }
@@ -161,7 +158,7 @@ export default function Datepicker(props: Props) {
                 />
                 <ButtonContainer
                     focused={focused}
-                    open={open}
+                    open={openRef.current}
                     errorOutline={!valid}
                     onClick={toggleOpen}
                     disabled={props.disabled}
@@ -173,7 +170,7 @@ export default function Datepicker(props: Props) {
                 </ButtonContainer>
             </InputBase>
             <Error visible={!valid}>Invalid Date</Error>
-            <CalendarHook ref={calendarRef} open={open} />
+            <CalendarHook ref={calendarRef} open={openRef.current} />
             {CalendarPortal(calendarRef, handleCalendarChange, currentDate)}
         </Base>
     );

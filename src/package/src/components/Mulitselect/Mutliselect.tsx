@@ -8,6 +8,7 @@ import {
     multiselectList,
     stickyAll,
 } from "./style";
+import useRefState from "../../helpers/RefState";
 
 interface Option {
     value: string;
@@ -48,24 +49,20 @@ interface Props extends SelectProps {
 
     /** *Optional* - Makes the 'Select All' all option sticky */
     stickyAll?: boolean;
+
+    /** *Optional* - Pads the top of the input (similar to as if a label was defined) */
+    topPad?: boolean;
+
+    /** *Optional* - Pads the bottom of the input (similar to as if an error was defined) */
+    botPad?: boolean;
 }
 let targetText: string = "";
 const CHECKED = "CheckBox";
 const UNCHECKED = "CheckBoxOutlineBlank";
 const ROLLOVER_LIMIT = 3;
 export default function Mutliselect(props: Props) {
-    const [target, _setTarget] = useState<number | undefined>(undefined);
-    const [open, _setOpen] = useState(false);
-    const targetRef = useRef(target);
-    const setTarget = (value: number | undefined) => {
-        targetRef.current = value;
-        _setTarget(value);
-    };
-    const openRef = useRef(open);
-    const setOpen = (value: boolean) => {
-        openRef.current = value;
-        _setOpen(value);
-    };
+    const [targetRef, setTarget] = useRefState<number | undefined>(undefined);
+    const [openRef, setOpen] = useRefState<boolean>(false);
 
     const handleClick = (option: OptionFormat) => (e: React.MouseEvent) => {
         if (props.onChange !== undefined && !props.disabled) {
@@ -152,7 +149,7 @@ export default function Mutliselect(props: Props) {
 
     return (
         <Select
-            open={open}
+            open={openRef.current}
             value={value}
             disabled={props.disabled}
             error={props.error}
@@ -161,6 +158,8 @@ export default function Mutliselect(props: Props) {
             placholder={props.placholder}
             noWrap={props.noWrap}
             fullWidth={props.fullWidth}
+            topPad={props.topPad}
+            botPad={props.botPad}
             onToggle={setOpen}
             styledCSSList={multiselectList}
         >
@@ -188,7 +187,7 @@ export default function Mutliselect(props: Props) {
                             props.fillSelected &&
                             isSelected(option, props.selected)
                         }
-                        targeted={idx === target}
+                        targeted={idx === targetRef.current}
                         onClick={handleClick(option)}
                         centered={props.centered}
                         styledCSS={multiselectOption}

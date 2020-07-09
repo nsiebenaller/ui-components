@@ -82,4 +82,18 @@ export const impliedProperties = [
         required: false,
         description: "Defines element as block style (width 100%)",
     },
+    {
+        name: "topPad",
+        format: "boolean",
+        required: false,
+        description:
+            "Pads the top of the input (similar to as if a label was defined)",
+    },
+    {
+        name: "botPad",
+        format: "boolean",
+        required: false,
+        description:
+            "Pads the bottom of the input (similar to as if an error was defined)",
+    },
 ];

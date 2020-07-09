@@ -75,4 +75,18 @@ export const impliedProperties = [
         required: false,
         description: "Overrides the value displayed in the input",
     },
+    {
+        name: "topPad",
+        format: "boolean",
+        required: false,
+        description:
+            "Pads the top of the input (similar to as if a label was defined)",
+    },
+    {
+        name: "botPad",
+        format: "boolean",
+        required: false,
+        description:
+            "Pads the bottom of the input (similar to as if an error was defined)",
+    },
 ];

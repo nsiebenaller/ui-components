@@ -25,7 +25,6 @@ export default function AutocompletePage() {
             <h4>Clearing Autocomplete</h4>
             <Autocomplete
                 label={"autocomplete label"}
-                error={"error"}
                 selected={value}
                 options={[
                     "Ant",

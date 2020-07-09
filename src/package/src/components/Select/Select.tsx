@@ -1,7 +1,8 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect } from "react";
 import { createPortal } from "react-dom";
 import { Base, Label, InputBase, Input, List, Error } from "./style";
 import { Icon } from "../../index";
+import useRefState from "../../helpers/RefState";
 
 export interface Props {
     /** *Optional* - Class to apply to the component */
@@ -54,21 +55,25 @@ export interface Props {
 
     /** *Optional* - Defines element as block style (width 100%) */
     fullWidth?: boolean;
+
+    /** *Optional* - Pads the top of the input (similar to as if a label was defined) */
+    topPad?: boolean;
+
+    /** *Optional* - Pads the bottom of the input (similar to as if an error was defined) */
+    botPad?: boolean;
 }
 
 let lastPressTab: boolean = false;
 export default function Select(props: Props) {
     const list = useRef<HTMLDivElement>(null);
     const input = useRef<HTMLInputElement>(null);
-    const [_open, _setOpen] = useState<boolean>(false);
-    const open = props.open !== undefined ? props.open : _open;
-    const openRef = useRef(open);
-    const setOpen = (value: boolean) => {
-        openRef.current = value;
-        _setOpen(value);
-    };
-    const disabled = !!props.disabled;
-    const disabledRef = useRef(disabled);
+
+    // Open state handler
+    const open = props.open !== undefined ? props.open : false;
+    const [openRef, setOpen] = useRefState<boolean>(open);
+
+    // Disabled state handler
+    const [disabledRef, setDisabled] = useRefState<boolean>(!!props.disabled);
 
     const toggleOpen = () => {
         if (disabledRef.current) return;
@@ -102,7 +107,7 @@ export default function Select(props: Props) {
     }, [props.open]);
 
     useEffect(() => {
-        disabledRef.current = !!props.disabled;
+        setDisabled(!!props.disabled);
     }, [props.disabled]);
 
     useEffect(() => {
@@ -172,11 +177,20 @@ export default function Select(props: Props) {
         className: props.className || undefined,
     };
 
+    const labelText = props.label
+        ? props.label
+        : props.topPad
+        ? "hidden"
+        : undefined;
+    const errorText = props.error
+        ? props.error
+        : props.botPad
+        ? "hidden"
+        : undefined;
+
     return (
         <Base {...styles} fullWidth={props.fullWidth}>
-            <Label visible={!!props.label}>
-                {props.label ? props.label : "hidden"}
-            </Label>
+            <Label visible={!!props.label}>{labelText}</Label>
             <InputBase
                 disabled={props.disabled}
                 errorOutline={props.errorOutline}
@@ -206,12 +220,13 @@ export default function Select(props: Props) {
                     document.getElementsByTagName("BODY")[0]
                 )}
                 {!props.allowInput && (
-                    <Icon iconName={"ArrowDropDown"} cursorPointer />
+                    <Icon
+                        iconName={"ArrowDropDown"}
+                        cursorPointer={!disabledRef.current}
+                    />
                 )}
             </InputBase>
-            <Error visible={!!props.error}>
-                {props.error ? props.error : "hidden"}
-            </Error>
+            <Error visible={!!props.error}>{errorText}</Error>
         </Base>
     );
 }

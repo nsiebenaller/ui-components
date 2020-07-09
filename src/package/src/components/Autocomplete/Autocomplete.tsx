@@ -32,6 +32,12 @@ interface Props extends SelectProps {
 
     /** *Optional* - Text to display if there are no matching options */
     noMatchText?: string;
+
+    /** *Optional* - Pads the top of the input (similar to as if a label was defined) */
+    topPad?: boolean;
+
+    /** *Optional* - Pads the bottom of the input (similar to as if an error was defined) */
+    botPad?: boolean;
 }
 
 export default function Autocomplete(props: Props) {
@@ -78,6 +84,8 @@ export default function Autocomplete(props: Props) {
             label={props.label}
             noWrap={props.noWrap}
             fullWidth={props.fullWidth}
+            topPad={props.topPad}
+            botPad={props.botPad}
         >
             {displayOptions &&
                 options.length > 0 &&
