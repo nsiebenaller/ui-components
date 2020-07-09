@@ -91,6 +91,7 @@ export default function Select(props: Props) {
     };
 
     useEffect(() => {
+        if (props.disabled) return;
         if (props.open !== undefined) {
             if (props.open) toggleOpen();
             else toggleClose();
