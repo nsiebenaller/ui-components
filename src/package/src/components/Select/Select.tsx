@@ -67,9 +67,11 @@ export default function Select(props: Props) {
         openRef.current = value;
         _setOpen(value);
     };
+    const disabled = !!props.disabled;
+    const disabledRef = useRef(disabled);
 
     const toggleOpen = () => {
-        if (props.disabled) return;
+        if (disabledRef.current) return;
         updateDimensions(
             input.current,
             list.current,
@@ -85,19 +87,23 @@ export default function Select(props: Props) {
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        if (props.disabled) return;
+        if (disabledRef.current) return;
         if (props.onInput) props.onInput(e.currentTarget.value);
         if (props.autoClose) toggleClose();
     };
 
     useEffect(() => {
-        if (props.disabled) return;
+        if (disabledRef.current) return;
         if (props.open !== undefined) {
             if (props.open) toggleOpen();
             else toggleClose();
         }
         // eslint-disable-next-line
     }, [props.open]);
+
+    useEffect(() => {
+        disabledRef.current = !!props.disabled;
+    }, [props.disabled]);
 
     useEffect(() => {
         updateDimensions(
@@ -155,7 +161,7 @@ export default function Select(props: Props) {
     }, []);
 
     const tryFocus = () => {
-        if (props.disabled) return;
+        if (disabledRef.current) return;
         if (lastPressTab) {
             toggleOpen();
         }
