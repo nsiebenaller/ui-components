@@ -85,6 +85,7 @@ export default function Select(props: Props) {
     };
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (props.disabled) return;
         if (props.onInput) props.onInput(e.currentTarget.value);
         if (props.autoClose) toggleClose();
     };
@@ -153,6 +154,7 @@ export default function Select(props: Props) {
     }, []);
 
     const tryFocus = () => {
+        if (props.disabled) return;
         if (lastPressTab) {
             toggleOpen();
         }
