@@ -194,8 +194,10 @@ function updateDimensions(
 ) {
     if (input === null || calendar === null) return;
     const domRect: DOMRect = input.getBoundingClientRect();
-    calendar.style.top = `${domRect.height + domRect.top + window.scrollY}px`;
-    calendar.style.left = `${domRect.left + window.scrollX}px`;
+    const windowScrollY = window.scrollY || window.pageYOffset || 0;
+    const windowScrollX = window.scrollX || window.pageXOffset || 0;
+    calendar.style.top = `${domRect.height + domRect.top + windowScrollY}px`;
+    calendar.style.left = `${domRect.left + windowScrollX}px`;
 }
 
 function isEventContained(

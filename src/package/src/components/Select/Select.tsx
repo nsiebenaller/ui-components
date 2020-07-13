@@ -240,8 +240,11 @@ function updateDimensions(
     if (input === null || list === null) return;
     const domRect: DOMRect = input.getBoundingClientRect();
     const inputHeight = allowInput ? domRect.height : 0;
-    list.style.top = `${inputHeight + domRect.top + window.scrollY}px`;
-    list.style.left = `${domRect.left + window.scrollX}px`;
+    const windowScrollY = window.scrollY || window.pageYOffset || 0;
+    const windowScrollX = window.scrollX || window.pageXOffset || 0;
+
+    list.style.top = `${inputHeight + domRect.top + windowScrollY}px`;
+    list.style.left = `${domRect.left + windowScrollX}px`;
     list.style.width = noWrap ? "auto" : `${input.offsetWidth - 2}px`;
     if (noWrap) list.style.minWidth = `${input.offsetWidth - 2}px`;
 }
