@@ -198,7 +198,7 @@ export default function Select(props: Props) {
             >
                 <Input
                     ref={input}
-                    open={open}
+                    open={openRef.current}
                     value={props.value || ""}
                     disabled={props.disabled}
                     errorOutline={props.errorOutline}
@@ -212,7 +212,7 @@ export default function Select(props: Props) {
                 {createPortal(
                     <List
                         ref={list}
-                        open={open}
+                        open={openRef.current}
                         styledCSSList={props.styledCSSList}
                     >
                         {props.children}
