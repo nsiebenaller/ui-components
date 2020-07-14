@@ -33,7 +33,7 @@ interface Props {
 export default function Datepicker(props: Props) {
     const calendarRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLDivElement>(null);
-    const [dateString, setDateString] = useState("");
+    const [dateString, setDateString] = useState<string>("");
     const [valid, setValid] = useState(true);
     const [focused, setFocus] = useState(false);
     const handleFocus = () => setFocus(true);
@@ -45,6 +45,7 @@ export default function Datepicker(props: Props) {
         if (value && calendarRef.current && inputRef.current) {
             updateDimensions(inputRef.current, calendarRef.current);
         }
+        validateDate();
         setFocus(value);
         setOpen(value);
     };
@@ -54,7 +55,7 @@ export default function Datepicker(props: Props) {
             setValid(true);
             return true;
         }
-        const date = new Date(dateString);
+        const date = new Date(cleanDateString(dateString));
         if (!(date instanceof Date) || isNaN(date.getTime())) {
             setValid(false);
             return false;
@@ -105,10 +106,10 @@ export default function Datepicker(props: Props) {
     }, []);
 
     const handleInput = (e: React.FormEvent<HTMLInputElement>) => {
-        setDateString(e.currentTarget.value);
+        setDateString(cleanDateString(e.currentTarget.value));
     };
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setDateString(e.currentTarget.value);
+        setDateString(cleanDateString(e.currentTarget.value));
     };
 
     const handleBlur = () => {
@@ -118,7 +119,7 @@ export default function Datepicker(props: Props) {
             if (props.onChange) props.onChange(null);
             return;
         }
-        const date = new Date(dateString);
+        const date = new Date(cleanDateString(dateString));
         if (props.onChange) props.onChange(date);
         if (props.includeTime) {
             setDateString(date.toLocaleString("en-US"));
@@ -145,7 +146,7 @@ export default function Datepicker(props: Props) {
 
     let currentDate = null;
     if (dateString !== "") {
-        const date = new Date(dateString);
+        const date = new Date(cleanDateString(dateString));
         if (date instanceof Date && !isNaN(date.getTime())) {
             currentDate = date;
         }
@@ -222,4 +223,9 @@ function isEventContained(
         domRect.top <= e.clientY &&
         domRect.top + domRect.height >= e.clientY // Y contained
     );
+}
+
+function cleanDateString(dateString: string | undefined | null): string {
+    if (dateString === undefined || dateString === null) return "";
+    return dateString.replace(/[^ -~]+/g, "");
 }
