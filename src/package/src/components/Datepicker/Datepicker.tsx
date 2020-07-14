@@ -88,9 +88,19 @@ export default function Datepicker(props: Props) {
             }
         }
 
+        function handleResize() {
+            if (openRef.current) {
+                updateDimensions(inputRef.current, calendarRef.current);
+            }
+        }
+
         document.addEventListener("click", handleClick, true);
+        window.addEventListener("resize", handleResize);
+        window.addEventListener("scroll", handleResize, true);
         return () => {
             document.removeEventListener("click", handleClick, true);
+            window.removeEventListener("resize", handleResize);
+            window.removeEventListener("scroll", handleResize, true);
         };
     }, []);
 

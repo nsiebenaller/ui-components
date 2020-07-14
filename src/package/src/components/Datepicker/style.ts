@@ -112,15 +112,16 @@ export const CalendarHook = styled.div`
     position: fixed;
     top: 0;
     left: 0;
+    z-index: 100;
     user-select: none;
     pointer-events: none;
     display: ${(props: Props) => (props.open ? "inline-block" : "none")};
     > * {
-        pointer-events: all;
-        border-radius: 5px;
-        border: 1px solid transparent;
+        pointer-events: all !important;
+        border-radius: 5px !important;
+        border: 1px solid transparent !important;
         box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25),
-            0 10px 10px rgba(0, 0, 0, 0.22);
+            0 10px 10px rgba(0, 0, 0, 0.22) !important;
     }
     .react-calendar__tile--now {
         border: 1px solid #006edc;
