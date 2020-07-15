@@ -82,7 +82,8 @@ export default function Datepicker(props: Props) {
         function handleClick(e: MouseEvent) {
             const opened = openRef.current;
             const clickedInput = isEventContained(e, inputRef.current);
-            const clickedCalendar = isEventContained(e, calendarRef.current);
+            const reactCalendar = calendarRef.current?.children[0];
+            const clickedCalendar = isEventContained(e, reactCalendar);
 
             if (opened && !clickedInput && !clickedCalendar) {
                 setOpen(false);
@@ -233,7 +234,7 @@ function updateDimensions(
 
 function isEventContained(
     e: MouseEvent,
-    ele: HTMLInputElement | HTMLDivElement | null
+    ele: Element | HTMLInputElement | HTMLDivElement | null | undefined
 ): boolean {
     if (!ele) return false;
     const domRect: DOMRect = ele.getBoundingClientRect();
