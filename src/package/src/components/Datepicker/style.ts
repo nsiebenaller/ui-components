@@ -117,6 +117,7 @@ export const CalendarHook = styled.div`
     pointer-events: none;
     display: ${(props: Props) => (props.open ? "inline-block" : "none")};
     > * {
+        display: inline-table !important;
         pointer-events: all !important;
         border-radius: 5px !important;
         border: 1px solid transparent !important;

@@ -194,7 +194,14 @@ function CalendarPortal(
 ) {
     if (!calendarHook || !calendarHook.current) return;
     return createPortal(
-        <Calendar value={value} onChange={onChange} />,
+        <Calendar
+            value={value}
+            onChange={onChange}
+            prev2Label={String.fromCharCode(171)} // «
+            prevLabel={String.fromCharCode(8249)} // ‹
+            next2Label={String.fromCharCode(187)} // »
+            nextLabel={String.fromCharCode(8250)} // ›
+        />,
         calendarHook.current
     );
 }
