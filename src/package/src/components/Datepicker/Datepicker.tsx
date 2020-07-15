@@ -83,6 +83,7 @@ export default function Datepicker(props: Props) {
             const opened = openRef.current;
             const clickedInput = isEventContained(e, inputRef.current);
             const clickedCalendar = isEventContained(e, calendarRef.current);
+
             if (opened && !clickedInput && !clickedCalendar) {
                 setOpen(false);
                 setFocus(false);
@@ -181,28 +182,40 @@ export default function Datepicker(props: Props) {
                 </ButtonContainer>
             </InputBase>
             <Error visible={!valid}>Invalid Date</Error>
-            <CalendarHook ref={calendarRef} open={openRef.current} />
-            {CalendarPortal(calendarRef, handleCalendarChange, currentDate)}
+            {renderCalendar(
+                handleCalendarChange,
+                currentDate,
+                calendarRef,
+                openRef
+            )}
         </Base>
     );
 }
 
-function CalendarPortal(
-    calendarHook: React.RefObject<HTMLDivElement> | null,
+function renderCalendar(
     onChange: (e: Date | Date[]) => void,
-    value: Date | null
+    value: Date | null,
+    calendarRef: React.RefObject<HTMLDivElement>,
+    openRef: React.MutableRefObject<boolean>
 ) {
-    if (!calendarHook || !calendarHook.current) return;
     return createPortal(
-        <Calendar
-            value={value}
-            onChange={onChange}
-            prev2Label={String.fromCharCode(171)} // «
-            prevLabel={String.fromCharCode(8249)} // ‹
-            next2Label={String.fromCharCode(187)} // »
-            nextLabel={String.fromCharCode(8250)} // ›
-        />,
-        calendarHook.current
+        <CalendarHook ref={calendarRef} open={openRef.current}>
+            <Calendar
+                value={value}
+                onChange={onChange}
+                prev2Label={String.fromCharCode(171)} // «
+                prevLabel={String.fromCharCode(8249)} // ‹
+                next2Label={String.fromCharCode(187)} // »
+                nextLabel={String.fromCharCode(8250)} // ›
+                navigationLabel={(props) => (
+                    <span>
+                        {props.view.charAt(0).toUpperCase() +
+                            props.view.slice(1)}
+                    </span>
+                )}
+            />
+        </CalendarHook>,
+        document.getElementsByTagName("BODY")[0]
     );
 }
 

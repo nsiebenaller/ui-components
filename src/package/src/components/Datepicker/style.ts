@@ -135,6 +135,9 @@ export const CalendarHook = styled.div`
     .react-calendar__month-view__days__day--weekend {
         color: black;
     }
+    .react-calendar__month-view__days__day--neighboringMonth {
+        color: #757575 !important;
+    }
     .react-calendar__tile--active {
         background: #006edc !important;
         color: white !important;
