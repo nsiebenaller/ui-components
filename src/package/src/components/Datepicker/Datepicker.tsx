@@ -30,6 +30,7 @@ interface Props {
     /** *Optional* - Disables the component, preventing any input */
     disabled?: boolean;
 }
+type ViewType = "month" | "century" | "decade" | "year" | undefined;
 export default function Datepicker(props: Props) {
     const calendarRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLDivElement>(null);
@@ -38,6 +39,11 @@ export default function Datepicker(props: Props) {
     const [focused, setFocus] = useState(false);
     const handleFocus = () => setFocus(true);
     const [openRef, setOpen] = useRefState<boolean>(false);
+    const [view, setView] = useState<ViewType>("month");
+    const onViewChange = (p: any) => {
+        if (p.view === "century") return;
+        setView(p.view);
+    };
 
     const toggleOpen = () => {
         if (props.disabled) return;
@@ -187,7 +193,9 @@ export default function Datepicker(props: Props) {
                 handleCalendarChange,
                 currentDate,
                 calendarRef,
-                openRef
+                openRef,
+                onViewChange,
+                view
             )}
         </Base>
     );
@@ -197,7 +205,9 @@ function renderCalendar(
     onChange: (e: Date | Date[]) => void,
     value: Date | null,
     calendarRef: React.RefObject<HTMLDivElement>,
-    openRef: React.MutableRefObject<boolean>
+    openRef: React.MutableRefObject<boolean>,
+    onViewChange: (p: any) => void,
+    view: ViewType
 ) {
     return createPortal(
         <CalendarHook ref={calendarRef} open={openRef.current}>
@@ -208,16 +218,28 @@ function renderCalendar(
                 prevLabel={String.fromCharCode(8249)} // ‹
                 next2Label={String.fromCharCode(187)} // »
                 nextLabel={String.fromCharCode(8250)} // ›
-                navigationLabel={(props) => (
-                    <span>
-                        {props.view.charAt(0).toUpperCase() +
-                            props.view.slice(1)}
-                    </span>
-                )}
+                navigationLabel={NavigationLabel}
+                onViewChange={onViewChange}
+                view={view}
             />
         </CalendarHook>,
         document.getElementsByTagName("BODY")[0]
     );
+}
+interface NavLabelType {
+    date: Date;
+    view: "century" | "decade" | "year" | "month";
+    label: string;
+}
+function NavigationLabel(p: NavLabelType) {
+    if (p.view === "century" || p.view === "decade") {
+        return (
+            p.label.substring(0, 4) +
+            " to " +
+            p.label.substring(p.label.length - 4, p.label.length)
+        );
+    }
+    return p.label;
 }
 
 function updateDimensions(
