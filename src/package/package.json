@@ -1,6 +1,6 @@
 {
     "name": "ebrap-ui",
-    "version": "1.0.29",
+    "version": "1.0.30",
     "description": "Simple UI Components in React",
     "main": "dist/index.js",
     "types": "dist/index.d.ts",

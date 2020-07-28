@@ -42,7 +42,7 @@ export interface Props {
     open?: boolean;
 
     /** *Optional* - Placeholder to display in the input */
-    placholder?: string | undefined;
+    placeholder?: string | undefined;
 
     /** *Optional* - Callback function to call when input is changed */
     onInput?: ((value: string) => void) | undefined;
@@ -202,7 +202,7 @@ export default function Select(props: Props) {
                     value={props.value || ""}
                     disabled={props.disabled}
                     errorOutline={props.errorOutline}
-                    placeholder={props.placholder}
+                    placeholder={props.placeholder}
                     allowInput={props.allowInput}
                     readOnly={!props.allowInput}
                     fullWidth={props.fullWidth}

@@ -80,7 +80,7 @@ export default function Autocomplete(props: Props) {
             disabled={props.disabled}
             error={props.error}
             errorOutline={props.errorOutline}
-            placholder={props.placholder}
+            placeholder={props.placeholder}
             label={props.label}
             noWrap={props.noWrap}
             fullWidth={props.fullWidth}

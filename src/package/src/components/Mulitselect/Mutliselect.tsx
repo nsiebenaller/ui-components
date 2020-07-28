@@ -155,7 +155,7 @@ export default function Mutliselect(props: Props) {
             error={props.error}
             errorOutline={props.errorOutline}
             label={props.label}
-            placholder={props.placholder}
+            placeholder={props.placeholder}
             noWrap={props.noWrap}
             fullWidth={props.fullWidth}
             topPad={props.topPad}

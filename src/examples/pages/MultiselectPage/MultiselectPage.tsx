@@ -30,7 +30,7 @@ export default function MultiselectPage() {
                 error={"error text"}
                 options={options}
                 selected={allSelected}
-                placholder={"All"}
+                placeholder={"All"}
                 rolloverLimit={2}
                 includeAll
                 stickyAll
@@ -43,7 +43,7 @@ export default function MultiselectPage() {
                 error={"error text"}
                 options={options}
                 selected={allSelected}
-                placholder={"All"}
+                placeholder={"All"}
                 rolloverLimit={2}
                 includeAll
                 stickyAll
@@ -55,7 +55,7 @@ export default function MultiselectPage() {
                 error={"error text"}
                 options={options}
                 selected={allSelected}
-                placholder={"All"}
+                placeholder={"All"}
                 rolloverLimit={2}
                 includeAll
                 onChange={(e: any) => setAllSelected(e)}
@@ -65,7 +65,7 @@ export default function MultiselectPage() {
                 error={"error"}
                 options={["Option 1", "Option 2", "Option 3"]}
                 selected={selected}
-                placholder={"Select Report"}
+                placeholder={"Select Report"}
                 rolloverLimit={2}
                 onChange={(e: any) => setSelected(e)}
             />

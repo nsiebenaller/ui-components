@@ -30,7 +30,7 @@ export default function DropdownPage() {
                 options={options}
                 selected={selected}
                 onChange={(e: any) => setSelected(e)}
-                placholder={"I am a placeholder"}
+                placeholder={"I am a placeholder"}
                 fullWidth
                 disabled={disabled}
             />
