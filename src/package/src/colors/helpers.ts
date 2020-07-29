@@ -1,72 +1,52 @@
-import { colors } from "./index";
+import { colors, textColors } from "./index";
+import { ColorHue, castColorHue } from "./types";
 const colorMap: any = colors;
-const DEFAULT_COLOR = "grey-500";
+const textColorMap: any = textColors;
 
-export function colorOrDefault(
-    colorString: string | undefined,
-    defaultColor?: string
-) {
-    if (!colorString) {
-        if (defaultColor) {
-            return colorMap[defaultColor];
-        }
-        return colorMap[DEFAULT_COLOR];
-    }
-    const color = colorMap[standardizeColor(colorString)];
-    if (!color) return colorMap[defaultColor || DEFAULT_COLOR];
-    return color;
-}
-export function standardizeColor(colorString: string | undefined): string {
-    if (!colorString) return "";
-    if (colorMap[colorString]) return colorString;
-    return extractColorValue(colorString) + "-" + extractColorHue(colorString);
-}
-export function extractColorValue(colorString: string) {
-    if (!colorString.includes("-")) {
-        return colorString;
-    }
-    return colorString.substring(0, colorString.indexOf("-"));
-}
+// Constants
+const DEFAULT_HUE = "grey";
+const DEFAULT_SHADE = "500";
+const DEFAULT_COLOR = `${DEFAULT_HUE}-${DEFAULT_SHADE}`;
 
-export function extractColorHue(colorString: string) {
-    if (!colorString.includes("-")) {
-        return "500";
-    }
-    return colorString.substring(
-        colorString.indexOf("-") + 1,
-        colorString.length
-    );
+export function stdColor(input?: string): string | undefined {
+    if (!input) return undefined;
+    if (colorMap[input]) return input;
+    const hue = stdHue(input);
+    const shade = stdShade(input);
+    const colorKey = `${hue}-${shade}`;
+    if (colorMap[colorKey]) return colorKey;
+    return undefined;
+}
+export function stdHue(input: string): ColorHue | undefined {
+    if (!input.includes("-")) return castColorHue(input);
+    return castColorHue(input.substring(0, input.indexOf("-")));
+}
+export function stdShade(input: string): string {
+    if (!input.includes("-")) return DEFAULT_SHADE;
+    return input.substring(input.indexOf("-") + 1, input.length);
+}
+export function toHex(input: string): string {
+    return colorMap[colorOrDefault(input)];
 }
 
-export function getHoverColor(
-    colorString: string,
-    variant = "default"
-): string {
-    if (variant !== "default" && variant !== "outlined") {
-        return "white";
-    }
+export function colorOrDefault(input?: string, defaultColor?: string): string {
+    const color = stdColor(input);
+    if (color) return color;
+    const defColor = stdColor(defaultColor);
+    if (defColor) return defColor;
+    return DEFAULT_COLOR;
+}
 
-    // Standardize color if hue is not given
-    const key = standardizeColor(colorString);
-    const colorValue = extractColorValue(colorString);
+export function getHoverColor(input?: string): string {
+    const color = stdColor(input);
+    const hue = stdHue(color || DEFAULT_COLOR);
+    const shade = parseInt(stdShade(color || DEFAULT_COLOR));
+    if (isNaN(shade)) return DEFAULT_COLOR;
+    const nextShade = shade + 200 > 900 ? shade - 200 : shade + 200;
+    return `${hue}-${nextShade}`;
+}
 
-    // Find given color in map
-    const color = colorMap[key];
-    if (!color) return colorMap[DEFAULT_COLOR];
-
-    // Check if outlined variant
-    if (variant === "outlined") {
-        return colorMap[colorValue + "-50"];
-    }
-
-    const hue = parseInt(
-        colorString.substring(colorString.indexOf("-") + 1, colorString.length)
-    );
-
-    // Calculate next hue
-    if (isNaN(hue)) return colorMap[DEFAULT_COLOR];
-    const nextHue = hue + 200 > 900 ? hue - 200 : hue + 200;
-    const nextColor = extractColorValue(colorString) + "-" + nextHue;
-    const hoverColor = colorMap[nextColor];
-    return hoverColor;
+export function getTextColor(input?: string): string {
+    const color = colorOrDefault(input, "white");
+    return textColorMap[color];
 }

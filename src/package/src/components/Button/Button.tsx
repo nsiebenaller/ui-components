@@ -1,12 +1,23 @@
 import React from "react";
 import { Base, ButtonBase, TopPad, BotPad } from "./style";
 import {
-    textColors,
     getHoverColor,
+    getTextColor,
     colorOrDefault,
-    standardizeColor,
+    stdHue,
+    toHex,
 } from "../../colors";
-const textColorMap: any = textColors;
+
+function parseHoverColor(color: string, variant = "default"): string {
+    if (variant !== "default" && variant !== "outlined") {
+        return "white";
+    }
+    if (variant === "outlined") {
+        const hue = stdHue(color);
+        return `${hue || "grey"}-50`;
+    }
+    return getHoverColor(color);
+}
 
 interface Props {
     /** *Optional* - Class to apply to the component */
@@ -38,7 +49,6 @@ interface Props {
         | ((event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void)
         | undefined;
 }
-
 export default function Button(props: Props) {
     const variant = props.variant || "default";
     const styles = {
@@ -46,12 +56,9 @@ export default function Button(props: Props) {
         className: props.className || undefined,
     };
 
-    const color = standardizeColor(props.color);
-    const colorHex = colorOrDefault(props.color);
-    const hoverColorHex = getHoverColor(
-        color === "" ? "grey-500" : color,
-        variant
-    );
+    const color = colorOrDefault(props.color);
+    const hoverColor = parseHoverColor(color, variant);
+    const textColor = getTextColor(color);
 
     const handleClick = (
         event: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -63,10 +70,10 @@ export default function Button(props: Props) {
         <Base>
             {props.topPad && <TopPad>hidden</TopPad>}
             <ButtonBase
-                color={colorHex}
+                color={toHex(color)}
                 variant={variant}
-                textColor={textColorMap[color]}
-                hoverColor={hoverColorHex}
+                textColor={textColor}
+                hoverColor={toHex(hoverColor)}
                 onClick={handleClick}
                 disabled={props.disabled}
                 {...styles}

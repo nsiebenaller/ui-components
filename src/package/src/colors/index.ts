@@ -2,18 +2,22 @@ import colors from "./colors.json";
 import textColors from "./textColors.json";
 import {
     colorOrDefault,
-    standardizeColor,
-    extractColorHue,
-    extractColorValue,
+    stdColor,
+    stdHue,
+    stdShade,
+    toHex,
     getHoverColor,
+    getTextColor,
 } from "./helpers";
 
 export {
     colors,
     textColors,
     colorOrDefault,
-    standardizeColor,
-    extractColorHue,
-    extractColorValue,
+    stdColor,
+    stdHue,
+    stdShade,
+    toHex,
     getHoverColor,
+    getTextColor,
 };

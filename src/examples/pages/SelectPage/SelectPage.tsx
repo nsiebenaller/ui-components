@@ -13,7 +13,7 @@ export default function SelectPage() {
             <Select
                 label={"Select statuses"}
                 value={""}
-                placholder={"temp"}
+                placeholder={"temp"}
                 error={"disabled"}
                 disabled
             >

@@ -6,6 +6,7 @@ export {
     Button,
     Datepicker,
     Dropdown,
+    FileDropZone,
     Multiselect,
     Option,
     RadioButton,

@@ -28,6 +28,9 @@ export default function ButtonPage() {
             >
                 Disabled
             </Button>
+            <Button color={"indigo-100"} botPad topPad onClick={handleClick}>
+                Light Button
+            </Button>
 
             <p>Clicked {count} times!</p>
 

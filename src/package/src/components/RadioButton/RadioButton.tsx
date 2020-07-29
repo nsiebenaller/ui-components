@@ -1,12 +1,7 @@
 import React from "react";
 import { Base, Label } from "./style";
 import { Icon } from "../../index";
-import {
-    textColors,
-    getHoverColor,
-    colorOrDefault,
-    standardizeColor,
-} from "../../colors";
+import { textColors, colorOrDefault, toHex } from "../../colors";
 const textColorMap: any = textColors;
 
 interface Props {
@@ -27,7 +22,7 @@ export default function RadioButton(props: Props) {
         if (props.onChange) props.onChange(!props.value);
     };
 
-    const colorHex = colorOrDefault(props.color, "grey-900");
+    const colorHex = toHex(colorOrDefault(props.color, "grey-900"));
 
     return (
         <Base color={colorHex} value={props.value}>

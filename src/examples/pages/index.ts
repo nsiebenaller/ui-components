@@ -3,6 +3,7 @@ export { default as ButtonPage } from "./ButtonPage/ButtonPage";
 export { default as ColorsPage } from "./ColorsPage/ColorsPage";
 export { default as DatepickerPage } from "./DatepickerPage/DatepickerPage";
 export { default as DropdownPage } from "./DropdownPage/DropdownPage";
+export { default as FileDropZonePage } from "./FileDropZonePage/FileDropZonePage";
 export { default as IconPage } from "./IconPage/IconPage";
 export { default as MultiselectPage } from "./MultiselectPage/MultiselectPage";
 export { default as RadioButtonPage } from "./RadioButtonPage/RadioButtonPage";

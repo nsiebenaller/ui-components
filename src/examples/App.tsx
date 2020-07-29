@@ -8,6 +8,7 @@ import {
     ColorsPage,
     DatepickerPage,
     DropdownPage,
+    FileDropZonePage,
     IconPage,
     MultiselectPage,
     RadioButtonPage,
@@ -22,6 +23,7 @@ componentMap.set("Button", ButtonPage);
 componentMap.set("Colors", ColorsPage);
 componentMap.set("Datepicker", DatepickerPage);
 componentMap.set("Dropdown", DropdownPage);
+componentMap.set("FileDropZone", FileDropZonePage);
 componentMap.set("Icon", IconPage);
 componentMap.set("Multiselect", MultiselectPage);
 componentMap.set("RadioButton", RadioButtonPage);
@@ -31,7 +33,7 @@ componentMap.set("TextField", TextFieldPage);
 const components = Array.from(componentMap.keys());
 
 export default function App() {
-    const [component, setComponent] = useState("Autocomplete");
+    const [component, setComponent] = useState("FileDropZone");
 
     const Page = componentMap.get(component);
 

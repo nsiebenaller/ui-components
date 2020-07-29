@@ -1,6 +1,6 @@
 import React from "react";
 import { Base } from "./style";
-import { colorOrDefault } from "../colors";
+import { colorOrDefault, toHex } from "../colors";
 
 import ArrowBack from "./ArrowBack";
 import ArrowDropDown from "./ArrowDropDown";
@@ -66,7 +66,7 @@ export default function Icon(props: Props) {
         id: props.id || undefined,
         className: props.className || undefined,
     };
-    const colorHex = colorOrDefault(props.color, "black");
+    const colorHex = toHex(colorOrDefault(props.color, "black"));
     return (
         <Base
             onMouseDown={handleMouseDown}
