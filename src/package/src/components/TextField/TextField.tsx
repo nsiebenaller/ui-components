@@ -34,6 +34,12 @@ interface Props {
 
     /** *Optional* - Flag to disable this input */
     disabled?: boolean;
+
+    /** *Optional* - Pads the top of the input (similar to as if a label was defined) */
+    topPad?: boolean;
+
+    /** *Optional* - Pads the bottom of the input (similar to as if an error was defined) */
+    botPad?: boolean;
 }
 
 export default function TextField(props: Props) {
@@ -55,11 +61,20 @@ export default function TextField(props: Props) {
         if (props.onChange) props.onChange(input.current?.value || "");
     };
 
+    const labelText = props.label
+        ? props.label
+        : props.topPad
+        ? "hidden"
+        : undefined;
+    const errorText = props.error
+        ? props.error
+        : props.botPad
+        ? "hidden"
+        : undefined;
+
     return (
         <Base fullWidth={props.fullWidth}>
-            <Label visible={!!props.label}>
-                {props.label ? props.label : "hidden"}
-            </Label>
+            <Label visible={!!props.label}>{labelText}</Label>
             <Input
                 placeholder={props.placeholder}
                 onChange={handleInput}
@@ -71,9 +86,7 @@ export default function TextField(props: Props) {
                 {...styles}
                 {...value}
             />
-            <Error visible={!!props.error}>
-                {props.error ? props.error : "hidden"}
-            </Error>
+            <Error visible={!!props.error}>{errorText}</Error>
         </Base>
     );
 }
