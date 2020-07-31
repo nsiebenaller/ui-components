@@ -1,4 +1,4 @@
-export default function uniqueId(prefix: string | undefined | null): string {
+export default function uniqueId(prefix?: string | undefined | null): string {
     return `${prefix ? prefix + "-" : ""}${genGUID()}${genGUID()}${genGUID()}`;
 }
 

@@ -15,6 +15,7 @@ import {
     SelectPage,
     TextAreaPage,
     TextFieldPage,
+    TreeselectPage,
 } from "./pages";
 
 const componentMap = new Map();
@@ -30,10 +31,11 @@ componentMap.set("RadioButton", RadioButtonPage);
 componentMap.set("Select", SelectPage);
 componentMap.set("TextArea", TextAreaPage);
 componentMap.set("TextField", TextFieldPage);
+componentMap.set("Treeselect", TreeselectPage);
 const components = Array.from(componentMap.keys());
 
 export default function App() {
-    const [component, setComponent] = useState("FileDropZone");
+    const [component, setComponent] = useState("Treeselect");
 
     const Page = componentMap.get(component);
 

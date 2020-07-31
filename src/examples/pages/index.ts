@@ -10,3 +10,4 @@ export { default as RadioButtonPage } from "./RadioButtonPage/RadioButtonPage";
 export { default as SelectPage } from "./SelectPage/SelectPage";
 export { default as TextAreaPage } from "./TextAreaPage/TextAreaPage";
 export { default as TextFieldPage } from "./TextFieldPage/TextFieldPage";
+export { default as TreeselectPage } from "./TreeselectPage/TreeselectPage";

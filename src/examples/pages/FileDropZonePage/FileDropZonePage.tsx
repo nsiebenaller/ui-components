@@ -1,5 +1,7 @@
 import React from "react";
 import { FileDropZone } from "../../../package/dist";
+import { properties } from "./doc";
+import Documentation from "../../Documentation/Documentation";
 
 function printFileNames(files: File | File[]) {
     if (Array.isArray(files)) {
@@ -28,6 +30,7 @@ export default function FileDropZonePage() {
             <br />
             <h4>Empty default FileDropZone</h4>
             <FileDropZone onChange={printFileNames} />
+            <Documentation title={"Properties"} properties={properties} />
         </div>
     );
 }

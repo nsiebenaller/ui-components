@@ -13,5 +13,6 @@ export {
     Select,
     TextArea,
     TextField,
+    Treeselect,
 } from "./components";
 export { Icon, textColors, colors };

@@ -15,7 +15,7 @@ export const properties = [
         name: "children",
         format: "React.ReactNode",
         required: false,
-        description: "Button text to display",
+        description: "HTML to display within the drop zone",
     },
     {
         name: "cursorPointer",
