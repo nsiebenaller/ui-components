@@ -3,6 +3,7 @@ import { createPortal } from "react-dom";
 import { Base, Label, InputBase, Input, List, Error } from "./style";
 import { Icon } from "../../index";
 import useRefState from "../../helpers/RefState";
+import GlobalState from "../../helpers/GlobalState";
 
 export interface Props {
     /** *Optional* - Class to apply to the component */
@@ -70,7 +71,11 @@ export default function Select(props: Props) {
 
     // Open state handler
     const open = props.open !== undefined ? props.open : false;
-    const [openRef, setOpen] = useRefState<boolean>(open);
+    const [openRef, _setOpen] = useRefState<boolean>(open);
+    const setOpen = (value: boolean) => {
+        GlobalState.setOpen(value);
+        _setOpen(value);
+    };
 
     // Disabled state handler
     const [disabledRef, setDisabled] = useRefState<boolean>(!!props.disabled);
@@ -128,6 +133,13 @@ export default function Select(props: Props) {
         }
         function handleClick(e: MouseEvent) {
             lastPressTab = false;
+
+            // Prevent overlapping of multiple selects
+            if (!openRef.current && GlobalState.isOpen()) {
+                return;
+            }
+
+            // Check if click is within the input
             const clickedInput = isEventContained(e, input.current);
             const clickedList = isEventContained(e, list.current);
             if (clickedInput || clickedList) {

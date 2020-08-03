@@ -70,6 +70,14 @@ export default function TreeselectPage() {
                 selected={selected}
                 onChange={(e: any) => setSelected(e)}
             />
+            <br />
+            <Treeselect
+                label={"Tree Select Component"}
+                error={"Error!"}
+                options={options}
+                selected={selected}
+                onChange={(e: any) => setSelected(e)}
+            />
             <Documentation title={"Properties"} properties={properties} />
             <Documentation
                 title={"Implied Properties"}

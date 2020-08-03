@@ -1,6 +1,7 @@
 import React from "react";
 import { Base } from "./style";
 import { colorOrDefault, toHex } from "../colors";
+import { IconType, castIconType } from "./types";
 
 import ArrowBack from "./ArrowBack";
 import ArrowDropDown from "./ArrowDropDown";
@@ -12,7 +13,7 @@ import CalendarToday from "./CalendarToday";
 import CheckBox from "./CheckBox";
 import CheckBoxOutlineBlank from "./CheckBoxOutlineBlank";
 
-const components = new Map();
+const components = new Map<IconType, () => JSX.Element>();
 components.set("ArrowBack", ArrowBack);
 components.set("ArrowDropDown", ArrowDropDown);
 components.set("ArrowDropUp", ArrowDropUp);
@@ -25,7 +26,7 @@ components.set("CheckBoxOutlineBlank", CheckBoxOutlineBlank);
 
 interface Props {
     /** *Required* - Icon to display in Capital-Case (ex: "ArrowDropDown") */
-    iconName: string;
+    iconName: string | IconType;
 
     /** *Optional* - Class to apply to the component */
     className?: string;
@@ -57,7 +58,9 @@ interface Props {
         | undefined;
 }
 export default function Icon(props: Props) {
-    const IconSVG = components.get(props.iconName);
+    const iconName = castIconType(props.iconName);
+    if (!iconName) return null;
+    const IconSVG = components.get(iconName);
     if (!IconSVG) return null;
 
     const handleMouseDown = (e: React.MouseEvent) => {

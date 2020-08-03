@@ -60,6 +60,7 @@ export default function Treeselect(props: Props) {
         // Fire callback if selectable
         if (option.selectable && props.onChange) {
             props.onChange(option);
+            setOpen(false);
         }
     };
 
