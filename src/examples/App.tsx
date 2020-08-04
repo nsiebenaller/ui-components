@@ -35,7 +35,7 @@ componentMap.set("Treeselect", TreeselectPage);
 const components = Array.from(componentMap.keys());
 
 export default function App() {
-    const [component, setComponent] = useState("Treeselect");
+    const [component, setComponent] = useState("Autocomplete");
 
     const Page = componentMap.get(component);
 

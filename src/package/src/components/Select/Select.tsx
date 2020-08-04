@@ -77,6 +77,12 @@ export default function Select(props: Props) {
         _setOpen(value);
     };
 
+    // Sync external open state
+    if (props.open !== undefined && props.open !== openRef.current) {
+        GlobalState.setOpen(props.open);
+        openRef.current = props.open;
+    }
+
     // Disabled state handler
     const [disabledRef, setDisabled] = useRefState<boolean>(!!props.disabled);
 
@@ -104,10 +110,9 @@ export default function Select(props: Props) {
 
     useEffect(() => {
         if (disabledRef.current) return;
-        if (props.open !== undefined) {
-            if (props.open) toggleOpen();
-            else toggleClose();
-        }
+        if (props.open === undefined) return;
+        if (props.open) toggleOpen();
+        else toggleClose();
         // eslint-disable-next-line
     }, [props.open]);
 

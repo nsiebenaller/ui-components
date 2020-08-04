@@ -3,26 +3,15 @@ import { Base } from "./style";
 import { colorOrDefault, toHex } from "../colors";
 import { IconType, castIconType } from "./types";
 
-import ArrowBack from "./ArrowBack";
-import ArrowDropDown from "./ArrowDropDown";
-import ArrowDropUp from "./ArrowDropUp";
-import ArrowLeft from "./ArrowLeft";
-import ArrowRight from "./ArrowRight";
-import Autorenew from "./Autorenew";
-import CalendarToday from "./CalendarToday";
-import CheckBox from "./CheckBox";
-import CheckBoxOutlineBlank from "./CheckBoxOutlineBlank";
+import * as SVG from "./svg";
+const svgMap: any = SVG;
 
-const components = new Map<IconType, () => JSX.Element>();
-components.set("ArrowBack", ArrowBack);
-components.set("ArrowDropDown", ArrowDropDown);
-components.set("ArrowDropUp", ArrowDropUp);
-components.set("ArrowLeft", ArrowLeft);
-components.set("ArrowRight", ArrowRight);
-components.set("Autorenew", Autorenew);
-components.set("CalendarToday", CalendarToday);
-components.set("CheckBox", CheckBox);
-components.set("CheckBoxOutlineBlank", CheckBoxOutlineBlank);
+const components = new Map<IconType, any>();
+Object.keys(svgMap).forEach((key: any) => {
+    const icon = castIconType(key);
+    if (!icon) return;
+    components.set(icon, svgMap[key]);
+});
 
 interface Props {
     /** *Required* - Icon to display in Capital-Case (ex: "ArrowDropDown") */

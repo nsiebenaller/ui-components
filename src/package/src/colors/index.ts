@@ -1,5 +1,5 @@
-import colors from "./colors.json";
-import textColors from "./textColors.json";
+import colors from "./json/colors.json";
+import textColors from "./json/textColors.json";
 import {
     colorOrDefault,
     stdColor,

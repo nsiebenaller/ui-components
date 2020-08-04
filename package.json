@@ -22,6 +22,7 @@
         "babel-preset-react-app": "^9.1.2",
         "camelcase": "^5.3.1",
         "case-sensitive-paths-webpack-plugin": "2.3.0",
+        "concurrently": "^5.2.0",
         "css-loader": "3.4.2",
         "dotenv": "8.2.0",
         "dotenv-expand": "5.1.0",
@@ -72,7 +73,9 @@
     "scripts": {
         "start": "node scripts/start.js",
         "watch": "concurrently \"npm run start\" \"cd ./src/package/ && npm run watch\"",
-        "build": "node scripts/build.js"
+        "build": "node scripts/build.js",
+        "publishPatch": "node scripts/publish.js",
+        "postpublishPatch": "cd ./src/package && npm publish"
     },
     "eslintConfig": {
         "extends": "react-app"

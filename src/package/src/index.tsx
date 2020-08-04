@@ -1,6 +1,5 @@
 import Icon from "./icons/Icon";
-import textColors from "./colors/textColors.json";
-import colors from "./colors/colors.json";
+export { colors, textColors } from "./colors";
 export {
     Autocomplete,
     Button,
@@ -15,4 +14,4 @@ export {
     TextField,
     Treeselect,
 } from "./components";
-export { Icon, textColors, colors };
+export { Icon };
