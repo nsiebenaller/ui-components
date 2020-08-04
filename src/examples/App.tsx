@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./App.css";
 import Menu from "./Menu/Menu";
+import { alert } from "../package/dist";
 
 import {
     AutocompletePage,
@@ -39,6 +40,10 @@ export default function App() {
 
     const Page = componentMap.get(component);
 
+    const handleClick = () => {
+        alert();
+    };
+
     return (
         <div className="App">
             <Menu
@@ -47,6 +52,7 @@ export default function App() {
                 setComponent={setComponent}
             />
             <div className="content">
+                <button onClick={handleClick}>open alert</button>
                 <Page />
             </div>
         </div>

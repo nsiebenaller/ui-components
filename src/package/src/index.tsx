@@ -13,5 +13,6 @@ export {
     TextArea,
     TextField,
     Treeselect,
+    alert,
 } from "./components";
 export { Icon };
