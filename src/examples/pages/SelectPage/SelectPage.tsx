@@ -3,7 +3,7 @@ import { Select } from "../../../package/dist";
 import { properties } from "./doc";
 import Documentation from "../../Documentation/Documentation";
 
-export default function SelectPage() {
+function SelectPage() {
     return (
         <div>
             <h1>Select Component</h1>
@@ -25,3 +25,5 @@ export default function SelectPage() {
         </div>
     );
 }
+SelectPage.pageName = "Select";
+export default SelectPage;

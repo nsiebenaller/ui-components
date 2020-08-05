@@ -4,7 +4,7 @@ import "./style.css";
 const colorMap: any = colors;
 const textMap: any = textColors;
 
-export default function ColorsPage() {
+function ColorsPage() {
     return (
         <div>
             <h1>Colors</h1>
@@ -25,3 +25,5 @@ export default function ColorsPage() {
         </div>
     );
 }
+ColorsPage.pageName = "Colors";
+export default ColorsPage;

@@ -3,7 +3,7 @@ import { RadioButton } from "../../../package/dist";
 import { properties } from "./doc";
 import Documentation from "../../Documentation/Documentation";
 
-export default function RadioButtonPage() {
+function RadioButtonPage() {
     const [first, setFirst] = useState(false);
     const [second, setSecond] = useState(false);
     const [third, setThird] = useState(true);
@@ -30,3 +30,5 @@ export default function RadioButtonPage() {
         </div>
     );
 }
+RadioButtonPage.pageName = "RadioButton";
+export default RadioButtonPage;

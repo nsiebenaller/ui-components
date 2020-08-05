@@ -3,7 +3,7 @@ import { TextField } from "../../../package/dist";
 import { properties } from "./doc";
 import Documentation from "../../Documentation/Documentation";
 
-export default function TextFieldPage() {
+function TextFieldPage() {
     const [text, setText] = useState("Tim");
 
     return (
@@ -27,3 +27,5 @@ export default function TextFieldPage() {
         </div>
     );
 }
+TextFieldPage.pageName = "TextField";
+export default TextFieldPage;

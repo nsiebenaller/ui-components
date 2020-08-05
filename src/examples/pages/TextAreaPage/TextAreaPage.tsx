@@ -3,7 +3,7 @@ import { TextArea } from "../../../package/dist";
 import { properties } from "./doc";
 import Documentation from "../../Documentation/Documentation";
 
-export default function TextAreaPage() {
+function TextAreaPage() {
     return (
         <div>
             <h1>TextArea Component</h1>
@@ -33,3 +33,5 @@ export default function TextAreaPage() {
         </div>
     );
 }
+TextAreaPage.pageName = "TextArea";
+export default TextAreaPage;

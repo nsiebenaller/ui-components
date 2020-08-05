@@ -1,10 +1,10 @@
 import styled from "styled-components";
 
-export const Modal = styled.div`
+export const Container = styled.div`
     overflow: auto;
     z-index: 10;
     background-color: white;
-    padding: 10px 10px;
+    padding: 15px 15px;
     width: 400px;
     top: 200px;
     position: absolute;
@@ -22,13 +22,4 @@ export const Modal = styled.div`
 export const Actions = styled.div`
     display: flex;
     justify-content: flex-end;
-`;
-
-export const HookStyle = `
-    position: fixed;
-    height: 100%;
-    width: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
 `;

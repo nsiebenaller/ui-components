@@ -1,5 +1,6 @@
 import Icon from "./icons/Icon";
 export { colors, textColors } from "./colors";
+export { default as useRefState } from "./helpers/RefState";
 export {
     Autocomplete,
     Button,
@@ -13,6 +14,6 @@ export {
     TextArea,
     TextField,
     Treeselect,
-    alert,
+    command,
 } from "./components";
 export { Icon };

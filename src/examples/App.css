@@ -17,3 +17,14 @@ body {
     padding: 50px 50px 50px 150px;
     overflow: auto;
 }
+
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

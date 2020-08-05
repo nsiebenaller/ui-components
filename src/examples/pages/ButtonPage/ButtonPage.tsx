@@ -3,7 +3,7 @@ import { Button, Icon } from "../../../package/dist";
 import { properties } from "./doc";
 import Documentation from "../../Documentation/Documentation";
 
-export default function ButtonPage() {
+function ButtonPage() {
     const [count, setCount] = useState(0);
     const handleClick = () => setCount(count + 1);
     return (
@@ -87,3 +87,5 @@ export default function ButtonPage() {
         </div>
     );
 }
+ButtonPage.pageName = "Button";
+export default ButtonPage;

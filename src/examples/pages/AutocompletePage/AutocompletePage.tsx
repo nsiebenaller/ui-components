@@ -3,7 +3,7 @@ import { Autocomplete } from "../../../package/dist";
 import { properties, impliedProperties } from "./doc";
 import Documentation from "../../Documentation/Documentation";
 
-export default function AutocompletePage() {
+function AutocompletePage() {
     const [value, setValue] = useState("");
     return (
         <div>
@@ -60,3 +60,5 @@ export default function AutocompletePage() {
         </div>
     );
 }
+AutocompletePage.pageName = "Autocomplete";
+export default AutocompletePage;

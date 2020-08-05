@@ -4,7 +4,7 @@ import { Icon } from "../../../package/dist";
 import { properties } from "./doc";
 import Documentation from "../../Documentation/Documentation";
 
-export default function IconPage() {
+function IconPage() {
     return (
         <div>
             <h1>Icon Component</h1>
@@ -30,6 +30,8 @@ export default function IconPage() {
         </div>
     );
 }
+IconPage.pageName = "Icon";
+export default IconPage;
 
 interface Props {
     iconName: string;

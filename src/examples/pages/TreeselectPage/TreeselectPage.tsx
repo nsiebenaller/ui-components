@@ -57,7 +57,7 @@ const options = [
     },
 ];
 
-export default function TreeselectPage() {
+function TreeselectPage() {
     const [selected, setSelected] = useState(undefined);
 
     return (
@@ -86,3 +86,5 @@ export default function TreeselectPage() {
         </div>
     );
 }
+TreeselectPage.pageName = "Treeselect";
+export default TreeselectPage;

@@ -12,7 +12,7 @@ function printFileNames(files: File | File[]) {
     }
     return console.log(files.name);
 }
-export default function FileDropZonePage() {
+function FileDropZonePage() {
     return (
         <div>
             <h1>FileInput Component</h1>
@@ -34,3 +34,5 @@ export default function FileDropZonePage() {
         </div>
     );
 }
+FileDropZonePage.pageName = "FileDropZone";
+export default FileDropZonePage;

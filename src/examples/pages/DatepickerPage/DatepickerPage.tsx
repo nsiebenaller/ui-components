@@ -3,7 +3,7 @@ import { Datepicker } from "../../../package/dist";
 import { properties } from "./doc";
 import Documentation from "../../Documentation/Documentation";
 
-export default function DatepickerPage() {
+function DatepickerPage() {
     return (
         <div>
             <h1>Datepicker Component</h1>
@@ -19,3 +19,5 @@ export default function DatepickerPage() {
         </div>
     );
 }
+DatepickerPage.pageName = "Datepicker";
+export default DatepickerPage;

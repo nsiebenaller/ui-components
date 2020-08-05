@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import "./App.css";
 import Menu from "./Menu/Menu";
-import { alert } from "../package/dist";
 
 import {
     AutocompletePage,
     ButtonPage,
     ColorsPage,
+    CommandPage,
     DatepickerPage,
     DropdownPage,
     FileDropZonePage,
@@ -19,30 +19,20 @@ import {
     TreeselectPage,
 } from "./pages";
 
+import * as pages from "./pages";
+
+// Dynamically load all pages
+const pageMap: any = pages;
 const componentMap = new Map();
-componentMap.set("Autocomplete", AutocompletePage);
-componentMap.set("Button", ButtonPage);
-componentMap.set("Colors", ColorsPage);
-componentMap.set("Datepicker", DatepickerPage);
-componentMap.set("Dropdown", DropdownPage);
-componentMap.set("FileDropZone", FileDropZonePage);
-componentMap.set("Icon", IconPage);
-componentMap.set("Multiselect", MultiselectPage);
-componentMap.set("RadioButton", RadioButtonPage);
-componentMap.set("Select", SelectPage);
-componentMap.set("TextArea", TextAreaPage);
-componentMap.set("TextField", TextFieldPage);
-componentMap.set("Treeselect", TreeselectPage);
+Object.keys(pageMap).forEach((key: any) => {
+    componentMap.set(pageMap[key].pageName, pageMap[key]);
+});
 const components = Array.from(componentMap.keys());
 
 export default function App() {
-    const [component, setComponent] = useState("Autocomplete");
+    const [component, setComponent] = useState("Command");
 
     const Page = componentMap.get(component);
-
-    const handleClick = () => {
-        alert();
-    };
 
     return (
         <div className="App">
@@ -52,7 +42,6 @@ export default function App() {
                 setComponent={setComponent}
             />
             <div className="content">
-                <button onClick={handleClick}>open alert</button>
                 <Page />
             </div>
         </div>

@@ -18,7 +18,7 @@ const options = [
     },
 ];
 
-export default function DropdownPage() {
+function DropdownPage() {
     const [selected, setSelected] = useState(undefined);
     const [disabled, setDisabled] = useState(false);
 
@@ -71,3 +71,5 @@ export default function DropdownPage() {
         </div>
     );
 }
+DropdownPage.pageName = "Dropdown";
+export default DropdownPage;

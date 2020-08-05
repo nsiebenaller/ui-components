@@ -18,7 +18,7 @@ const options = [
     },
 ];
 
-export default function MultiselectPage() {
+function MultiselectPage() {
     const [selected, setSelected] = useState([]);
     const [allSelected, setAllSelected] = useState([]);
 
@@ -99,3 +99,5 @@ export default function MultiselectPage() {
         </div>
     );
 }
+MultiselectPage.pageName = "Multiselect";
+export default MultiselectPage;
