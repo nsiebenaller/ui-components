@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { command } from "../../../package/dist";
+import { command, Datepicker } from "../../../package/dist";
 import {
     firstMessage,
     secondMessage,
@@ -47,6 +47,20 @@ function CommandPage() {
     const handleModal = async () => {
         await command.modal(sixthMessage);
     };
+    const handleModal2 = async () => {
+        const form = (close: any) => (
+            <div>
+                <h2>Date Information</h2>
+                <hr />
+                <Datepicker label={"Datepicker 1"} value={new Date()} />
+                <Datepicker label={"Datepicker 2"} value={new Date()} />
+                <hr />
+                <button>cancel</button>
+                <button>save</button>
+            </div>
+        );
+        await command.modal(form);
+    };
     return (
         <div>
             <h1>Command Functions</h1>
@@ -56,6 +70,8 @@ function CommandPage() {
                 <code>window.confirm</code>. The goal of commands is to provide
                 easy, programmatic, drop-in replacements for these built-in
                 browser functions with a standardized style and functionality.
+                These commands render outside of the react context, if you
+                require a more traditional react modal check out `Portal`.
             </p>
             <h4>command.alert</h4>
             <p>
@@ -117,6 +133,8 @@ function CommandPage() {
                 previous two commands to allow more flexibility.
             </p>
             <button onClick={handleModal}>open modal</button>
+            <br />
+            <button onClick={handleModal2}>open modal w/ datepicker</button>
         </div>
     );
 }

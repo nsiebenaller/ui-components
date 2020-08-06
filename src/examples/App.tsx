@@ -1,24 +1,6 @@
 import React, { useState } from "react";
 import "./App.css";
 import Menu from "./Menu/Menu";
-
-import {
-    AutocompletePage,
-    ButtonPage,
-    ColorsPage,
-    CommandPage,
-    DatepickerPage,
-    DropdownPage,
-    FileDropZonePage,
-    IconPage,
-    MultiselectPage,
-    RadioButtonPage,
-    SelectPage,
-    TextAreaPage,
-    TextFieldPage,
-    TreeselectPage,
-} from "./pages";
-
 import * as pages from "./pages";
 
 // Dynamically load all pages
@@ -30,7 +12,7 @@ Object.keys(pageMap).forEach((key: any) => {
 const components = Array.from(componentMap.keys());
 
 export default function App() {
-    const [component, setComponent] = useState("Command");
+    const [component, setComponent] = useState("Portal");
 
     const Page = componentMap.get(component);
 

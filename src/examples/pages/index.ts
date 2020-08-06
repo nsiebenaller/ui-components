@@ -7,6 +7,7 @@ export { default as DropdownPage } from "./DropdownPage/DropdownPage";
 export { default as FileDropZonePage } from "./FileDropZonePage/FileDropZonePage";
 export { default as IconPage } from "./IconPage/IconPage";
 export { default as MultiselectPage } from "./MultiselectPage/MultiselectPage";
+export { default as PortalPage } from "./PortalPage/PortalPage";
 export { default as RadioButtonPage } from "./RadioButtonPage/RadioButtonPage";
 export { default as SelectPage } from "./SelectPage/SelectPage";
 export { default as TextAreaPage } from "./TextAreaPage/TextAreaPage";

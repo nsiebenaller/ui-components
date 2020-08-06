@@ -9,6 +9,7 @@ export {
     FileDropZone,
     Multiselect,
     Option,
+    Portal,
     RadioButton,
     Select,
     TextArea,
