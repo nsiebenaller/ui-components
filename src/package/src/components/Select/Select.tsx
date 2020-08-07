@@ -234,7 +234,7 @@ export default function Select(props: Props) {
                     >
                         {props.children}
                     </List>,
-                    document.getElementsByTagName("BODY")[0]
+                    GlobalState.getModalRef()
                 )}
                 {!props.allowInput && (
                     <Icon

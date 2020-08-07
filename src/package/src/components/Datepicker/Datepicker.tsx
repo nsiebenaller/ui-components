@@ -13,6 +13,7 @@ import {
 } from "./style";
 import { Icon } from "../../index";
 import useRefState from "../../helpers/RefState";
+import GlobalState from "../../helpers/GlobalState";
 
 interface Props {
     /** *Optional* - Currently selected date */
@@ -48,7 +49,7 @@ export default function Datepicker(props: Props) {
     const toggleOpen = () => {
         if (props.disabled) return;
         const value = !openRef.current;
-        if (value && calendarRef.current && inputRef.current) {
+        if (calendarRef.current && inputRef.current) {
             updateDimensions(inputRef.current, calendarRef.current);
         }
         validateDate();
@@ -223,7 +224,7 @@ function renderCalendar(
                 view={view}
             />
         </CalendarHook>,
-        document.getElementsByTagName("BODY")[0]
+        GlobalState.getModalRef()
     );
 }
 interface NavLabelType {
