@@ -9,7 +9,6 @@ interface Props {
     style?: string;
 }
 export default function Modal({ children, drop, className, style }: Props) {
-    console.log(style);
     return (
         <Container className={className} css={style}>
             {renderChildren(children, { drop })}
