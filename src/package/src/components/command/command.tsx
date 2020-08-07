@@ -72,8 +72,8 @@ function confirm(
     });
 }
 
-function modal(children: React.ReactNode, options?: Options): Promise<boolean> {
-    return new Promise<boolean>((resolve) => {
+function modal(children: React.ReactNode, options?: Options): Promise<any> {
+    return new Promise<any>((resolve) => {
         const callback = () => resolve(true);
         hardPortal(
             <Modal className={options?.className} style={options?.style}>

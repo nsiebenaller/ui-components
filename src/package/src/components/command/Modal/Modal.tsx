@@ -4,7 +4,7 @@ import { renderChildren } from "../utils";
 
 interface Props {
     children: React.ReactNode | undefined;
-    drop?: () => void;
+    drop?: (data: any) => void;
     className?: string;
     style?: string;
 }

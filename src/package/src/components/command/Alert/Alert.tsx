@@ -19,7 +19,7 @@ export default function Alert({
     style,
 }: Props) {
     return (
-        <Modal className={className} style={style}>
+        <Modal className={className} style={style} drop={drop}>
             {renderChildren(children, { drop })}
             <Actions>
                 <Button color={"blue"} onClick={drop}>

@@ -17,7 +17,11 @@ export default function Confirm(props: Props) {
     const handleCancel = () => props.drop && props.drop(false);
 
     return (
-        <Modal className={props.className} style={props.style}>
+        <Modal
+            className={props.className}
+            style={props.style}
+            drop={props.drop}
+        >
             {renderChildren(props.children, { drop: props.drop })}
             <Actions>
                 <Button
