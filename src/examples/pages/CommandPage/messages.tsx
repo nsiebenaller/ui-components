@@ -22,20 +22,20 @@ export const secondMessage = (
 
 export const thirdMessage = "Button text is now custom";
 
-export const fourthMessage = (close: any) => (
+export const fourthMessage = (props: any) => (
     <div>
-        <button onClick={close}>Close from HTML</button>
+        <button onClick={props.drop}>Close from HTML</button>
     </div>
 );
 
-export const fifthMessage = (close: any) => (
+export const fifthMessage = (props: any) => (
     <div>
-        <button onClick={() => close(true)}>Confirm</button>
-        <button onClick={() => close(false)}>Unconfirm</button>
+        <button onClick={() => props.drop(true)}>Confirm</button>
+        <button onClick={() => props.drop(false)}>Unconfirm</button>
     </div>
 );
 
-export function sixthMessage(close: any) {
+export function sixthMessage(props: any) {
     return (
         <div>
             <h1>Modal!</h1>
@@ -51,7 +51,7 @@ export function sixthMessage(close: any) {
             </Button>
             <p>However, state must be stored outside this function!</p>
             <div>I can then close myself:</div>
-            <Button color={"red"} onClick={close}>
+            <Button color={"red"} onClick={props.drop}>
                 Exit!
             </Button>
         </div>

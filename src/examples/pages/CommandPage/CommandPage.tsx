@@ -19,7 +19,7 @@ function CommandPage() {
         await command.alert(secondMessage);
     };
     const handleAlert3 = async () => {
-        await command.alert(thirdMessage, "Custom Confirm");
+        await command.alert(thirdMessage, { confirmText: "Custom Confirm" });
     };
     const handleAlert4 = async () => {
         await command.alert(fourthMessage);
@@ -33,11 +33,11 @@ function CommandPage() {
         setConfirmed(confirmed);
     };
     const handleConfirm3 = async () => {
-        const confirmed = await command.confirm(
-            "Is there custom text?",
-            "Oh Yeah!!",
-            "I need glasses :("
-        );
+        const confirmed = await command.confirm("Is there custom text?", {
+            cancelText: "I need glasses :(",
+            confirmText: "Oh Yeah!!",
+            style: "background: lightgrey;",
+        });
         setConfirmed(confirmed);
     };
     const handleConfirm4 = async () => {
@@ -48,15 +48,15 @@ function CommandPage() {
         await command.modal(sixthMessage);
     };
     const handleModal2 = async () => {
-        const form = (close: any) => (
+        const form = (props: any) => (
             <div>
                 <h2>Date Information</h2>
                 <hr />
                 <Datepicker label={"Datepicker 1"} value={new Date()} />
                 <Datepicker label={"Datepicker 2"} value={new Date()} />
                 <hr />
-                <button>cancel</button>
-                <button>save</button>
+                <button onClick={props.drop}>cancel</button>
+                <button onClick={props.drop}>save</button>
             </div>
         );
         await command.modal(form);

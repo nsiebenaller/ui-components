@@ -17,6 +17,7 @@ export const Container = styled.div`
         "Helvetica Neue", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    ${(props: { css: string | undefined }) => (props.css ? props.css : "")}
 `;
 
 export const Actions = styled.div`

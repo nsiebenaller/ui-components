@@ -1,20 +1,24 @@
 import React from "react";
 import { Actions } from "../style";
 import { Button } from "../../index";
+import { renderChildren } from "../utils";
 import Modal from "../Modal/Modal";
 
 interface Props {
-    close: (confirmed: boolean) => void;
     children: React.ReactNode | undefined;
+    drop?: (confirmed: boolean) => void;
     confirmText?: string;
     cancelText?: string;
+    className?: string;
+    style?: string;
 }
 export default function Confirm(props: Props) {
-    const handleConfirm = () => props.close(true);
-    const handleCancel = () => props.close(false);
+    const handleConfirm = () => props.drop && props.drop(true);
+    const handleCancel = () => props.drop && props.drop(false);
+
     return (
-        <Modal>
-            {props.children}
+        <Modal className={props.className} style={props.style}>
+            {renderChildren(props.children, { drop: props.drop })}
             <Actions>
                 <Button
                     variant={"outlined"}

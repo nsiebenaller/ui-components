@@ -1,20 +1,29 @@
 import React from "react";
 import { Actions } from "../style";
 import { Button } from "../../index";
+import { renderChildren } from "../utils";
 import Modal from "../Modal/Modal";
 
 interface Props {
-    close: () => void;
     children: React.ReactNode | undefined;
+    drop?: () => void;
     confirmText?: string;
+    className?: string;
+    style?: string;
 }
-export default function Alert(props: Props) {
+export default function Alert({
+    drop,
+    children,
+    confirmText,
+    className,
+    style,
+}: Props) {
     return (
-        <Modal>
-            {props.children}
+        <Modal className={className} style={style}>
+            {renderChildren(children, { drop })}
             <Actions>
-                <Button color={"blue"} onClick={props.close}>
-                    {props.confirmText || "OK"}
+                <Button color={"blue"} onClick={drop}>
+                    {confirmText || "OK"}
                 </Button>
             </Actions>
         </Modal>

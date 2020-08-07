@@ -12,7 +12,7 @@ Object.keys(pageMap).forEach((key: any) => {
 const components = Array.from(componentMap.keys());
 
 export default function App() {
-    const [component, setComponent] = useState("Portal");
+    const [component, setComponent] = useState("Command");
 
     const Page = componentMap.get(component);
 
