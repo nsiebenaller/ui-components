@@ -7,7 +7,9 @@ export type IconType =
     | "Autorenew"
     | "CalendarToday"
     | "CheckBox"
-    | "CheckBoxOutlineBlank";
+    | "CheckBoxOutlineBlank"
+    | "RadioButtonChecked"
+    | "RadioButtonUnchecked";
 
 export function castIconType(value: string): IconType | undefined {
     switch (value) {
@@ -20,6 +22,8 @@ export function castIconType(value: string): IconType | undefined {
         case "CalendarToday":
         case "CheckBox":
         case "CheckBoxOutlineBlank":
+        case "RadioButtonChecked":
+        case "RadioButtonUnchecked":
             return value;
         default:
             return undefined;

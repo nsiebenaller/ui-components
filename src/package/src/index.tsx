@@ -4,6 +4,7 @@ export { default as useRefState } from "./helpers/RefState";
 export {
     Autocomplete,
     Button,
+    Checkbox,
     Datepicker,
     Dropdown,
     FileDropZone,

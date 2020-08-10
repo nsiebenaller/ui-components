@@ -7,3 +7,5 @@ export { default as Autorenew } from "./Autorenew";
 export { default as CalendarToday } from "./CalendarToday";
 export { default as CheckBox } from "./CheckBox";
 export { default as CheckBoxOutlineBlank } from "./CheckBoxOutlineBlank";
+export { default as RadioButtonChecked } from "./RadioButtonChecked";
+export { default as RadioButtonUnchecked } from "./RadioButtonUnchecked";

@@ -17,7 +17,7 @@ interface Props {
     /** *Optional* - Color to use for the icon */
     color?: string;
 }
-export default function RadioButton(props: Props) {
+export default function Checkbox(props: Props) {
     const handleClick = () => {
         if (props.onChange) props.onChange(!props.value);
     };
@@ -27,9 +27,7 @@ export default function RadioButton(props: Props) {
     return (
         <Base color={colorHex} value={props.value}>
             <Icon
-                iconName={
-                    props.value ? "RadioButtonChecked" : "RadioButtonUnchecked"
-                }
+                iconName={props.value ? "CheckBox" : "CheckBoxOutlineBlank"}
                 onClick={handleClick}
                 cursorPointer
             />
