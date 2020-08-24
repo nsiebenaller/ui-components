@@ -144,16 +144,22 @@ export default function Select(props: Props) {
                 return;
             }
 
-            // Check if click is within the input
+            // Check if click is within the input or list
             const clickedInput = isEventContained(e, input.current);
             const clickedList = isEventContained(e, list.current);
-            if (clickedInput || clickedList) {
-                if (openRef.current && clickedList && props.autoClose) {
-                    toggleClose();
-                    return;
-                }
+
+            // Auto close if applicable
+            if (props.autoClose && openRef.current && clickedList) {
+                toggleClose();
+            }
+
+            // Open if click event is within input
+            if (!openRef.current && clickedInput) {
                 toggleOpen();
-            } else {
+            }
+
+            // Close if clicked outside
+            if (openRef.current && !clickedInput && !clickedList) {
                 toggleClose();
             }
         }
