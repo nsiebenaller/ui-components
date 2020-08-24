@@ -151,16 +151,19 @@ export default function Select(props: Props) {
             // Auto close if applicable
             if (props.autoClose && openRef.current && clickedList) {
                 toggleClose();
+                return;
             }
 
             // Open if click event is within input
             if (!openRef.current && clickedInput) {
                 toggleOpen();
+                return;
             }
 
             // Close if clicked outside
             if (openRef.current && !clickedInput && !clickedList) {
                 toggleClose();
+                return;
             }
         }
         function handleResize() {
