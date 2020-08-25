@@ -12,18 +12,32 @@ function IconPage() {
             <table className={"icon-table"}>
                 <thead>
                     <tr>
-                        <th>Icon</th>
+                        <th></th>
                         <th>Icon Name</th>
                     </tr>
                 </thead>
                 <tbody>
                     <IconRow iconName={"ArrowBack"} />
                     <IconRow iconName={"ArrowDropDown"} />
+                    <IconRow iconName={"ArrowDropUp"} />
                     <IconRow iconName={"ArrowLeft"} />
                     <IconRow iconName={"ArrowRight"} />
+                    <IconRow iconName={"Autorenew"} />
                     <IconRow iconName={"CalendarToday"} />
+                    <IconRow iconName={"Cancel"} />
+                    <IconRow iconName={"Check"} />
                     <IconRow iconName={"CheckBox"} />
                     <IconRow iconName={"CheckBoxOutlineBlank"} />
+                    <IconRow iconName={"CheckCircle"} />
+                    <IconRow iconName={"CheckCircleOutline"} />
+                    <IconRow iconName={"ChevronRight"} />
+                    <IconRow iconName={"CloudUpload"} />
+                    <IconRow iconName={"Delete"} />
+                    <IconRow iconName={"Edit"} />
+                    <IconRow iconName={"RadioButtonChecked"} />
+                    <IconRow iconName={"RadioButtonUnchecked"} />
+                    <IconRow iconName={"Save"} />
+                    <IconRow iconName={"Search"} />
                 </tbody>
             </table>
             <Documentation title={"Properties"} properties={properties} />
