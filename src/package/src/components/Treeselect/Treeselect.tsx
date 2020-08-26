@@ -3,7 +3,7 @@ import { Select } from "../index";
 import { Props as SelectProps } from "../Select/Select";
 import useRefState from "../../helpers/RefState";
 import { TreeOptionType, ClickHandlerType } from "./types";
-import { formatOptions, valueOf } from "./utils";
+import { formatOptions, valueOf, isOptionSelected } from "./utils";
 import TreeOptions from "./TreeOptions";
 
 interface Props extends SelectProps {
@@ -38,24 +38,23 @@ export default function Treeselect(props: Props) {
     }, [props.options]);
 
     const handleClick = (option: TreeOptionType) => {
-        // Option was already opened, close it
-        if (openedGroups.some((x) => valueOf(x) === valueOf(option))) {
+        if (openedGroups.some((x) => isOptionSelected(x, option))) {
+            // Option was already opened, close it
             setOpenedGroups(
-                openedGroups.filter((x) => valueOf(x) !== valueOf(option))
+                openedGroups.filter((x) => !isOptionSelected(x, option))
             );
-            return;
+        } else {
+            // Open wasn't opened, open it
+            const groups = Array.from([option]);
+            let item: TreeOptionType | undefined = option;
+            while (item && item.__parentId__) {
+                item = optionMap.get(item.__parentId__);
+                if (!item) break;
+                groups.push(item);
+            }
+            groups.reverse();
+            setOpenedGroups(groups);
         }
-
-        // Open wasn't opened, open it
-        const groups = Array.from([option]);
-        let item: TreeOptionType | undefined = option;
-        while (item && item.__parentId__) {
-            item = optionMap.get(item.__parentId__);
-            if (!item) break;
-            groups.push(item);
-        }
-        groups.reverse();
-        setOpenedGroups(groups);
 
         // Fire callback if selectable
         if (option.selectable && props.onChange) {
