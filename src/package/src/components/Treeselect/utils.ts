@@ -11,11 +11,14 @@ export function formatOptions(
     input.forEach((option) => {
         // Setup current option
         const id = uniqueId();
-        option.__identifier__ = id;
+        if (!option.__identifier__) {
+            option.__identifier__ = id;
+        }
         option.__parentId__ = parentId;
         map.set(id, option);
-        if (!option.children || option.children.length === 0)
+        if (!option.children || option.children.length === 0) {
             return options.push(option);
+        }
 
         // Calculate children
         const { map: childMap, options: childOptions } = formatOptions(
