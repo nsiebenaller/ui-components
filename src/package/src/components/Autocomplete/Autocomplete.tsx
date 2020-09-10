@@ -1,14 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Select, Option } from "../index";
 import { Props as SelectProps } from "../Select/Select";
+import { OptionFormat } from "../../types/types";
+import OptionUtil from "../../helpers/OptionUtil";
 
-interface Option {
-    value: string;
-    label?: string;
-    [key: string]: any;
-}
-type OptionFormat = string | Option;
-
+type onChangeType = (
+    selected: OptionFormat,
+    event: React.MouseEvent | KeyboardEvent | undefined
+) => void;
 interface Props extends SelectProps {
     /** *Required* - Options to display that are available to select */
     options: Array<OptionFormat>;
@@ -17,12 +16,7 @@ interface Props extends SelectProps {
     selected?: OptionFormat;
 
     /** *Optional* - Callback function to call when an option is selected */
-    onChange?:
-        | ((
-              selected: OptionFormat,
-              event: React.MouseEvent | KeyboardEvent | undefined
-          ) => void)
-        | undefined;
+    onChange?: onChangeType | undefined;
 
     /** *Optional* - Centers the options displayed in the list */
     centered?: boolean;
@@ -51,23 +45,23 @@ export default function Autocomplete(props: Props) {
     const options = filterOptions(value, props.options);
 
     useEffect(() => {
-        const value = valueOf(props.selected);
+        const value = OptionUtil.valueOf(props.selected);
         setValue(value);
     }, [props.selected]);
 
     const handleInput = (value: string) => {
-        if (props.onChange !== undefined && !props.disabled) {
-            props.onChange(value, undefined);
-            setValue(value);
-        }
+        const { onChange, disabled } = props;
+        if (!onChange || disabled) return;
+        onChange(value, undefined);
+        setValue(value);
     };
 
     const handleClick = (option: OptionFormat) => (e: React.MouseEvent) => {
-        if (props.onChange !== undefined && !props.disabled) {
-            props.onChange(option, e);
-            setValue(valueOf(option));
-            setOpen(false);
-        }
+        const { onChange, disabled } = props;
+        if (!onChange || disabled) return;
+        onChange(option, e);
+        setValue(OptionUtil.valueOf(option));
+        setOpen(false);
     };
 
     return (
@@ -95,7 +89,7 @@ export default function Autocomplete(props: Props) {
                         onClick={handleClick(option)}
                         centered={props.centered}
                     >
-                        {valueOf(option)}
+                        {OptionUtil.valueOf(option)}
                     </Option>
                 ))}
             {displayOptions && options.length === 0 && (
@@ -111,14 +105,9 @@ function filterOptions(
     value: OptionFormat,
     options: Array<OptionFormat>
 ): Array<OptionFormat> {
-    return options.filter((option) => {
-        return valueOf(option)
-            .toLowerCase()
-            .includes(valueOf(value).toLowerCase());
-    });
-}
-
-function valueOf(item: OptionFormat | undefined) {
-    if (!item) return "";
-    return typeof item === "string" ? item : item.label || item.value;
+    const filterValue = OptionUtil.valueOf(value).toLowerCase();
+    const optionValues = options.map((x) =>
+        OptionUtil.valueOf(x).toLowerCase()
+    );
+    return OptionUtil.filter(filterValue, optionValues);
 }

@@ -1,7 +1,8 @@
 import React from "react";
 import { Button } from "../../../package/dist";
 
-export const firstMessage = "This is a standard alert message";
+export const firstMessage =
+    "This is a standard alert message. This can be arbitrarily long and the message will always be contained by the modal, even expanding if necessary.";
 
 export const secondMessage = (
     <div>

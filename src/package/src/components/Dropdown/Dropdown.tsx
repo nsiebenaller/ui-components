@@ -2,14 +2,13 @@ import React, { useEffect } from "react";
 import { Select, Option } from "../index";
 import { Props as SelectProps } from "../Select/Select";
 import useRefState from "../../helpers/RefState";
+import { OptionFormat } from "../../types/types";
+import OptionUtil from "../../helpers/OptionUtil";
 
-interface Option {
-    value: string;
-    label?: string;
-    [key: string]: any;
-}
-type OptionFormat = string | Option;
-
+type onChangeType = (
+    selected: OptionFormat,
+    event: React.MouseEvent | KeyboardEvent
+) => void;
 interface Props extends SelectProps {
     /** *Required* - Options to display that are available to select */
     options: Array<OptionFormat>;
@@ -18,12 +17,7 @@ interface Props extends SelectProps {
     selected?: OptionFormat;
 
     /** *Optional* - Callback function to call when an option is selected */
-    onChange?:
-        | ((
-              selected: OptionFormat,
-              event: React.MouseEvent | KeyboardEvent
-          ) => void)
-        | undefined;
+    onChange?: onChangeType | undefined;
 
     /** *Optional* - Centers the options displayed in the list */
     centered?: boolean;
@@ -57,7 +51,10 @@ export default function Dropdown(props: Props) {
                     e.keyCode === 32
                 ) {
                     targetText += e.key;
-                    const matchingIndex = findFirstMatchingIndex(props.options);
+                    const matchingIndex = OptionUtil.startsWith(
+                        targetText,
+                        props.options
+                    );
                     if (matchingIndex === undefined) targetText = "";
                     setTarget(matchingIndex);
                     return;
@@ -90,7 +87,7 @@ export default function Dropdown(props: Props) {
         <Select
             onToggle={setOpen}
             open={openRef.current}
-            value={props.value || valueOf(props.selected)}
+            value={props.value || OptionUtil.valueOf(props.selected)}
             disabled={props.disabled}
             error={props.error}
             errorOutline={props.errorOutline}
@@ -106,39 +103,15 @@ export default function Dropdown(props: Props) {
                 return (
                     <Option
                         key={`dropdown-${idx}`}
-                        selected={isSelected(option, props.selected)}
+                        selected={OptionUtil.match(option, props.selected)}
                         targeted={idx === targetRef.current}
                         onClick={handleClick(option)}
                         centered={props.centered}
                     >
-                        {valueOf(option)}
+                        {OptionUtil.valueOf(option)}
                     </Option>
                 );
             })}
         </Select>
     );
-}
-
-function valueOf(item: OptionFormat | undefined) {
-    if (!item) return "";
-    return typeof item === "string" ? item : item.label || item.value;
-}
-
-function isSelected(option: OptionFormat, item: OptionFormat | undefined) {
-    if (!item) return false;
-    const optionValue = valueOf(option);
-    const itemValue = valueOf(item);
-    if (optionValue === itemValue) return true;
-    return false;
-}
-
-function findFirstMatchingIndex(
-    options: Array<OptionFormat>
-): number | undefined {
-    for (let i = 0; i < options.length; i++) {
-        const option: OptionFormat = options[i];
-        const optionValue = valueOf(option);
-        if (optionValue.startsWith(targetText)) return i;
-    }
-    return undefined;
 }

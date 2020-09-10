@@ -6,6 +6,10 @@ Simple React UI Components (ebrap-ui) --WIP
 
 React UI Components used in the EBRAP project. These components are designed to be simple and re-usable. The main package codebase is written with typescript for ease of use. Compatible with the latest version of React.
 
+_Required Peer Dependencies_
+"styled-components": "^5.1.1"
+"react-calendar": "^3.1.0"
+
 ## Demo
 
 An online demo is available here: https://nsiebenaller.github.io/ui-components-demo/index.html

@@ -9,14 +9,13 @@ import {
     stickyAll,
 } from "./style";
 import useRefState from "../../helpers/RefState";
+import { OptionFormat } from "../../types/types";
+import OptionUtil from "../../helpers/OptionUtil";
 
-interface Option {
-    value: string;
-    label?: string;
-    [key: string]: any;
-}
-type OptionFormat = string | Option;
-
+type onChangeType = (
+    selected: Array<OptionFormat>,
+    event: React.MouseEvent | KeyboardEvent
+) => void;
 interface Props extends SelectProps {
     /** *Required* - Options to display that are available to select */
     options: Array<OptionFormat>;
@@ -25,12 +24,7 @@ interface Props extends SelectProps {
     selected: Array<OptionFormat>;
 
     /** *Optional* - Callback function to call when an option is selected */
-    onChange?:
-        | ((
-              selected: Array<OptionFormat>,
-              event: React.MouseEvent | KeyboardEvent
-          ) => void)
-        | undefined;
+    onChange?: onChangeType | undefined;
 
     /** *Optional* - Centers the options displayed in the list */
     centered?: boolean;
@@ -60,99 +54,68 @@ let targetText: string = "";
 const CHECKED = "CheckBox";
 const UNCHECKED = "CheckBoxOutlineBlank";
 const ROLLOVER_LIMIT = 3;
+const ALL_TEXT = "All";
 export default function Mutliselect(props: Props) {
     const [targetRef, setTarget] = useRefState<number | undefined>(undefined);
     const [openRef, setOpen] = useRefState<boolean>(false);
+    const [propsRef, setPropsRef] = useRefState<Props | undefined>(undefined);
+
+    // Save props in RefState for event listeners
+    useEffect(() => {
+        setPropsRef(props);
+    }, [props]);
 
     const handleClick = (option: OptionFormat) => (e: React.MouseEvent) => {
-        if (props.onChange !== undefined && !props.disabled) {
-            if (isSelected(option, props.selected)) {
-                const selected = props.selected.filter(
-                    (x) => valueOf(x) !== valueOf(option)
-                );
-                props.onChange(selected, e);
-            } else {
-                const selected = props.selected.concat(option);
-                props.onChange(selected, e);
-            }
+        const { onChange, disabled, selected } = props;
+
+        if (!onChange || disabled) return;
+
+        let newSelections = new Array<OptionFormat>();
+        if (OptionUtil.includes(option, selected)) {
+            newSelections = OptionUtil.filter(option, selected);
+        } else {
+            newSelections = selected.concat(option);
         }
+        onChange(newSelections, e);
     };
 
     const handleAllClick = (e: React.MouseEvent) => {
-        if (props.onChange !== undefined && !props.disabled) {
-            if (props.options.length === props.selected.length) {
-                props.onChange([], e);
-            } else {
-                props.onChange(props.options, e);
-            }
+        const { onChange, disabled, options, selected } = props;
+
+        if (!onChange || disabled) return;
+
+        if (options.length !== selected.length) {
+            onChange(options, e);
+            return;
         }
+        onChange(new Array<OptionFormat>(), e);
     };
 
+    // Keyboard Event handler
     useEffect(() => {
-        // Event handlers
-        function handleKeyDown(e: KeyboardEvent) {
-            const isOpen = openRef.current;
-            if (isOpen) {
-                // Handle searching the options
-                if (
-                    (e.keyCode >= 48 && e.keyCode <= 57) ||
-                    (e.keyCode >= 65 && e.keyCode <= 90) ||
-                    e.keyCode === 32
-                ) {
-                    targetText += e.key;
-                    const matchingIndex = findFirstMatchingIndex(props.options);
-                    if (matchingIndex === undefined) targetText = "";
-                    setTarget(matchingIndex);
-
-                    return;
-                }
-
-                // Handle clicking of the targeted option
-                if (e.key === "Enter") {
-                    if (
-                        targetRef.current !== undefined &&
-                        props.onChange !== undefined &&
-                        !props.disabled
-                    ) {
-                        // Form selected list
-                        const option = props.options[targetRef.current];
-                        if (isSelected(option, props.selected)) {
-                            const selected = props.selected.filter(
-                                (x) => x !== option
-                            );
-                            props.onChange(selected, e);
-                        } else {
-                            const selected = props.selected.concat(option);
-                            props.onChange(selected, e);
-                        }
-                        setOpen(false);
-                    }
-                    return;
-                }
-            }
-        }
-
-        document.addEventListener("keydown", handleKeyDown, true);
+        const listener = createKeyboardEventListener(
+            openRef,
+            targetRef,
+            propsRef,
+            setTarget,
+            setOpen
+        );
+        document.addEventListener("keydown", listener, true);
         return () => {
-            document.removeEventListener("keydown", handleKeyDown, true);
+            document.removeEventListener("keydown", listener, true);
         };
         // eslint-disable-next-line
     }, []);
 
-    const allValue = props.allText || "All";
-    let value = "";
-    if (props.value) {
-        value = props.value;
-    } else if (props.selected.length === props.options.length) {
-        value = allValue;
-    } else {
-        value = getValue(props.selected, props.rolloverLimit);
-    }
+    const { value, options, selected, allText, rolloverLimit } = props;
+    const allValue = allText || ALL_TEXT;
+    const limit = rolloverLimit || ROLLOVER_LIMIT;
+    const showValue = getShowValue(value, options, selected, allValue, limit);
 
     return (
         <Select
             open={openRef.current}
-            value={value}
+            value={showValue}
             disabled={props.disabled}
             error={props.error}
             errorOutline={props.errorOutline}
@@ -173,7 +136,7 @@ export default function Mutliselect(props: Props) {
                     <Icon
                         cursorPointer
                         iconName={
-                            props.options.length === props.selected.length
+                            options.length === selected.length
                                 ? CHECKED
                                 : UNCHECKED
                         }
@@ -181,13 +144,13 @@ export default function Mutliselect(props: Props) {
                     <b>{allValue}</b>
                 </Option>
             )}
-            {props.options.map((option, idx) => {
+            {options.map((option, idx) => {
                 return (
                     <Option
                         key={`mutliselect-${idx}`}
                         selected={
                             props.fillSelected &&
-                            isSelected(option, props.selected)
+                            OptionUtil.includes(option, selected)
                         }
                         targeted={idx === targetRef.current}
                         onClick={handleClick(option)}
@@ -197,12 +160,12 @@ export default function Mutliselect(props: Props) {
                         <Icon
                             cursorPointer
                             iconName={
-                                isSelected(option, props.selected)
+                                OptionUtil.includes(option, selected)
                                     ? CHECKED
                                     : UNCHECKED
                             }
                         />
-                        <span>{valueOf(option)}</span>
+                        <span>{OptionUtil.valueOf(option)}</span>
                     </Option>
                 );
             })}
@@ -210,38 +173,78 @@ export default function Mutliselect(props: Props) {
     );
 }
 
-function valueOf(item: OptionFormat) {
-    return typeof item === "string" ? item : item.label || item.value;
-}
-
-function isSelected(option: OptionFormat, selected: Array<OptionFormat>) {
-    for (let i = 0; i < selected.length; i++) {
-        const item = selected[i];
-        const optionValue = valueOf(option);
-        const itemValue = valueOf(item);
-        if (optionValue === itemValue) return true;
-    }
-    return false;
-}
-
-function findFirstMatchingIndex(
-    options: Array<OptionFormat>
-): number | undefined {
-    for (let i = 0; i < options.length; i++) {
-        const option: OptionFormat = options[i];
-        const optionValue = valueOf(option);
-        if (optionValue.startsWith(targetText)) return i;
-    }
-    return undefined;
-}
-
-function getValue(
+function getShowValue(
+    value: string | undefined,
+    options: Array<OptionFormat>,
     selected: Array<OptionFormat>,
-    rollover: number | undefined
+    allValue: string,
+    rolloverLimit: number
 ): string {
-    const rolloverLimit = rollover || ROLLOVER_LIMIT;
-    if (selected.length > rolloverLimit) return `${selected.length} selected`;
+    if (value) return value;
     if (selected.length === 0) return "";
-    const selectedLabels = selected.map((s) => valueOf(s));
-    return selectedLabels.join(", ");
+    if (options.length === selected.length) return allValue;
+    if (selected.length > rolloverLimit) return `${selected.length} selected`;
+    return selected.map((s) => OptionUtil.valueOf(s)).join(", ");
+}
+
+function isLetter(e: KeyboardEvent): boolean {
+    return e.keyCode >= 65 && e.keyCode <= 90;
+}
+
+function isNumber(e: KeyboardEvent): boolean {
+    return e.keyCode >= 48 && e.keyCode <= 57;
+}
+
+function isSpace(e: KeyboardEvent): boolean {
+    return e.keyCode === 32;
+}
+
+// Keyboard Event Listener
+function createKeyboardEventListener(
+    openRef: React.MutableRefObject<boolean>,
+    targetRef: React.MutableRefObject<number | undefined>,
+    propsRef: React.MutableRefObject<Props | undefined>,
+    setTarget: (value: number | undefined) => void,
+    setOpen: (value: boolean) => void
+) {
+    function handleKeyDown(e: KeyboardEvent) {
+        const { current: open } = openRef;
+        const { current: props } = propsRef;
+        if (!open || !props) return;
+
+        // Handle searching the options
+        if (isLetter(e) || isNumber(e) || isSpace(e)) {
+            targetText += e.key;
+            const matchingIndex = OptionUtil.startsWith(
+                targetText,
+                props.options
+            );
+            if (matchingIndex === undefined) targetText = "";
+            setTarget(matchingIndex);
+            return;
+        }
+
+        // Handle clicking of the targeted option
+        if (e.key === "Enter") {
+            const { current: targetIdx } = targetRef;
+            const { onChange, disabled } = props;
+
+            if (targetIdx === undefined) return;
+            if (onChange === undefined) return;
+            if (disabled) return;
+
+            // Form selected list
+            const option = props.options[targetIdx];
+            let newSelections = new Array<OptionFormat>();
+            if (OptionUtil.includes(option, props.selected)) {
+                newSelections = props.selected.filter((x) => x !== option);
+            } else {
+                newSelections = props.selected.concat(option);
+            }
+            onChange(newSelections, e);
+            setOpen(false);
+            return;
+        }
+    }
+    return handleKeyDown;
 }
