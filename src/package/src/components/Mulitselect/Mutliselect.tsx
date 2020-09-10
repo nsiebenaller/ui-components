@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import { Select, Option } from "../index";
 import { Props as SelectProps } from "../Select/Select";
 import { Icon } from "../../index";
@@ -67,7 +67,9 @@ export default function Mutliselect(props: Props) {
     const handleClick = (option: OptionFormat) => (e: React.MouseEvent) => {
         if (props.onChange !== undefined && !props.disabled) {
             if (isSelected(option, props.selected)) {
-                const selected = props.selected.filter((x) => x !== option);
+                const selected = props.selected.filter(
+                    (x) => valueOf(x) !== valueOf(option)
+                );
                 props.onChange(selected, e);
             } else {
                 const selected = props.selected.concat(option);
