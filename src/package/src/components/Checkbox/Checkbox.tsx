@@ -19,7 +19,9 @@ interface Props {
 }
 export default function Checkbox(props: Props) {
     const handleClick = () => {
-        if (props.onChange) props.onChange(!props.value);
+        const { onChange } = props;
+        if (!onChange) return;
+        onChange(!props.value);
     };
 
     const colorHex = toHex(colorOrDefault(props.color, "grey-900"));

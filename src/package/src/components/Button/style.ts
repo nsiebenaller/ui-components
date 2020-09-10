@@ -7,6 +7,7 @@ interface Props {
     hoverColor: string;
     variant: "default" | "outlined" | "minimal";
     disabled?: boolean;
+    disabledElevation?: boolean;
 }
 export const Base = styled.div`
     position: relative;
@@ -52,8 +53,11 @@ export const ButtonBase = styled.button`
     justify-content: center;
     box-shadow: ${(props: Props) => {
         if (props.disabled) return "none";
-        if (props.variant === "default")
+        if (props.variant === "default" && !props.disabledElevation) {
             return "0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24)";
+        } else if (props.variant === "default" && props.disabledElevation) {
+            return "none";
+        }
         return "none";
     }};
     transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);

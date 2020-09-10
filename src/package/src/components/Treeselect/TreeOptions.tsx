@@ -1,14 +1,15 @@
 import React from "react";
 import { Icon, Option } from "../../index";
-import { TreeOptionType, ClickHandlerType } from "./types";
-import { valueOf, isGroupOpen, isOptionSelected } from "./utils";
+import { TreeOptionType, TreeselectClickHandler } from "../../types/types";
+import { isGroupOpen, isOptionSelected } from "./utils";
 import uniqueId from "../../helpers/uniqueId";
+import OptionUtil from "../../helpers/OptionUtil";
 
 interface Props {
     options: Array<TreeOptionType>;
     openedGroups: Array<TreeOptionType>;
     selected?: TreeOptionType;
-    handleClick: ClickHandlerType;
+    handleClick: TreeselectClickHandler;
 }
 export default function TreeOptions({
     options,
@@ -27,7 +28,7 @@ function renderOptions(
     options: Array<TreeOptionType>,
     openedGroups: Array<TreeOptionType>,
     selected: TreeOptionType | undefined,
-    handleClick: ClickHandlerType,
+    handleClick: TreeselectClickHandler,
     depth: number = 0,
     renderable: Array<React.ReactNode> = []
 ): Array<React.ReactNode> {
@@ -68,7 +69,7 @@ interface OptionProps {
     depth: number;
     isOpen: boolean;
     isSelected: boolean;
-    handleClick: ClickHandlerType;
+    handleClick: TreeselectClickHandler;
 }
 function TreeselectOption({
     option,
@@ -83,7 +84,7 @@ function TreeselectOption({
             onClick={() => handleClick(option)}
             selected={isSelected}
         >
-            {valueOf(option)}
+            {OptionUtil.valueOf(option)}
             {option.children && <Arrow isOpen={isOpen} />}
         </Option>
     );

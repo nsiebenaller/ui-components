@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { Select } from "../index";
-import { Props as SelectProps } from "../Select/Select";
+import { Props as SelectProps } from "../Select/props";
 import useRefState from "../../helpers/RefState";
-import { TreeOptionType, ClickHandlerType } from "./types";
-import { formatOptions, valueOf, isOptionSelected } from "./utils";
+import { TreeOptionType, TreeselectClickHandler } from "../../types/types";
+import OptionUtil from "../../helpers/OptionUtil";
+import { formatOptions, isOptionSelected } from "./utils";
 import TreeOptions from "./TreeOptions";
 
 interface Props extends SelectProps {
@@ -14,7 +15,7 @@ interface Props extends SelectProps {
     selected?: TreeOptionType;
 
     /** *Optional* - Callback function to call when an option is selected */
-    onChange?: ClickHandlerType | undefined;
+    onChange?: TreeselectClickHandler | undefined;
 
     /** *Optional* - Centers the options displayed in the list */
     centered?: boolean;
@@ -67,7 +68,7 @@ export default function Treeselect(props: Props) {
         <Select
             onToggle={setOpen}
             open={openRef.current}
-            value={props.value || valueOf(props.selected)}
+            value={props.value || OptionUtil.valueOf(props.selected)}
             disabled={props.disabled}
             error={props.error}
             errorOutline={props.errorOutline}

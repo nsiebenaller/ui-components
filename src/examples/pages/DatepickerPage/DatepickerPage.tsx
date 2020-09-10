@@ -1,5 +1,5 @@
 import React from "react";
-import { Datepicker } from "../../../package/dist";
+import { Datepicker, Dropdown } from "../../../package/dist";
 import { properties } from "./doc";
 import Documentation from "../../Documentation/Documentation";
 

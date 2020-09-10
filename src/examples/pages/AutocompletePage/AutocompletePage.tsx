@@ -17,7 +17,9 @@ function AutocompletePage() {
                     "Aardvark",
                     "Very Long animal name that is hard to fit on one line",
                 ]}
-                onChange={(e: any) => console.log(e)}
+                onChange={(e: any) => {
+                    console.log(e);
+                }}
                 minLength={3}
                 fullWidth
                 noWrap

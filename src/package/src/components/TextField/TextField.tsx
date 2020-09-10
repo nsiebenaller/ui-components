@@ -1,4 +1,4 @@
-import React, { FormEventHandler, KeyboardEvent, useRef } from "react";
+import React, { KeyboardEvent, useRef } from "react";
 import { Base, Input, Label, Error } from "./style";
 
 interface Props {

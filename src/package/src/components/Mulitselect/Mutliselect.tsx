@@ -1,6 +1,5 @@
 import React, { useEffect } from "react";
 import { Select, Option } from "../index";
-import { Props as SelectProps } from "../Select/Select";
 import { Icon } from "../../index";
 import {
     multiselectOption,
@@ -11,45 +10,9 @@ import {
 import useRefState from "../../helpers/RefState";
 import { OptionFormat } from "../../types/types";
 import OptionUtil from "../../helpers/OptionUtil";
+import DomUtil from "../../helpers/DomUtil";
+import { Props } from "./props";
 
-type onChangeType = (
-    selected: Array<OptionFormat>,
-    event: React.MouseEvent | KeyboardEvent
-) => void;
-interface Props extends SelectProps {
-    /** *Required* - Options to display that are available to select */
-    options: Array<OptionFormat>;
-
-    /** *Required* - Options to display that are currently selected */
-    selected: Array<OptionFormat>;
-
-    /** *Optional* - Callback function to call when an option is selected */
-    onChange?: onChangeType | undefined;
-
-    /** *Optional* - Centers the options displayed in the list */
-    centered?: boolean;
-
-    /** *Optional* - Selected input will recieve a background (similar to the Dropdown component) */
-    fillSelected?: boolean;
-
-    /** *Optional* - Sets the maximum number of options to be displayed. comma deliminated before the abbreviated text is displayed */
-    rolloverLimit?: number;
-
-    /** *Optional* - Includes an option called 'All' which will return all given options */
-    includeAll?: boolean;
-
-    /** *Optional* - Overwrites the default text for 'includeAll' property */
-    allText?: string;
-
-    /** *Optional* - Makes the 'Select All' all option sticky */
-    stickyAll?: boolean;
-
-    /** *Optional* - Pads the top of the input (similar to as if a label was defined) */
-    topPad?: boolean;
-
-    /** *Optional* - Pads the bottom of the input (similar to as if an error was defined) */
-    botPad?: boolean;
-}
 let targetText: string = "";
 const CHECKED = "CheckBox";
 const UNCHECKED = "CheckBoxOutlineBlank";
@@ -58,7 +21,7 @@ const ALL_TEXT = "All";
 export default function Mutliselect(props: Props) {
     const [targetRef, setTarget] = useRefState<number | undefined>(undefined);
     const [openRef, setOpen] = useRefState<boolean>(false);
-    const [propsRef, setPropsRef] = useRefState<Props | undefined>(undefined);
+    const [propsRef, setPropsRef] = useRefState<Props | undefined>(props);
 
     // Save props in RefState for event listeners
     useEffect(() => {
@@ -67,7 +30,6 @@ export default function Mutliselect(props: Props) {
 
     const handleClick = (option: OptionFormat) => (e: React.MouseEvent) => {
         const { onChange, disabled, selected } = props;
-
         if (!onChange || disabled) return;
 
         let newSelections = new Array<OptionFormat>();
@@ -187,18 +149,6 @@ function getShowValue(
     return selected.map((s) => OptionUtil.valueOf(s)).join(", ");
 }
 
-function isLetter(e: KeyboardEvent): boolean {
-    return e.keyCode >= 65 && e.keyCode <= 90;
-}
-
-function isNumber(e: KeyboardEvent): boolean {
-    return e.keyCode >= 48 && e.keyCode <= 57;
-}
-
-function isSpace(e: KeyboardEvent): boolean {
-    return e.keyCode === 32;
-}
-
 // Keyboard Event Listener
 function createKeyboardEventListener(
     openRef: React.MutableRefObject<boolean>,
@@ -213,7 +163,7 @@ function createKeyboardEventListener(
         if (!open || !props) return;
 
         // Handle searching the options
-        if (isLetter(e) || isNumber(e) || isSpace(e)) {
+        if (DomUtil.isLetter(e) || DomUtil.isNumber(e) || DomUtil.isSpace(e)) {
             targetText += e.key;
             const matchingIndex = OptionUtil.startsWith(
                 targetText,

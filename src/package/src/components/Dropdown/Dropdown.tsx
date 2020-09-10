@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
 import { Select, Option } from "../index";
-import { Props as SelectProps } from "../Select/Select";
+import { Props as SelectProps } from "../Select/props";
 import useRefState from "../../helpers/RefState";
 import { OptionFormat } from "../../types/types";
 import OptionUtil from "../../helpers/OptionUtil";
+import DomUtil from "../../helpers/DomUtil";
 
 type onChangeType = (
     selected: OptionFormat,
@@ -32,53 +33,30 @@ let targetText: string = "";
 export default function Dropdown(props: Props) {
     const [targetRef, setTarget] = useRefState<number | undefined>(undefined);
     const [openRef, setOpen] = useRefState<boolean>(false);
+    const [propsRef, setPropsRef] = useRefState<Props | undefined>(props);
+
+    // Save props in RefState for event listeners
+    useEffect(() => {
+        setPropsRef(props);
+    }, [props]);
 
     const handleClick = (option: OptionFormat) => (e: React.MouseEvent) => {
-        if (props.onChange !== undefined && !props.disabled) {
-            props.onChange(option, e);
-        }
+        if (!props.onChange || props.disabled) return;
+        props.onChange(option, e);
     };
 
     useEffect(() => {
         // Event handlers
-        function handleKeyDown(e: KeyboardEvent) {
-            const isOpen = openRef.current;
-            if (isOpen) {
-                // Handle searching the options
-                if (
-                    (e.keyCode >= 48 && e.keyCode <= 57) ||
-                    (e.keyCode >= 65 && e.keyCode <= 90) ||
-                    e.keyCode === 32
-                ) {
-                    targetText += e.key;
-                    const matchingIndex = OptionUtil.startsWith(
-                        targetText,
-                        props.options
-                    );
-                    if (matchingIndex === undefined) targetText = "";
-                    setTarget(matchingIndex);
-                    return;
-                }
-
-                // Handle clicking of the targeted option
-                if (e.key === "Enter") {
-                    if (
-                        targetRef.current !== undefined &&
-                        props.onChange !== undefined &&
-                        !props.disabled
-                    ) {
-                        const option = props.options[targetRef.current];
-                        props.onChange(option, e);
-                        setOpen(false);
-                    }
-                    return;
-                }
-            }
-        }
-
-        document.addEventListener("keydown", handleKeyDown, true);
+        const listener = createKeyboardEventListener(
+            openRef,
+            targetRef,
+            propsRef,
+            setTarget,
+            setOpen
+        );
+        document.addEventListener("keydown", listener, true);
         return () => {
-            document.removeEventListener("keydown", handleKeyDown, true);
+            document.removeEventListener("keydown", listener, true);
         };
         // eslint-disable-next-line
     }, []);
@@ -114,4 +92,44 @@ export default function Dropdown(props: Props) {
             })}
         </Select>
     );
+}
+
+function createKeyboardEventListener(
+    openRef: React.MutableRefObject<boolean>,
+    targetRef: React.MutableRefObject<number | undefined>,
+    propsRef: React.MutableRefObject<Props | undefined>,
+    setTarget: (value: number | undefined) => void,
+    setOpen: (value: boolean) => void
+) {
+    function handleKeyDown(e: KeyboardEvent) {
+        const { current: open } = openRef;
+        const { current: targetIdx } = targetRef;
+        const { current: props } = propsRef;
+
+        if (!open || !props) return;
+
+        // Handle searching the options
+        if (DomUtil.isLetter(e) || DomUtil.isNumber(e) || DomUtil.isSpace(e)) {
+            targetText += e.key;
+            const matchingIndex = OptionUtil.startsWith(
+                targetText,
+                props.options
+            );
+            if (matchingIndex === undefined) targetText = "";
+            setTarget(matchingIndex);
+            return;
+        }
+
+        // Handle clicking of the targeted option
+        if (e.key === "Enter") {
+            if (targetIdx === undefined) return;
+            if (props.onChange === undefined) return;
+            if (props.disabled) return;
+            const option = props.options[targetIdx];
+            props.onChange(option, e);
+            setOpen(false);
+            return;
+        }
+    }
+    return handleKeyDown;
 }

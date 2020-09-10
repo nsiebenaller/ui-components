@@ -1,5 +1,6 @@
 import uniqueId from "../../helpers/uniqueId";
-import { TreeOptionType } from "./types";
+import { TreeOptionType } from "../../types/types";
+import OptionUtil from "../../helpers/OptionUtil";
 
 export function formatOptions(
     input: Array<TreeOptionType>,
@@ -36,11 +37,6 @@ export function formatOptions(
     return { map, options };
 }
 
-export function valueOf(item: TreeOptionType | undefined) {
-    if (!item) return "";
-    return typeof item === "string" ? item : item.label || item.value;
-}
-
 export function isGroupOpen(
     option: TreeOptionType,
     openGroups: Array<TreeOptionType>,
@@ -48,7 +44,7 @@ export function isGroupOpen(
 ) {
     const currGroup = openGroups[depth];
     if (!currGroup) return false;
-    return valueOf(currGroup) === valueOf(option);
+    return OptionUtil.valueOf(currGroup) === OptionUtil.valueOf(option);
 }
 
 export function isOptionSelected(
@@ -58,5 +54,5 @@ export function isOptionSelected(
     if (option.__identifier__ && selected.__identifier__) {
         return option.__identifier__ === selected.__identifier__;
     }
-    return valueOf(option) === valueOf(selected);
+    return OptionUtil.valueOf(option) === OptionUtil.valueOf(selected);
 }

@@ -1,22 +1,23 @@
 .menu {
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 240px;
-  background-color: #2196f3;
-  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 240px;
+    background-color: #2196f3;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+    overflow-y: auto;
 }
 
 .menu-header {
-  color: white;
-  font-size: 1.25rem;
-  padding: 20px 10px 0px 20px;
+    color: white;
+    font-size: 1.25rem;
+    padding: 20px 10px 0px 20px;
 }
 
 .menu-subheader {
-  color: white;
-  font-size: 0.75rem;
-  border-bottom: 1px solid #64b5f6;
-  margin-bottom: 10px;
-  padding: 0px 10px 10px 20px;
+    color: white;
+    font-size: 0.75rem;
+    border-bottom: 1px solid #64b5f6;
+    margin-bottom: 10px;
+    padding: 0px 10px 10px 20px;
 }

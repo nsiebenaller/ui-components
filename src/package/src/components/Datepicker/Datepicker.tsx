@@ -14,6 +14,7 @@ import {
 import { Icon } from "../../index";
 import useRefState from "../../helpers/RefState";
 import GlobalState from "../../helpers/GlobalState";
+import DomUtil from "../../helpers/DomUtil";
 
 interface Props {
     /** *Optional* - Currently selected date */
@@ -48,13 +49,14 @@ export default function Datepicker(props: Props) {
 
     const toggleOpen = () => {
         if (props.disabled) return;
-        const value = !openRef.current;
-        if (calendarRef.current && inputRef.current) {
-            updateDimensions(inputRef.current, calendarRef.current);
-        }
+        DomUtil.positionElement(inputRef.current, calendarRef.current, {
+            positionBelow: true,
+        });
         validateDate();
-        setFocus(value);
-        setOpen(value);
+        const { current: open } = openRef;
+        GlobalState.setCalendarRef(!open ? calendarRef : undefined);
+        setFocus(!open);
+        setOpen(!open);
     };
 
     const validateDate = (): boolean => {
@@ -72,25 +74,25 @@ export default function Datepicker(props: Props) {
     };
 
     useEffect(() => {
-        if (
-            props.value &&
-            props.value instanceof Date &&
-            !isNaN(props.value.getTime())
-        ) {
-            if (props.includeTime) {
-                setDateString(props.value.toLocaleString("en-US"));
-                return;
-            }
-            setDateString(props.value.toLocaleDateString("en-US"));
+        const { value, includeTime } = props;
+        if (!value || !(value instanceof Date) || isNaN(value.getTime()))
+            return;
+
+        let dateString = "";
+        if (includeTime) {
+            dateString = value.toLocaleString("en-US");
+        } else {
+            dateString = value.toLocaleDateString("en-US");
         }
+        setDateString(dateString);
     }, [props.value]);
 
     useEffect(() => {
         function handleClick(e: MouseEvent) {
             const opened = openRef.current;
-            const clickedInput = isEventContained(e, inputRef.current);
+            const clickedInput = DomUtil.eventContained(e, inputRef.current);
             const reactCalendar = calendarRef.current?.children[0];
-            const clickedCalendar = isEventContained(e, reactCalendar);
+            const clickedCalendar = DomUtil.eventContained(e, reactCalendar);
 
             if (opened && !clickedInput && !clickedCalendar) {
                 setOpen(false);
@@ -100,7 +102,9 @@ export default function Datepicker(props: Props) {
 
         function handleResize() {
             if (openRef.current) {
-                updateDimensions(inputRef.current, calendarRef.current);
+                DomUtil.positionElement(inputRef.current, calendarRef.current, {
+                    positionBelow: true,
+                });
             }
         }
 
@@ -114,10 +118,11 @@ export default function Datepicker(props: Props) {
         };
     }, []);
 
-    const handleInput = (e: React.FormEvent<HTMLInputElement>) => {
-        setDateString(cleanDateString(e.currentTarget.value));
-    };
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const handleInputChange = (
+        e:
+            | React.FormEvent<HTMLInputElement>
+            | React.ChangeEvent<HTMLInputElement>
+    ) => {
         setDateString(cleanDateString(e.currentTarget.value));
     };
 
@@ -168,10 +173,10 @@ export default function Datepicker(props: Props) {
                 <Input
                     value={dateString}
                     placeholder={placeholder}
-                    onInput={handleInput}
+                    onInput={handleInputChange}
                     onFocus={handleFocus}
                     onBlur={handleBlur}
-                    onChange={handleChange}
+                    onChange={handleInputChange}
                     errorOutline={!valid}
                     focused={focused}
                     disabled={props.disabled}
@@ -241,32 +246,6 @@ function NavigationLabel(p: NavLabelType) {
         );
     }
     return p.label;
-}
-
-function updateDimensions(
-    input: HTMLDivElement | null,
-    calendar: HTMLDivElement | null
-) {
-    if (input === null || calendar === null) return;
-    const domRect: DOMRect = input.getBoundingClientRect();
-    const windowScrollY = window.scrollY || window.pageYOffset || 0;
-    const windowScrollX = window.scrollX || window.pageXOffset || 0;
-    calendar.style.top = `${domRect.height + domRect.top + windowScrollY}px`;
-    calendar.style.left = `${domRect.left + windowScrollX}px`;
-}
-
-function isEventContained(
-    e: MouseEvent,
-    ele: Element | HTMLInputElement | HTMLDivElement | null | undefined
-): boolean {
-    if (!ele) return false;
-    const domRect: DOMRect = ele.getBoundingClientRect();
-    return (
-        domRect.left <= e.clientX &&
-        domRect.left + domRect.width >= e.clientX && // X contained
-        domRect.top <= e.clientY &&
-        domRect.top + domRect.height >= e.clientY // Y contained
-    );
 }
 
 function cleanDateString(dateString: string | undefined | null): string {

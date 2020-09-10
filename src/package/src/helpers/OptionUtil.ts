@@ -1,6 +1,6 @@
-import { OptionFormat } from "../types/types";
+import { OptionFormat, TreeOptionType } from "../types/types";
 
-function valueOf(option: OptionFormat | undefined): string {
+function valueOf(option: OptionFormat | TreeOptionType | undefined): string {
     if (!option) return "";
     if (typeof option === "string") return option;
     return option.label || option.value;
@@ -44,11 +44,23 @@ function filter(
     return array.filter((b) => OptionUtil.valueOf(a) !== OptionUtil.valueOf(b));
 }
 
+function filterStartsWith(
+    a: OptionFormat,
+    array: Array<OptionFormat>
+): Array<OptionFormat> {
+    return array.filter((b) =>
+        OptionUtil.valueOf(b)
+            .toLowerCase()
+            .startsWith(OptionUtil.valueOf(a).toLowerCase())
+    );
+}
+
 const OptionUtil = {
     valueOf,
     match,
     includes,
     startsWith,
     filter,
+    filterStartsWith,
 };
 export default OptionUtil;
