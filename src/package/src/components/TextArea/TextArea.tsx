@@ -70,6 +70,7 @@ export default function TextArea(props: Props) {
                 disabled={props.disabled}
                 noResize={props.noResize}
                 onInput={handleInput}
+                onChange={handleInput}
                 ref={input}
                 {...styles}
                 {...value}
