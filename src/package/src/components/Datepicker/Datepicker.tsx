@@ -1,20 +1,11 @@
 import React, { useState, useEffect, useRef } from "react";
-import { createPortal } from "react-dom";
 import "react-calendar/dist/Calendar.css";
-import Calendar from "react-calendar";
-import {
-    Base,
-    InputBase,
-    Input,
-    ButtonContainer,
-    Label,
-    Error,
-    CalendarHook,
-} from "./style";
+import { Base, InputBase, Input, ButtonContainer, Label, Error } from "./style";
 import { Icon } from "../../index";
 import useRefState from "../../helpers/RefState";
 import GlobalState from "../../helpers/GlobalState";
 import DomUtil from "../../helpers/DomUtil";
+import Calendar from "./Calendar";
 
 interface Props {
     /** *Optional* - Currently selected date */
@@ -26,11 +17,26 @@ interface Props {
     /** *Optional* - Callback function to call when the input changes to a valid input */
     onChange?: ((value: Date | null) => void) | undefined;
 
+    /** *Optional* - Disables the component, preventing any input */
+    disabled?: boolean;
+
     /** *Optional* - Includes time in the input that allows the end user to change */
     includeTime?: boolean;
 
-    /** *Optional* - Disables the component, preventing any input */
-    disabled?: boolean;
+    /** *Optional* - Includes seconds to the input if 'includeTime' is also set to true */
+    includeSec?: boolean;
+
+    /** *Optional* - Sets a default time when selecting a date from the calendar */
+    defaultHour?: number;
+
+    /** *Optional* - Sets a default time when selecting a date from the calendar */
+    defaultMin?: number;
+
+    /** *Optional* - Sets a default time when selecting a date from the calendar */
+    defaultSec?: number;
+
+    /** *Optional* - Placeholder for the input */
+    placeholder?: string;
 }
 type ViewType = "month" | "century" | "decade" | "year" | undefined;
 export default function Datepicker(props: Props) {
@@ -74,17 +80,11 @@ export default function Datepicker(props: Props) {
     };
 
     useEffect(() => {
-        const { value, includeTime } = props;
+        const { value, includeTime, includeSec } = props;
         if (!value || !(value instanceof Date) || isNaN(value.getTime()))
             return;
 
-        let dateString = "";
-        if (includeTime) {
-            dateString = value.toLocaleString("en-US");
-        } else {
-            dateString = value.toLocaleDateString("en-US");
-        }
-        setDateString(dateString);
+        setDateString(formatDate(value, includeTime, includeSec));
     }, [props.value]);
 
     useEffect(() => {
@@ -135,36 +135,25 @@ export default function Datepicker(props: Props) {
         }
         const date = new Date(cleanDateString(dateString));
         if (props.onChange) props.onChange(date);
-        if (props.includeTime) {
-            setDateString(date.toLocaleString("en-US"));
-            return;
-        }
-        setDateString(date.toLocaleDateString("en-US"));
+        setDateString(formatDate(date, props.includeTime, props.includeSec));
     };
 
     const handleCalendarChange = (e: Date | Date[]) => {
         if (e instanceof Date) {
+            if (props.defaultHour) e.setHours(props.defaultHour);
+            if (props.defaultMin) e.setMinutes(props.defaultMin);
+            if (props.defaultSec) e.setSeconds(props.defaultSec);
+
             if (props.onChange) props.onChange(e);
-            if (props.includeTime) {
-                setDateString(e.toLocaleString("en-US"));
-                return;
-            }
-            setDateString(e.toLocaleDateString("en-US"));
+            setDateString(formatDate(e, props.includeTime, props.includeSec));
         }
     };
 
-    let placeholder = "MM/DD/YYYY";
-    if (props.includeTime) {
-        placeholder = "MM/DD/YYYY, hh:mm:ss";
-    }
+    const placeholder =
+        props.placeholder ||
+        getPlaceholder(props.includeTime, props.includeSec);
 
-    let currentDate = null;
-    if (dateString !== "") {
-        const date = new Date(cleanDateString(dateString));
-        if (date instanceof Date && !isNaN(date.getTime())) {
-            currentDate = date;
-        }
-    }
+    const currentDate = getCurrentDate(dateString);
 
     return (
         <Base>
@@ -172,14 +161,14 @@ export default function Datepicker(props: Props) {
             <InputBase ref={inputRef}>
                 <Input
                     value={dateString}
+                    errorOutline={!valid}
+                    focused={focused}
                     placeholder={placeholder}
+                    disabled={props.disabled}
                     onInput={handleInputChange}
                     onFocus={handleFocus}
                     onBlur={handleBlur}
                     onChange={handleInputChange}
-                    errorOutline={!valid}
-                    focused={focused}
-                    disabled={props.disabled}
                 />
                 <ButtonContainer
                     focused={focused}
@@ -195,60 +184,59 @@ export default function Datepicker(props: Props) {
                 </ButtonContainer>
             </InputBase>
             <Error visible={!valid}>Invalid Date</Error>
-            {renderCalendar(
-                handleCalendarChange,
-                currentDate,
-                calendarRef,
-                openRef,
-                onViewChange,
-                view
-            )}
-        </Base>
-    );
-}
 
-function renderCalendar(
-    onChange: (e: Date | Date[]) => void,
-    value: Date | null,
-    calendarRef: React.RefObject<HTMLDivElement>,
-    openRef: React.MutableRefObject<boolean>,
-    onViewChange: (p: any) => void,
-    view: ViewType
-) {
-    return createPortal(
-        <CalendarHook ref={calendarRef} open={openRef.current}>
+            {/* MODALS */}
             <Calendar
-                value={value}
-                onChange={onChange}
-                prev2Label={String.fromCharCode(171)} // «
-                prevLabel={String.fromCharCode(8249)} // ‹
-                next2Label={String.fromCharCode(187)} // »
-                nextLabel={String.fromCharCode(8250)} // ›
-                navigationLabel={NavigationLabel}
+                onChange={handleCalendarChange}
+                value={currentDate}
+                calendarRef={calendarRef}
+                openRef={openRef}
                 onViewChange={onViewChange}
                 view={view}
             />
-        </CalendarHook>,
-        GlobalState.getModalRef()
+        </Base>
     );
-}
-interface NavLabelType {
-    date: Date;
-    view: "century" | "decade" | "year" | "month";
-    label: string;
-}
-function NavigationLabel(p: NavLabelType) {
-    if (p.view === "century" || p.view === "decade") {
-        return (
-            p.label.substring(0, 4) +
-            " to " +
-            p.label.substring(p.label.length - 4, p.label.length)
-        );
-    }
-    return p.label;
 }
 
 function cleanDateString(dateString: string | undefined | null): string {
     if (dateString === undefined || dateString === null) return "";
     return dateString.replace(/[^ -~]+/g, "");
+}
+
+const options: Intl.DateTimeFormatOptions = {
+    year: "numeric",
+    month: "numeric",
+    day: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+};
+const Formatter = new Intl.DateTimeFormat("en-us", options);
+
+function formatDate(
+    date: Date,
+    includeTime?: boolean,
+    includeSec?: boolean
+): string {
+    if (includeTime) {
+        if (includeSec) {
+            return date.toLocaleString("en-US");
+        }
+        return Formatter.format(date);
+    }
+    return date.toLocaleDateString("en-US");
+}
+
+function getPlaceholder(includeTime?: boolean, includeSec?: boolean): string {
+    if (!includeTime) return "MM/DD/YYYY";
+    if (includeSec) return "MM/DD/YYYY, hh:mm:ss";
+    return "MM/DD/YYYY, hh:mm";
+}
+
+function getCurrentDate(dateString: string): Date | null {
+    if (dateString === "") return null;
+    const date = new Date(cleanDateString(dateString));
+    if (date instanceof Date && !isNaN(date.getTime())) {
+        return date;
+    }
+    return null;
 }
