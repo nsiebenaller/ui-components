@@ -1,5 +1,5 @@
-import React, { useRef, useEffect } from 'react'
-import { Base, TextArea as Input, Label, Error } from './style'
+import React, { useRef, useEffect } from "react";
+import { Base, TextArea as Input, Label, Error } from "./style";
 
 interface Props {
     /** *Optional* - Class to apply to the component */
@@ -33,34 +33,51 @@ interface Props {
     onChange?: ((input: string, event: React.FormEvent) => void) | undefined;
 }
 export default function TextArea(props: Props) {
-
     const input = useRef<HTMLTextAreaElement>(null);
 
     const handleInput = (e: React.FormEvent) => {
-        resize(input.current)
-        if(props.onChange) props.onChange(input.current?.value || '', e)
-    }
+        resize(input.current);
+        if (props.onChange) props.onChange(input.current?.value || "", e);
+    };
 
     const resize = (textArea: HTMLTextAreaElement | null) => {
-        if(textArea === null) return
-        textArea.style.height = '17px'
-        textArea.style.height = `${textArea.scrollHeight}px`
-    }
+        if (textArea === null) return;
+        textArea.style.height = "17px";
+        textArea.style.height = `${textArea.scrollHeight}px`;
+    };
 
     useEffect(() => {
-        resize(input.current)
-        
-    }, [])
+        resize(input.current);
+    }, []);
 
     const styles = {
         id: props.id || undefined,
         className: props.className || undefined,
-      };
+    };
+
+    const value = {
+        value: props.onChange ? props.value : undefined,
+        defaultValue: props.onChange ? undefined : props.value,
+    };
     return (
         <Base>
-            <Label visible={!!props.label}>{props.label ? props.label : 'hidden'}</Label>
-            <Input defaultValue={props.value} cols={props.cols} rows={props.rows} disabled={props.disabled} noResize={props.noResize} onInput={handleInput} ref={input} {...styles} />
-            <Error visible={!!props.error}>{props.error ? props.error : 'hidden'}</Error>
+            <Label visible={!!props.label}>
+                {props.label ? props.label : "hidden"}
+            </Label>
+            <Input
+                cols={props.cols}
+                rows={props.rows}
+                disabled={props.disabled}
+                noResize={props.noResize}
+                onInput={handleInput}
+                onChange={handleInput}
+                ref={input}
+                {...styles}
+                {...value}
+            />
+            <Error visible={!!props.error}>
+                {props.error ? props.error : "hidden"}
+            </Error>
         </Base>
-    )
+    );
 }
