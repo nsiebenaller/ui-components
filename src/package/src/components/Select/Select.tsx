@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from "react";
 import { createPortal } from "react-dom";
-import { Base, Label, InputBase, Input, List, Error } from "./style";
+import { Base, InputBase, Input, List, Error } from "./style";
+import { Label } from "../sharedStyles";
 import { Icon } from "../../index";
 import useRefState from "../../helpers/RefState";
 import GlobalState from "../../helpers/GlobalState";
@@ -25,12 +26,14 @@ export default function Select(props: Props) {
     // Open state handler
     const setOpen = (value: boolean) => {
         GlobalState.setOpen(value);
+        GlobalState.setAutoClose(!!props.autoClose);
         _setOpen(value);
     };
 
     // Sync external open state
     if (props.open !== undefined && props.open !== openRef.current) {
         GlobalState.setOpen(props.open);
+        GlobalState.setAutoClose(!!props.autoClose);
         openRef.current = props.open;
     }
 
@@ -199,7 +202,7 @@ function createClickListener(
         if (!props) return;
 
         // Prevent overlapping of multiple selects
-        if (!open && GlobalState.isOpen()) {
+        if (!open && GlobalState.isOpen() && !GlobalState.isAutoClose()) {
             return;
         }
 

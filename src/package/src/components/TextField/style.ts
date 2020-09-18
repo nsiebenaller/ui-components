@@ -18,11 +18,6 @@ export const Base = styled.div`
     -moz-osx-font-smoothing: grayscale;
 `;
 
-export const Label = styled.div`
-    opacity: ${(props: Props) => (props.visible ? "1" : "0")};
-    cursor: ${(props: Props) => (props.visible ? "auto" : "default")};
-`;
-
 export const Input = styled.input`
     border-radius: 5px;
     border: 1px solid ${colors["grey-500"]};

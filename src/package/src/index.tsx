@@ -19,3 +19,4 @@ export {
     command,
 } from "./components";
 export { Icon };
+export * from "./types/types";

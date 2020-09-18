@@ -63,6 +63,15 @@ function DropdownPage() {
                 onChange={(e: any) => console.log(e)}
                 noWrap
             />
+            <br />
+            <h4>No Options Text</h4>
+            <Dropdown label={"Default No options"} options={[]} botPad />
+            <Dropdown
+                noOptionsText={"No Options!"}
+                label={"Custom No options"}
+                options={[]}
+                botPad
+            />
             <Documentation title={"Properties"} properties={properties} />
             <Documentation
                 title={"Implied Properties"}

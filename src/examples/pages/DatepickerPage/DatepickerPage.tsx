@@ -1,5 +1,5 @@
 import React from "react";
-import { Datepicker, Dropdown } from "../../../package/dist";
+import { Datepicker } from "../../../package/dist";
 import { properties } from "./doc";
 import Documentation from "../../Documentation/Documentation";
 
@@ -10,12 +10,10 @@ function DatepickerPage() {
         <div>
             <h1>Datepicker Component</h1>
             <Datepicker
-                label={"Date Time Picker"}
-                includeTime
                 value={date || undefined}
                 onChange={(d) => setDate(d)}
+                includeTime
             />
-            <br />
             <Datepicker label={"Current Date"} value={new Date()} />
             <br />
             <Datepicker

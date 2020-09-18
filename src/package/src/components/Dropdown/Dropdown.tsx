@@ -28,8 +28,12 @@ interface Props extends SelectProps {
 
     /** *Optional* - Pads the bottom of the input (similar to as if an error was defined) */
     botPad?: boolean;
+
+    /** *Optional* - Text to display if there are no options (default: 'none') */
+    noOptionsText?: string;
 }
 let targetText: string = "";
+const NO_OPTIONS_TEXT = "none";
 export default function Dropdown(props: Props) {
     const [targetRef, setTarget] = useRefState<number | undefined>(undefined);
     const [openRef, setOpen] = useRefState<boolean>(false);
@@ -90,6 +94,11 @@ export default function Dropdown(props: Props) {
                     </Option>
                 );
             })}
+            {props.options.length === 0 && (
+                <Option centered={props.centered} disabled>
+                    {props.noOptionsText || NO_OPTIONS_TEXT}
+                </Option>
+            )}
         </Select>
     );
 }

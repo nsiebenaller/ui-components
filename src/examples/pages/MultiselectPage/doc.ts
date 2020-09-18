@@ -2,13 +2,13 @@ export const properties = [
     {
         name: "options",
         format: "Array<OptionFormat>",
-        required: true,
+        required: false,
         description: "Options to display that are available to select",
     },
     {
         name: "selected",
         format: "Array<OptionFormat>",
-        required: true,
+        required: false,
         description: "Options to display that are currently selected",
     },
     {
@@ -55,6 +55,27 @@ export const properties = [
         format: "boolean",
         required: false,
         description: "Makes the 'All' all option sticky",
+    },
+    {
+        name: "topPad",
+        format: "boolean",
+        required: false,
+        description:
+            "Pads the top of the input (similar to as if a label was defined)",
+    },
+    {
+        name: "botPad",
+        format: "boolean",
+        required: false,
+        description:
+            "Pads the bottom of the input (similar to as if an error was defined)",
+    },
+    {
+        name: "noOptionsText",
+        format: "string",
+        required: false,
+        description:
+            "Text to display if there are no options (default: 'none')",
     },
 ];
 

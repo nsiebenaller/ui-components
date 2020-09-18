@@ -7,9 +7,9 @@ import {
     ButtonContainer,
     CalendarButton,
     TimeButton,
-    Label,
     Error,
 } from "./style";
+import { Label } from "../sharedStyles";
 import { Icon } from "../../index";
 import useRefState from "../../helpers/RefState";
 import GlobalState from "../../helpers/GlobalState";
@@ -47,6 +47,9 @@ interface Props {
 
     /** *Optional* - Placeholder for the input */
     placeholder?: string;
+
+    /** *Optional* - Pads the top of the input (similar to as if a label was defined) */
+    topPad?: boolean;
 
     /** *Optional* - Displays a time icon to help selecting times */
     showTimeHelper?: boolean;
@@ -204,9 +207,15 @@ export default function Datepicker(props: Props) {
 
     const currentDate = getCurrentDate(dateString);
 
+    const labelText = props.label
+        ? props.label
+        : props.topPad
+        ? "hidden"
+        : undefined;
+
     return (
         <Base>
-            <Label visible={!!props.label}>{props.label}</Label>
+            <Label visible={!!props.label}>{labelText}</Label>
             <InputBase ref={inputRef}>
                 <Input
                     value={dateString}

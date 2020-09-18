@@ -18,7 +18,18 @@ const CHECKED = "CheckBox";
 const UNCHECKED = "CheckBoxOutlineBlank";
 const ROLLOVER_LIMIT = 3;
 const ALL_TEXT = "All";
+const NO_OPTIONS_TEXT = "none";
 export default function Mutliselect(props: Props) {
+    const {
+        value,
+        options: propsOptions,
+        selected: propsSelected,
+        allText,
+        rolloverLimit,
+    } = props;
+    const options = propsOptions || new Array<OptionFormat>();
+    const selected = propsSelected || new Array<OptionFormat>();
+
     const [targetRef, setTarget] = useRefState<number | undefined>(undefined);
     const [openRef, setOpen] = useRefState<boolean>(false);
     const [propsRef, setPropsRef] = useRefState<Props | undefined>(props);
@@ -29,7 +40,8 @@ export default function Mutliselect(props: Props) {
     }, [props]);
 
     const handleClick = (option: OptionFormat) => (e: React.MouseEvent) => {
-        const { onChange, disabled, selected } = props;
+        const { onChange, disabled, selected: propsSelected } = props;
+        const selected = propsSelected || new Array<OptionFormat>();
         if (!onChange || disabled) return;
 
         let newSelections = new Array<OptionFormat>();
@@ -42,7 +54,14 @@ export default function Mutliselect(props: Props) {
     };
 
     const handleAllClick = (e: React.MouseEvent) => {
-        const { onChange, disabled, options, selected } = props;
+        const {
+            onChange,
+            disabled,
+            options: propsOptions,
+            selected: propsSelected,
+        } = props;
+        const options = propsOptions || new Array<OptionFormat>();
+        const selected = propsSelected || new Array<OptionFormat>();
 
         if (!onChange || disabled) return;
 
@@ -69,7 +88,6 @@ export default function Mutliselect(props: Props) {
         // eslint-disable-next-line
     }, []);
 
-    const { value, options, selected, allText, rolloverLimit } = props;
     const allValue = allText || ALL_TEXT;
     const limit = rolloverLimit || ROLLOVER_LIMIT;
     const showValue = getShowValue(value, options, selected, allValue, limit);
@@ -131,6 +149,11 @@ export default function Mutliselect(props: Props) {
                     </Option>
                 );
             })}
+            {options.length === 0 && (
+                <Option centered={props.centered} disabled>
+                    {props.noOptionsText || NO_OPTIONS_TEXT}
+                </Option>
+            )}
         </Select>
     );
 }
@@ -161,14 +184,19 @@ function createKeyboardEventListener(
         const { current: open } = openRef;
         const { current: props } = propsRef;
         if (!open || !props) return;
+        const {
+            onChange,
+            disabled,
+            options: propsOptions,
+            selected: propsSelected,
+        } = props;
+        const options = propsOptions || new Array<OptionFormat>();
+        const selected = propsSelected || new Array<OptionFormat>();
 
         // Handle searching the options
         if (DomUtil.isLetter(e) || DomUtil.isNumber(e) || DomUtil.isSpace(e)) {
             targetText += e.key;
-            const matchingIndex = OptionUtil.startsWith(
-                targetText,
-                props.options
-            );
+            const matchingIndex = OptionUtil.startsWith(targetText, options);
             if (matchingIndex === undefined) targetText = "";
             setTarget(matchingIndex);
             return;
@@ -177,19 +205,18 @@ function createKeyboardEventListener(
         // Handle clicking of the targeted option
         if (e.key === "Enter") {
             const { current: targetIdx } = targetRef;
-            const { onChange, disabled } = props;
 
             if (targetIdx === undefined) return;
             if (onChange === undefined) return;
             if (disabled) return;
 
             // Form selected list
-            const option = props.options[targetIdx];
+            const option = options[targetIdx];
             let newSelections = new Array<OptionFormat>();
-            if (OptionUtil.includes(option, props.selected)) {
-                newSelections = props.selected.filter((x) => x !== option);
+            if (OptionUtil.includes(option, selected)) {
+                newSelections = selected.filter((x) => x !== option);
             } else {
-                newSelections = props.selected.concat(option);
+                newSelections = selected.concat(option);
             }
             onChange(newSelections, e);
             setOpen(false);

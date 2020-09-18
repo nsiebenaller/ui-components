@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from "react";
-import { Base, TextArea as Input, Label, Error } from "./style";
+import { Base, TextArea as Input, Error } from "./style";
+import { Label } from "../sharedStyles";
 
 interface Props {
     /** *Optional* - Class to apply to the component */

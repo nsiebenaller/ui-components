@@ -44,11 +44,6 @@ export const TextArea = styled.textarea`
     -moz-osx-font-smoothing: grayscale;
 `;
 
-export const Label = styled.div`
-    opacity: ${(props: Props) => (props.visible ? "1" : "0")};
-    cursor: ${(props: Props) => (props.visible ? "auto" : "default")};
-`;
-
 export const Error = styled.div`
     font-size: 0.75rem;
     color: ${colors["red-500"]};

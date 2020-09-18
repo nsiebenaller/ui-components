@@ -6,11 +6,11 @@ export type onChangeType = (
     event: React.MouseEvent | KeyboardEvent
 ) => void;
 export interface Props extends SelectProps {
-    /** *Required* - Options to display that are available to select */
-    options: Array<OptionFormat>;
+    /** *Optional* - Options to display that are available to select */
+    options?: Array<OptionFormat>;
 
-    /** *Required* - Options to display that are currently selected */
-    selected: Array<OptionFormat>;
+    /** *Optional* - Options to display that are currently selected */
+    selected?: Array<OptionFormat>;
 
     /** *Optional* - Callback function to call when an option is selected */
     onChange?: onChangeType | undefined;
@@ -21,7 +21,7 @@ export interface Props extends SelectProps {
     /** *Optional* - Selected input will recieve a background (similar to the Dropdown component) */
     fillSelected?: boolean;
 
-    /** *Optional* - Sets the maximum number of options to be displayed. comma deliminated before the abbreviated text is displayed */
+    /** *Optional* - Sets the maximum number of options to be displayed. comma deliminated before the abbreviated text is displayed (default: 3) */
     rolloverLimit?: number;
 
     /** *Optional* - Includes an option called 'All' which will return all given options */
@@ -38,4 +38,7 @@ export interface Props extends SelectProps {
 
     /** *Optional* - Pads the bottom of the input (similar to as if an error was defined) */
     botPad?: boolean;
+
+    /** *Optional* - Text to display if there are no options (default: 'none') */
+    noOptionsText?: string;
 }

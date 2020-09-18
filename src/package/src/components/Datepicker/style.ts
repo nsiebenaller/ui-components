@@ -124,10 +124,6 @@ export const InputBase = styled.div`
     }
 `;
 
-export const Label = styled.div`
-    opacity: ${(props: Props) => (props.visible ? "1" : "0")};
-`;
-
 export const Error = styled.div`
     font-size: 0.75rem;
     color: ${colors["red-500"]};

@@ -1,5 +1,6 @@
 import React, { KeyboardEvent, useRef } from "react";
-import { Base, Input, Label, Error } from "./style";
+import { Base, Input, Error } from "./style";
+import { Label } from "../sharedStyles";
 
 interface Props {
     /** *Optional* - Current value of the input */
