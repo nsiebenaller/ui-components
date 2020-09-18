@@ -8,6 +8,7 @@ interface Props {
     disabled?: boolean;
     errorOutline?: boolean;
     open?: boolean;
+    showTimeHelper?: boolean;
 }
 export const Base = styled.div`
     position: relative;
@@ -37,7 +38,32 @@ export const ButtonContainer = styled.div`
     cursor: ${(props: Props) => (props.disabled ? "default" : "pointer")};
     padding-left: 2px;
     padding-right: 2px;
+`;
+
+export const CalendarButton = styled.div`
+    height: 100%;
+    display: flex;
+    align-items: center;
+    margin-right: ${(props: Props) => (props.showTimeHelper ? "5px" : "0px")};
     svg {
+        transition: all 0.2s ease-out;
+        fill: ${(props: Props) => {
+            if (props.open) return "black";
+            return colors["grey-500"];
+        }};
+    }
+    &:hover svg {
+        fill: ${(props: Props) =>
+            props.disabled ? colors["grey-500"] : "black"};
+    }
+`;
+
+export const TimeButton = styled.div`
+    height: 100%;
+    display: flex;
+    align-items: center;
+    svg {
+        transition: all 0.2s ease-out;
         fill: ${(props: Props) => {
             if (props.open) return "black";
             return colors["grey-500"];
@@ -141,5 +167,45 @@ export const CalendarHook = styled.div`
     .react-calendar__tile--active {
         background: #006edc !important;
         color: white !important;
+    }
+`;
+
+export const TimeHook = styled.div`
+    display: ${(props: Props) => (props.open ? "inline-block" : "none")};
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 100;
+    user-select: none;
+    pointer-events: none;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+    background: white;
+    border-radius: 5px;
+    padding: 5px;
+`;
+
+export const TimeContainer = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: all !important;
+`;
+
+export const Spinner = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    pointer-events: all;
+    margin-left: 5px;
+    margin-right: 5px;
+    > div {
+        font-size: 2em;
+    }
+    svg {
+        fill: ${colors["grey-500"]};
+        &:hover {
+            fill: black !important;
+        }
     }
 `;

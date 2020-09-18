@@ -15,6 +15,7 @@ export { default as ChevronRight } from "./ChevronRight";
 export { default as CloudUpload } from "./ChevronRight";
 export { default as Delete } from "./Delete";
 export { default as Edit } from "./Edit";
+export { default as QueryBuilder } from "./QueryBuilder";
 export { default as RadioButtonChecked } from "./RadioButtonChecked";
 export { default as RadioButtonUnchecked } from "./RadioButtonUnchecked";
 export { default as Save } from "./Save";

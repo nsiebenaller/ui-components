@@ -34,6 +34,7 @@ function IconPage() {
                     <IconRow iconName={"CloudUpload"} />
                     <IconRow iconName={"Delete"} />
                     <IconRow iconName={"Edit"} />
+                    <IconRow iconName={"QueryBuilder"} />
                     <IconRow iconName={"RadioButtonChecked"} />
                     <IconRow iconName={"RadioButtonUnchecked"} />
                     <IconRow iconName={"Save"} />

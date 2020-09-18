@@ -1,11 +1,21 @@
 import React, { useState, useEffect, useRef } from "react";
 import "react-calendar/dist/Calendar.css";
-import { Base, InputBase, Input, ButtonContainer, Label, Error } from "./style";
+import {
+    Base,
+    InputBase,
+    Input,
+    ButtonContainer,
+    CalendarButton,
+    TimeButton,
+    Label,
+    Error,
+} from "./style";
 import { Icon } from "../../index";
 import useRefState from "../../helpers/RefState";
 import GlobalState from "../../helpers/GlobalState";
 import DomUtil from "../../helpers/DomUtil";
 import Calendar from "./Calendar";
+import Time from "./Time";
 
 interface Props {
     /** *Optional* - Currently selected date */
@@ -37,17 +47,24 @@ interface Props {
 
     /** *Optional* - Placeholder for the input */
     placeholder?: string;
+
+    /** *Optional* - Displays a time icon to help selecting times */
+    showTimeHelper?: boolean;
 }
 type ViewType = "month" | "century" | "decade" | "year" | undefined;
 export default function Datepicker(props: Props) {
-    const calendarRef = useRef<HTMLDivElement>(null);
     const inputRef = useRef<HTMLDivElement>(null);
+    const calendarRef = useRef<HTMLDivElement>(null);
+    const timeRef = useRef<HTMLDivElement>(null);
+
     const [dateString, setDateString] = useState<string>("");
     const [valid, setValid] = useState(true);
     const [focused, setFocus] = useState(false);
     const handleFocus = () => setFocus(true);
-    const [openRef, setOpen] = useRefState<boolean>(false);
+    const [openCalendar, setOpenCalendar] = useRefState<boolean>(false);
+    const [openTime, setOpenTime] = useRefState<boolean>(false);
     const [view, setView] = useState<ViewType>("month");
+
     const onViewChange = (p: any) => {
         if (p.view === "century") return;
         setView(p.view);
@@ -58,11 +75,23 @@ export default function Datepicker(props: Props) {
         DomUtil.positionElement(inputRef.current, calendarRef.current, {
             positionBelow: true,
         });
+        setOpenTime(false);
         validateDate();
-        const { current: open } = openRef;
+        const { current: open } = openCalendar;
         GlobalState.setCalendarRef(!open ? calendarRef : undefined);
         setFocus(!open);
-        setOpen(!open);
+        setOpenCalendar(!open);
+    };
+    const toggleTime = () => {
+        if (props.disabled) return;
+        setOpenCalendar(false);
+        DomUtil.positionElement(inputRef.current, timeRef.current, {
+            positionBelow: true,
+        });
+        const { current: open } = openTime;
+        GlobalState.setCalendarRef(!open ? timeRef : undefined);
+        setFocus(!open);
+        setOpenTime(!open);
     };
 
     const validateDate = (): boolean => {
@@ -89,20 +118,34 @@ export default function Datepicker(props: Props) {
 
     useEffect(() => {
         function handleClick(e: MouseEvent) {
-            const opened = openRef.current;
+            const calendarOpen = openCalendar.current;
+
             const clickedInput = DomUtil.eventContained(e, inputRef.current);
             const reactCalendar = calendarRef.current?.children[0];
             const clickedCalendar = DomUtil.eventContained(e, reactCalendar);
 
-            if (opened && !clickedInput && !clickedCalendar) {
-                setOpen(false);
+            if (calendarOpen && !clickedInput && !clickedCalendar) {
+                setOpenCalendar(false);
+                setFocus(false);
+            }
+
+            const timeOpen = openTime.current;
+            const clickedTime = DomUtil.eventContained(e, timeRef.current);
+
+            if (timeOpen && !clickedInput && !clickedTime) {
+                setOpenTime(false);
                 setFocus(false);
             }
         }
 
         function handleResize() {
-            if (openRef.current) {
+            if (openCalendar.current) {
                 DomUtil.positionElement(inputRef.current, calendarRef.current, {
+                    positionBelow: true,
+                });
+            }
+            if (openTime.current) {
+                DomUtil.positionElement(inputRef.current, timeRef.current, {
                     positionBelow: true,
                 });
             }
@@ -149,6 +192,12 @@ export default function Datepicker(props: Props) {
         }
     };
 
+    const handleTimeChange = (e: Date) => {
+        if (props.disabled) return;
+        if (props.onChange) props.onChange(e);
+        setDateString(formatDate(e, props.includeTime, props.includeSec));
+    };
+
     const placeholder =
         props.placeholder ||
         getPlaceholder(props.includeTime, props.includeSec);
@@ -172,15 +221,33 @@ export default function Datepicker(props: Props) {
                 />
                 <ButtonContainer
                     focused={focused}
-                    open={openRef.current}
+                    open={openCalendar.current}
                     errorOutline={!valid}
-                    onClick={toggleOpen}
                     disabled={props.disabled}
                 >
-                    <Icon
-                        cursorPointer={!props.disabled}
-                        iconName={"CalendarToday"}
-                    />
+                    <CalendarButton
+                        onClick={toggleOpen}
+                        open={openCalendar.current}
+                        disabled={props.disabled}
+                        showTimeHelper={props.showTimeHelper}
+                    >
+                        <Icon
+                            cursorPointer={!props.disabled}
+                            iconName={"CalendarToday"}
+                        />
+                    </CalendarButton>
+                    {props.showTimeHelper && (
+                        <TimeButton
+                            onClick={toggleTime}
+                            open={openTime.current}
+                            disabled={props.disabled}
+                        >
+                            <Icon
+                                cursorPointer={!props.disabled}
+                                iconName={"QueryBuilder"}
+                            />
+                        </TimeButton>
+                    )}
                 </ButtonContainer>
             </InputBase>
             <Error visible={!valid}>Invalid Date</Error>
@@ -190,10 +257,19 @@ export default function Datepicker(props: Props) {
                 onChange={handleCalendarChange}
                 value={currentDate}
                 calendarRef={calendarRef}
-                openRef={openRef}
+                openRef={openCalendar}
                 onViewChange={onViewChange}
                 view={view}
             />
+            {props.showTimeHelper && (
+                <Time
+                    timeRef={timeRef}
+                    openRef={openTime}
+                    value={currentDate}
+                    includeSec={props.includeSec}
+                    handleTimeChange={handleTimeChange}
+                />
+            )}
         </Base>
     );
 }

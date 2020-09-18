@@ -16,6 +16,7 @@ export type IconType =
     | "CloudUpload"
     | "Delete"
     | "Edit"
+    | "QueryBuilder"
     | "RadioButtonChecked"
     | "RadioButtonUnchecked"
     | "Save"
@@ -40,6 +41,7 @@ export function castIconType(value: string): IconType | undefined {
         case "CloudUpload":
         case "Delete":
         case "Edit":
+        case "QueryBuilder":
         case "RadioButtonChecked":
         case "RadioButtonUnchecked":
         case "Save":
