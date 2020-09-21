@@ -8,14 +8,15 @@ import GlobalState from "../../helpers/GlobalState";
 import DomUtil from "../../helpers/DomUtil";
 import { Props } from "./props";
 
-let lastPressTab: boolean = false;
+let listenerId: string | undefined = undefined;
 export default function Select(props: Props) {
     const open = props.open !== undefined ? props.open : false;
 
     const list = useRef<HTMLDivElement>(null);
     const input = useRef<HTMLInputElement>(null);
-    const [propsRef, setPropsRef] = useRefState<Props | undefined>(props);
-    const [openRef, _setOpen] = useRefState<boolean>(open);
+    const tabPressRef = useRef<boolean>(false);
+    const [propsRef, setPropsRef] = useRefState<Props>(props);
+    const [openRef, setOpen] = useRefState<boolean>(open);
     const [disabledRef, setDisabled] = useRefState<boolean>(!!props.disabled);
 
     // Save props in RefState for event listeners
@@ -23,17 +24,8 @@ export default function Select(props: Props) {
         setPropsRef(props);
     }, [props]);
 
-    // Open state handler
-    const setOpen = (value: boolean) => {
-        GlobalState.setOpen(value);
-        GlobalState.setAutoClose(!!props.autoClose);
-        _setOpen(value);
-    };
-
     // Sync external open state
     if (props.open !== undefined && props.open !== openRef.current) {
-        GlobalState.setOpen(props.open);
-        GlobalState.setAutoClose(!!props.autoClose);
         openRef.current = props.open;
     }
 
@@ -75,40 +67,27 @@ export default function Select(props: Props) {
             allowOverflow: props.noWrap,
         });
 
-        // Event handlers
-        const keyDownListener = createKeyDownListener(openRef, setOpen);
-        const clickListener = createClickListener(
+        // Register Event Handler
+        const selectProperties = {
+            tabPressRef,
             openRef,
             propsRef,
-            list,
-            input,
+            listRef: list,
+            inputRef: input,
             toggleClose,
-            toggleOpen
-        );
-        const resizeListener = createResizeListener(
-            openRef,
-            propsRef,
-            list,
-            input
-        );
-
-        document.addEventListener("keydown", keyDownListener, true);
-        document.addEventListener("click", clickListener, true);
-        window.addEventListener("resize", resizeListener);
-        window.addEventListener("scroll", resizeListener, true);
+            toggleOpen,
+        };
+        listenerId = GlobalState.registerListener(selectProperties);
 
         return () => {
-            document.removeEventListener("keydown", keyDownListener, true);
-            document.removeEventListener("click", clickListener, true);
-            window.removeEventListener("resize", resizeListener);
-            window.removeEventListener("scroll", resizeListener, true);
+            GlobalState.removeListener(listenerId);
         };
         // eslint-disable-next-line
     }, []);
 
     const tryFocus = () => {
         if (disabledRef.current) return;
-        if (lastPressTab) {
+        if (tabPressRef.current) {
             toggleOpen();
         }
     };
@@ -158,7 +137,7 @@ export default function Select(props: Props) {
                     >
                         {props.children}
                     </List>,
-                    GlobalState.getModalRef()
+                    GlobalState.getModalHook()
                 )}
                 {!props.allowInput && (
                     <Icon
@@ -170,86 +149,4 @@ export default function Select(props: Props) {
             <Error visible={!!props.error}>{errorText}</Error>
         </Base>
     );
-}
-
-function createKeyDownListener(
-    openRef: React.MutableRefObject<boolean>,
-    setOpen: (value: boolean) => void
-) {
-    function handleKeyDown(e: KeyboardEvent) {
-        const tabPressed = e.key === "Tab";
-        lastPressTab = tabPressed;
-        if (tabPressed && openRef.current) {
-            setOpen(false);
-        }
-    }
-    return handleKeyDown;
-}
-
-function createClickListener(
-    openRef: React.MutableRefObject<boolean>,
-    propsRef: React.MutableRefObject<Props | undefined>,
-    list: React.RefObject<HTMLDivElement>,
-    input: React.RefObject<HTMLInputElement>,
-    toggleClose: () => void,
-    toggleOpen: () => void
-) {
-    function handleClick(e: MouseEvent) {
-        lastPressTab = false;
-        const { current: open } = openRef;
-        const { current: props } = propsRef;
-
-        if (!props) return;
-
-        // Prevent overlapping of multiple selects
-        if (!open && GlobalState.isOpen() && !GlobalState.isAutoClose()) {
-            return;
-        }
-
-        // Prevent clicking "through" the datepicker's calendar
-        if (GlobalState.calendarOverlaps(e)) {
-            return;
-        }
-
-        // Check if click is within the input or list
-        const clickedInput = DomUtil.eventContained(e, input.current);
-        const clickedList = DomUtil.eventContained(e, list.current);
-
-        // Auto close if applicable
-        if (props.autoClose && openRef.current && clickedList) {
-            toggleClose();
-            return;
-        }
-
-        // Open if click event is within input
-        if (!openRef.current && clickedInput) {
-            toggleOpen();
-            return;
-        }
-
-        // Close if clicked outside
-        if (openRef.current && !clickedInput && !clickedList) {
-            toggleClose();
-            return;
-        }
-    }
-    return handleClick;
-}
-
-function createResizeListener(
-    openRef: React.MutableRefObject<boolean>,
-    propsRef: React.MutableRefObject<Props | undefined>,
-    list: React.RefObject<HTMLDivElement>,
-    input: React.RefObject<HTMLInputElement>
-) {
-    function handleResize() {
-        const { current: open } = openRef;
-        const { current: props } = propsRef;
-        if (!open || !props) return;
-        DomUtil.positionElement(input.current, list.current, {
-            positionBelow: props.allowInput,
-            allowOverflow: props.noWrap,
-        });
-    }
-    return handleResize;
 }

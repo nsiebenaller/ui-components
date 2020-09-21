@@ -106,7 +106,7 @@ export default function Time({
                 />
             </TimeContainer>
         </TimeHook>,
-        GlobalState.getModalRef()
+        GlobalState.getModalHook()
     );
 }
 

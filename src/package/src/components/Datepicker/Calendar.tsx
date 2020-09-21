@@ -35,7 +35,7 @@ export default function CalendarModal({
                 view={view}
             />
         </CalendarHook>,
-        GlobalState.getModalRef()
+        GlobalState.getModalHook()
     );
 }
 

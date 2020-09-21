@@ -77,6 +77,7 @@ export default function Datepicker(props: Props) {
         if (props.disabled) return;
         DomUtil.positionElement(inputRef.current, calendarRef.current, {
             positionBelow: true,
+            allowOverflow: true,
         });
         setOpenTime(false);
         validateDate();
@@ -90,6 +91,7 @@ export default function Datepicker(props: Props) {
         setOpenCalendar(false);
         DomUtil.positionElement(inputRef.current, timeRef.current, {
             positionBelow: true,
+            allowOverflow: true,
         });
         const { current: open } = openTime;
         GlobalState.setCalendarRef(!open ? timeRef : undefined);
@@ -145,11 +147,13 @@ export default function Datepicker(props: Props) {
             if (openCalendar.current) {
                 DomUtil.positionElement(inputRef.current, calendarRef.current, {
                     positionBelow: true,
+                    allowOverflow: true,
                 });
             }
             if (openTime.current) {
                 DomUtil.positionElement(inputRef.current, timeRef.current, {
                     positionBelow: true,
+                    allowOverflow: true,
                 });
             }
         }
