@@ -97,3 +97,78 @@ export const impliedProperties = [
             "Pads the bottom of the input (similar to as if an error was defined)",
     },
 ];
+
+export const codeSample1 = `function Component() {
+        const [value, setValue] = React.useState("")
+
+        return(
+            <Autocomplete
+                label={"Autocomplete"}
+                options={["Ant", "Aardvark", "Bear", "Cat", "Dog"]}
+                selected={value}
+                onChange={(e) => setValue(e)}
+            />
+        )
+    }`;
+export const codeSample2 = `function Component() {
+    const [value, setValue] = React.useState("")
+
+    return(
+        <Autocomplete
+            label={"autocomplete full width"}
+            error={"error"}
+            options={["Ant", "Aardvark", "Bear", "Cat", "Dog"]}
+            onChange={(e) => setValue(e)}
+            minLength={3}
+            fullWidth
+            noWrap
+        />
+    )
+}`;
+export const codeSample3 = `function Component() {
+    const [value, setValue] = React.useState("")
+
+    return(
+        <div>
+            <Autocomplete
+                label={"autocomplete label"}
+                selected={value}
+                options={[
+                    "Ant",
+                    "Aardvark",
+                    "Very Long animal name that is hard to fit on one line",
+                ]}
+                onChange={(e) => setValue(e)}
+                noWrap
+            />
+            <button onClick={() => setValue("")}>Clear</button>
+        </div>
+    )
+}`;
+export const codeSample4 = `function Component() {
+    const [value, setValue] = React.useState("")
+
+    return(
+        <Autocomplete
+            label={"Autocomplete"}
+            selected={value}
+            options={["Ant", "Aardvark", "Bear", "Cat", "Dog"]}
+            onChange={(e) => setValue(e)}
+            noMatchText={"No Matching"}
+            centered
+        />
+    )
+}`;
+export const codeSample5 = `function Component() {
+    const [value, setValue] = React.useState("")
+
+    return(
+        <Autocomplete
+            label={"autocomplete label"}
+            error={"error"}
+            options={options}
+            onChange={(e: any) => console.log(e)}
+            disabled
+        />
+    )
+}`;

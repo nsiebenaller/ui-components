@@ -16,6 +16,22 @@ const options = [
         value: "Option 3",
         label: "Option 3",
     },
+    {
+        value: "Option 4",
+        label: "Option 4",
+    },
+    {
+        value: "Option 5",
+        label: "Option 5",
+    },
+    {
+        value: "Option 6",
+        label: "Option 6",
+    },
+    {
+        value: "Option 7",
+        label: "Option 7",
+    },
 ];
 
 function MultiselectPage() {
