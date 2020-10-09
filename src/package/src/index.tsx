@@ -15,6 +15,7 @@ export {
     Select,
     TextArea,
     TextField,
+    ToolTip,
     Treeselect,
     command,
 } from "./components";

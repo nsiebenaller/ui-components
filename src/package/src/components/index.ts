@@ -11,5 +11,6 @@ export { default as RadioButton } from "./RadioButton/RadioButton";
 export { default as Select } from "./Select/Select";
 export { default as TextArea } from "./TextArea/TextArea";
 export { default as TextField } from "./TextField/TextField";
+export { default as ToolTip } from "./ToolTip/ToolTip";
 export { default as Treeselect } from "./Treeselect/Treeselect";
 export { default as command } from "./command/command";
