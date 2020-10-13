@@ -25,6 +25,9 @@ interface Props extends SelectProps {
 
     /** *Optional* - Pads the bottom of the input (similar to as if an error was defined) */
     botPad?: boolean;
+
+    /** *Optional* - Defines a max-height for the list of options (default: 1000px) */
+    maxHeight?: number;
 }
 let optionMap = new Map<string, TreeOptionType>();
 export default function Treeselect(props: Props) {
@@ -64,6 +67,9 @@ export default function Treeselect(props: Props) {
         }
     };
 
+    const maxHeight = props.maxHeight || 1000;
+    const style = `max-height: ${maxHeight}px;`;
+
     return (
         <Select
             onToggle={setOpen}
@@ -77,7 +83,7 @@ export default function Treeselect(props: Props) {
             fullWidth={props.fullWidth}
             topPad={props.topPad}
             botPad={props.botPad}
-            styledCSSList={`max-height: 1000px;`}
+            styledCSSList={style}
             noWrap
         >
             <TreeOptions
