@@ -4,6 +4,25 @@ import Calendar from "react-calendar";
 import { CalendarHook } from "./style";
 import GlobalState from "../../helpers/GlobalState";
 
+const weekFormat = (locale: string, date: Date): string => {
+    switch (date.getDay()) {
+        case 0:
+            return "SUN";
+        case 1:
+            return "MON";
+        case 2:
+            return "TUE";
+        case 3:
+            return "WED";
+        case 4:
+            return "THU";
+        case 5:
+            return "FRI";
+        case 6:
+            return "SAT";
+    }
+    return "";
+};
 type ViewType = "month" | "century" | "decade" | "year" | undefined;
 interface Props {
     onChange: (e: Date | Date[]) => void;
@@ -32,6 +51,7 @@ export default function CalendarModal({
                 nextLabel={String.fromCharCode(8250)} // ›
                 navigationLabel={NavigationLabel}
                 onViewChange={onViewChange}
+                formatShortWeekday={weekFormat}
                 view={view}
             />
         </CalendarHook>,
