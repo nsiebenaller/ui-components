@@ -5,6 +5,7 @@ import useRefState from "../../helpers/RefState";
 import { OptionFormat } from "../../types/types";
 import OptionUtil from "../../helpers/OptionUtil";
 import DomUtil from "../../helpers/DomUtil";
+import uniqueId from "../../helpers/uniqueId";
 
 type onChangeType = (
     selected: OptionFormat,
@@ -35,6 +36,7 @@ interface Props extends SelectProps {
 let targetText: string = "";
 const NO_OPTIONS_TEXT = "none";
 export default function Dropdown(props: Props) {
+    const [id, _] = useRefState<string>(uniqueId());
     const [targetRef, setTarget] = useRefState<number | undefined>(undefined);
     const [openRef, setOpen] = useRefState<boolean>(false);
     const [propsRef, setPropsRef] = useRefState<Props | undefined>(props);
@@ -52,6 +54,7 @@ export default function Dropdown(props: Props) {
     useEffect(() => {
         // Event handlers
         const listener = createKeyboardEventListener(
+            id,
             openRef,
             targetRef,
             propsRef,
@@ -85,6 +88,7 @@ export default function Dropdown(props: Props) {
                 return (
                     <Option
                         key={`dropdown-${idx}`}
+                        id={`option-${id.current}-${idx}`}
                         selected={OptionUtil.match(option, props.selected)}
                         targeted={idx === targetRef.current}
                         onClick={handleClick(option)}
@@ -104,6 +108,7 @@ export default function Dropdown(props: Props) {
 }
 
 function createKeyboardEventListener(
+    id: React.MutableRefObject<string>,
     openRef: React.MutableRefObject<boolean>,
     targetRef: React.MutableRefObject<number | undefined>,
     propsRef: React.MutableRefObject<Props | undefined>,
@@ -126,7 +131,33 @@ function createKeyboardEventListener(
             );
             if (matchingIndex === undefined) targetText = "";
             setTarget(matchingIndex);
+
+            if (matchingIndex !== undefined) {
+                focusElement(id.current, matchingIndex);
+            }
             return;
+        }
+
+        // Handle Arrow Key Down
+        if (e.key === "ArrowDown") {
+            if (targetIdx === undefined) {
+                setTarget(0);
+                focusElement(id.current, 0);
+            } else if (targetIdx !== props.options.length - 1) {
+                setTarget(targetIdx + 1);
+                focusElement(id.current, targetIdx + 1);
+            }
+        }
+
+        // Handle Arrow Key Up
+        if (e.key === "ArrowUp") {
+            if (targetIdx === undefined) {
+                setTarget(0);
+                focusElement(id.current, 0);
+            } else if (targetIdx !== 0) {
+                setTarget(targetIdx - 1);
+                focusElement(id.current, targetIdx - 1);
+            }
         }
 
         // Handle clicking of the targeted option
@@ -141,4 +172,10 @@ function createKeyboardEventListener(
         }
     }
     return handleKeyDown;
+}
+
+function focusElement(dropdownId: string, optionId: number) {
+    const identifier = `option-${dropdownId}-${optionId}`;
+    const option = document.getElementById(identifier);
+    if (option) option.scrollIntoView();
 }

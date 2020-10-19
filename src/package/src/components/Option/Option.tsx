@@ -28,6 +28,13 @@ interface Props {
 
     /** *Optional* - Disables this option, adding additonal styles & preventing click handlers */
     disabled?: boolean;
+
+    /** *Optional* - Ref of the option */
+    innerRef?:
+        | ((instance: HTMLDivElement | null) => void)
+        | React.RefObject<HTMLDivElement>
+        | null
+        | undefined;
 }
 export default function Option(props: Props) {
     const handleClick = (event: React.MouseEvent) => {
@@ -47,6 +54,7 @@ export default function Option(props: Props) {
             centered={props.centered}
             css={props.styledCSS}
             onClick={handleClick}
+            ref={props.innerRef}
             {...styles}
         >
             {props.children}

@@ -16,6 +16,30 @@ const options = [
         value: "Option 3",
         label: "Option 3",
     },
+    {
+        value: "Option 11",
+        label: "Option 11",
+    },
+    {
+        value: "Option 21",
+        label: "Option 21",
+    },
+    {
+        value: "Option 31",
+        label: "Option 31",
+    },
+    {
+        value: "Option 12",
+        label: "Option 12",
+    },
+    {
+        value: "Option 22",
+        label: "Option 22",
+    },
+    {
+        value: "Option 32",
+        label: "Option 32",
+    },
 ];
 
 function DropdownPage() {
