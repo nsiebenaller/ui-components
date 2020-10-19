@@ -54,7 +54,6 @@ interface Props {
     /** *Optional* - Displays a time icon to help selecting times */
     showTimeHelper?: boolean;
 }
-type ViewType = "month" | "century" | "decade" | "year" | undefined;
 export default function Datepicker(props: Props) {
     const inputRef = useRef<HTMLDivElement>(null);
     const calendarRef = useRef<HTMLDivElement>(null);
@@ -66,12 +65,6 @@ export default function Datepicker(props: Props) {
     const handleFocus = () => setFocus(true);
     const [openCalendar, setOpenCalendar] = useRefState<boolean>(false);
     const [openTime, setOpenTime] = useRefState<boolean>(false);
-    const [view, setView] = useState<ViewType>("month");
-
-    const onViewChange = (p: any) => {
-        if (p.view === "century") return;
-        setView(p.view);
-    };
 
     const toggleOpen = () => {
         if (props.disabled) return;
@@ -271,8 +264,6 @@ export default function Datepicker(props: Props) {
                 value={currentDate}
                 calendarRef={calendarRef}
                 openRef={openCalendar}
-                onViewChange={onViewChange}
-                view={view}
             />
             {props.showTimeHelper && (
                 <Time

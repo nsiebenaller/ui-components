@@ -13,7 +13,9 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": false,
-    "jsx": "react"
+    "outDir": "build",
+    "jsx": "react",
+    "declaration": true
   },
-  "include": ["src/index.tsx", "src/examples"]
+  "include": ["src/index.tsx", "src/examples",],
 }

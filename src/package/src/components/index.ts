@@ -1,5 +1,6 @@
 export { default as Autocomplete } from "./Autocomplete/Autocomplete";
 export { default as Button } from "./Button/Button";
+export { default as Calendar } from "./Calendar/Calendar";
 export { default as Checkbox } from "./Checkbox/Checkbox";
 export { default as Datepicker } from "./Datepicker/Datepicker";
 export { default as Dropdown } from "./Dropdown/Dropdown";

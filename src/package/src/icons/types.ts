@@ -12,10 +12,15 @@ export type IconType =
     | "CheckBoxOutlineBlank"
     | "CheckCircle"
     | "CheckCircleOutline"
+    | "ChevronLeft"
     | "ChevronRight"
     | "CloudUpload"
     | "Delete"
     | "Edit"
+    | "FastForward"
+    | "FastRewind"
+    | "FirstPage"
+    | "LastPage"
     | "QueryBuilder"
     | "RadioButtonChecked"
     | "RadioButtonUnchecked"
@@ -37,10 +42,15 @@ export function castIconType(value: string): IconType | undefined {
         case "CheckBoxOutlineBlank":
         case "CheckCircle":
         case "CheckCircleOutline":
+        case "ChevronLeft":
         case "ChevronRight":
         case "CloudUpload":
         case "Delete":
         case "Edit":
+        case "FastForward":
+        case "FastRewind":
+        case "FirstPage":
+        case "LastPage":
         case "QueryBuilder":
         case "RadioButtonChecked":
         case "RadioButtonUnchecked":
