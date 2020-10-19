@@ -8,6 +8,7 @@ import GlobalState from "../../helpers/GlobalState";
 import DomUtil from "../../helpers/DomUtil";
 import { Props } from "./props";
 
+type ClickEvent = React.MouseEvent<HTMLDivElement, MouseEvent>;
 let listenerId: string | undefined = undefined;
 export default function Select(props: Props) {
     const open = props.open !== undefined ? props.open : false;
@@ -92,6 +93,26 @@ export default function Select(props: Props) {
         }
     };
 
+    const handleClick = () => {
+        console.log("try open", props);
+        if (disabledRef.current) return;
+        if (openRef.current) {
+            console.log("is open");
+            if (props.autoClose) {
+                return toggleClose();
+            }
+        }
+        if (!openRef.current) {
+            console.log("is closed");
+            return toggleOpen();
+        }
+    };
+
+    const containEvent = (event: ClickEvent) => {
+        event.preventDefault();
+        event.stopPropagation();
+    };
+
     const styles = {
         id: props.id || undefined,
         className: props.className || undefined,
@@ -115,6 +136,7 @@ export default function Select(props: Props) {
                 disabled={props.disabled}
                 errorOutline={props.errorOutline}
                 fullWidth={props.fullWidth}
+                onClick={handleClick}
             >
                 <Input
                     ref={input}
@@ -134,6 +156,7 @@ export default function Select(props: Props) {
                         ref={list}
                         open={openRef.current}
                         styledCSSList={props.styledCSSList}
+                        onClick={containEvent}
                     >
                         {props.children}
                     </List>,

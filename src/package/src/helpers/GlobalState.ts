@@ -86,11 +86,12 @@ class GlobalState {
                 return;
             }
 
-            // Open if click event is within input
-            if (!open && clickedInput) {
-                openFns.push(toggleOpen);
-                return;
-            }
+            // Handled by individual components (in order to prevent clicking when behind elements)
+            // // Open if click event is within input
+            // if (!open && clickedInput) {
+            //     openFns.push(toggleOpen);
+            //     return;
+            // }
 
             // Close if clicked outside
             if (open && !clickedInput && !clickedList) {

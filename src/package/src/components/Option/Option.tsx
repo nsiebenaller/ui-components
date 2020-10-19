@@ -38,6 +38,8 @@ interface Props {
 }
 export default function Option(props: Props) {
     const handleClick = (event: React.MouseEvent) => {
+        event.preventDefault();
+        event.stopPropagation();
         if (!props.disabled && props.onClick) props.onClick(event);
     };
 
