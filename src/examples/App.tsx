@@ -11,20 +11,29 @@ Object.keys(pageMap).forEach((key: any) => {
     componentMap.set(pageMap[key].pageName, pageMap[key]);
 });
 const components = Array.from(componentMap.keys());
+const defaultPage = components[0];
 
 export default function App() {
-    const defaultPage = "Autocomplete";
-
     return (
         <BrowserRouter>
             <div className="App">
                 <Menu pages={components} defaultPage={defaultPage} />
                 <div className="content">
-                    <Route path={"/ui-components-demo"} exact>
+                    <Route
+                        path={[
+                            "/ui-components-demo",
+                            "/ui-components-demo/index.html",
+                        ]}
+                        exact
+                    >
                         <PageContent page={defaultPage} />
                     </Route>
                     {components.map((c: string, idx: number) => (
-                        <Route path={`/ui-components-demo/${c}`} key={idx}>
+                        <Route
+                            path={`/ui-components-demo/${c}`}
+                            key={idx}
+                            exact
+                        >
                             <PageContent page={c} />
                         </Route>
                     ))}

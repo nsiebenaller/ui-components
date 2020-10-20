@@ -8,6 +8,7 @@ import {
     fifthMessage,
     sixthMessage,
 } from "./messages";
+import Example from "../../Example/Example";
 
 function CommandPage() {
     const [confirmed, setConfirmed] = useState<boolean>(false);
@@ -73,7 +74,7 @@ function CommandPage() {
                 These commands render outside of the react context, if you
                 require a more traditional react modal check out `Portal`.
             </p>
-            <h4>command.alert</h4>
+            <h2>command.alert</h2>
             <p>
                 This command replaces <code>window.alert</code> and provides
                 identical functionality. This command takes one required
@@ -85,14 +86,17 @@ function CommandPage() {
                 it's first required parameter which allows HTML templates to
                 trigger the close action.
             </p>
-            <button onClick={handleAlert}>open alert</button>
-            <br />
-            <button onClick={handleAlert2}>open alert w/ HTML</button>
-            <br />
-            <button onClick={handleAlert3}>open alert w/ custom text</button>
-            <br />
-            <button onClick={handleAlert4}>open alert w/ custom close</button>
-            <h4>command.confirm</h4>
+            <Example>
+                <button onClick={handleAlert}>open alert</button>
+                <button onClick={handleAlert2}>open alert w/ HTML</button>
+                <button onClick={handleAlert3}>
+                    open alert w/ custom text
+                </button>
+                <button onClick={handleAlert4}>
+                    open alert w/ custom close
+                </button>
+            </Example>
+            <h2>command.confirm</h2>
             <p>
                 This command replaced <code>window.confirm</code> and provides
                 identical functionality. This command takes one required
@@ -104,27 +108,16 @@ function CommandPage() {
                 it's first required parameter which allows HTML templates to
                 trigger the confirmation action.
             </p>
-            <div className={"flex-row"}>
-                <div>
-                    <button onClick={handleConfirm}>confirm</button>
-                    <br />
-                    <button onClick={handleConfirm2}>
-                        confirm w/ custom HTML
-                    </button>
-                    <br />
-                    <button onClick={handleConfirm3}>
-                        confirm w/ custom text
-                    </button>
-                    <br />
-                    <button onClick={handleConfirm4}>
-                        confirm w/ custom close
-                    </button>
-                </div>
-                <div className={"center"}>
-                    {confirmed ? <b>Confirmed!</b> : <span>Not Confirmed</span>}
-                </div>
-            </div>
-            <h4>command.modal</h4>
+            <Example>
+                <button onClick={handleConfirm}>confirm</button>
+                <button onClick={handleConfirm2}>confirm w/ custom HTML</button>
+                <button onClick={handleConfirm3}>confirm w/ custom text</button>
+                <button onClick={handleConfirm4}>
+                    confirm w/ custom close
+                </button>
+                {confirmed ? <b>Confirmed!</b> : <span>Not Confirmed</span>}
+            </Example>
+            <h2>command.modal</h2>
             <p>
                 This command is a more generic version of{" "}
                 <code>window.alert</code> and <code>window.confirm</code> in
@@ -132,9 +125,10 @@ function CommandPage() {
                 modal. This command exposes the core functionality of the
                 previous two commands to allow more flexibility.
             </p>
-            <button onClick={handleModal}>open modal</button>
-            <br />
-            <button onClick={handleModal2}>open modal w/ datepicker</button>
+            <Example>
+                <button onClick={handleModal}>open modal</button>
+                <button onClick={handleModal2}>open modal w/ datepicker</button>
+            </Example>
         </div>
     );
 }

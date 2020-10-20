@@ -18,7 +18,11 @@ export default function CalendarModal({
 }: Props) {
     return createPortal(
         <CalendarHook ref={calendarRef} open={openRef.current}>
-            <Calendar value={value || undefined} onChange={onChange} />
+            <Calendar
+                value={value || undefined}
+                onChange={onChange}
+                showToday
+            />
         </CalendarHook>,
         GlobalState.getModalHook()
     );

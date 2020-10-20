@@ -94,16 +94,13 @@ export default function Select(props: Props) {
     };
 
     const handleClick = () => {
-        console.log("try open", props);
         if (disabledRef.current) return;
         if (openRef.current) {
-            console.log("is open");
             if (props.autoClose) {
                 return toggleClose();
             }
         }
         if (!openRef.current) {
-            console.log("is closed");
             return toggleOpen();
         }
     };

@@ -9,37 +9,60 @@ import {
 } from "../../colors";
 import { Props, ButtonVariant } from "./props";
 
+type ClickEvent = React.MouseEvent<HTMLButtonElement, MouseEvent>;
+type ColorString = string | undefined;
 export default function Button(props: Props) {
     const variant = props.variant || "default";
+    const [color, setColor] = React.useState<ColorString>();
+    const [hoverColor, setHoverColor] = React.useState<ColorString>();
+    const [textColor, setTextColor] = React.useState<ColorString>();
+
+    // Validate color & colorHex prop
+    if (props.color && props.colorHex) {
+        console.warn(
+            "Properties `color` and `colorHex` were provided. `colorHex` will be used. Remove one of the unnecessary properties."
+        );
+    }
+
+    React.useEffect(() => {
+        // TODO: Create color generators for hex values
+        if (props.colorHex) {
+            setColor(props.colorHex);
+            setHoverColor(props.hoverHex || "white");
+            setTextColor(props.textHex || "black");
+        } else {
+            const color = colorOrDefault(props.color);
+            const hoverColor = parseHoverColor(color, variant);
+            const textColor = getTextColor(color);
+            setColor(toHex(color));
+            setHoverColor(toHex(hoverColor));
+            setTextColor(textColor);
+        }
+    }, [props]);
+
     const styles = {
         id: props.id || undefined,
         className: props.className || undefined,
     };
 
-    const color = colorOrDefault(props.color);
-    const hoverColor = parseHoverColor(color, variant);
-    const textColor = getTextColor(color);
-
-    const handleClick = (
-        event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-    ) => {
+    const handleClick = (event: ClickEvent) => {
         const { disabled, onClick } = props;
         if (disabled || !onClick) return;
         onClick(event);
     };
 
+    if (!color || !hoverColor || !textColor) return null;
     return (
-        <Base>
+        <Base {...styles}>
             {props.topPad && <TopPad>hidden</TopPad>}
             <ButtonBase
-                color={toHex(color)}
                 variant={variant}
+                color={color}
                 textColor={textColor}
-                hoverColor={toHex(hoverColor)}
+                hoverColor={hoverColor}
                 onClick={handleClick}
                 disabled={props.disabled}
                 disabledElevation={props.disabledElevation}
-                {...styles}
             >
                 {props.children}
             </ButtonBase>

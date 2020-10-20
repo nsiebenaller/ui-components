@@ -1,3 +1,16 @@
+export const codeSample1 = `function Component() {
+    const [first, setFirst] = useState(false);
+    return(
+        <div>
+            <Checkbox
+                value={first}
+                onChange={setFirst}
+                label={"Is this a radio button?"}
+            />
+        </div>
+    )
+}`;
+
 export const properties = [
     {
         name: "value",

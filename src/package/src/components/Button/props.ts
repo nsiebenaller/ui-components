@@ -18,8 +18,17 @@ export interface Props {
     /** *Optional* - Pads the bottom of the input (similar to the TextField, Dropdown, or Multiselect inputs) */
     botPad?: boolean;
 
-    /** *Optional* - Color to use for the button */
+    /** *Optional* - Color to use for the button background (ex: 'blue-600') */
     color?: string;
+
+    /** *Optional* - Color to use for the button background (ex: '#FFFFFF') */
+    colorHex?: string;
+
+    /** *Optional* - Color to use for the button hover (ex: '#FFFFFF') */
+    hoverHex?: string;
+
+    /** *Optional* - Color to use for the button text (ex: '#FFFFFF') */
+    textHex?: string;
 
     /** *Optional* - Disables the button preventing further clicks */
     disabled?: boolean;
