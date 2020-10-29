@@ -1,6 +1,6 @@
 import React, { useRef, useEffect } from "react";
 import { createPortal } from "react-dom";
-import { Base, InputBase, Input, List, Error } from "./style";
+import { Base, InputBase, Input, List, Error, cancelIconStyle } from "./style";
 import { Label } from "../sharedStyles";
 import { Icon } from "../../index";
 import useRefState from "../../helpers/RefState";
@@ -26,9 +26,11 @@ export default function Select(props: Props) {
     }, [props]);
 
     // Sync external open state
-    if (props.open !== undefined && props.open !== openRef.current) {
-        openRef.current = props.open;
-    }
+    useEffect(() => {
+        if (props.open !== undefined && props.open !== openRef.current) {
+            openRef.current = props.open;
+        }
+    }, [props]);
 
     // Open handlers
     const toggleOpen = () => {
@@ -110,6 +112,12 @@ export default function Select(props: Props) {
         event.stopPropagation();
     };
 
+    const clearInput = (event: ClickEvent) => {
+        containEvent(event);
+        if (disabledRef.current) return;
+        if (props.onInput) props.onInput("");
+    };
+
     const styles = {
         id: props.id || undefined,
         className: props.className || undefined,
@@ -163,6 +171,14 @@ export default function Select(props: Props) {
                     <Icon
                         iconName={"ArrowDropDown"}
                         cursorPointer={!disabledRef.current}
+                    />
+                )}
+                {props.allowInput && (
+                    <Icon
+                        iconName={"Cancel"}
+                        cursorPointer={!disabledRef.current}
+                        styledCSS={cancelIconStyle}
+                        onClick={clearInput}
                     />
                 )}
             </InputBase>

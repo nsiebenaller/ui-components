@@ -23,6 +23,9 @@ interface Props {
     /** *Optional* - ID to apply to the component */
     id?: string;
 
+    /** *Optional* - CSS to apply to the component */
+    styledCSS?: string;
+
     /** *Optional* - Changes the cursor of the icon to pointer */
     cursorPointer?: boolean;
 
@@ -73,6 +76,7 @@ export default function Icon(props: Props) {
             rightPad={props.rightPad}
             leftPad={props.leftPad}
             color={colorHex}
+            styledCSS={props.styledCSS}
             {...styles}
         >
             <IconSVG />

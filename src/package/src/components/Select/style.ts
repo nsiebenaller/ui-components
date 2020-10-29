@@ -58,6 +58,7 @@ export const Input = styled.input`
     border-radius: 5px;
     border: 1px solid #9e9e9e;
     padding: 10px 14px;
+    padding-right: ${(props: Props) => (props.allowInput ? "24px" : "14px")};
     outline: 0;
     transition: all 0.2s ease-out;
     width: 100%;
@@ -114,4 +115,17 @@ export const Error = styled.div`
     color: ${colors["red-500"]};
     opacity: ${(props: Props) => (props.visible ? "1" : "0")};
     cursor: ${(props: Props) => (props.visible ? "auto" : "default")};
+`;
+
+export const cancelIconStyle = `
+    margin-right: 5px;
+    > svg {
+        width: 20px;
+        height: 20px;
+        fill: ${colors["grey-500"]};
+        transition: all 0.2s ease-out;
+        &:hover {
+            fill: black;
+        }
+    }
 `;

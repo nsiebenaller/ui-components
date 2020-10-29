@@ -7,6 +7,7 @@ interface Props {
     botPad?: boolean;
     rightPad?: boolean;
     leftPad?: boolean;
+    styledCSS?: string;
 }
 export const Base = styled.div`
     display: inline-flex;
@@ -16,4 +17,5 @@ export const Base = styled.div`
     padding-left: ${(props: Props) => (props.leftPad ? "5px" : "0px")};
     fill: ${(props: Props) => (props.color ? props.color : "black")};
     cursor: ${(props: Props) => (props.cursorPointer ? "pointer" : "default")};
+    ${({ styledCSS }: Props) => styledCSS}
 `;
