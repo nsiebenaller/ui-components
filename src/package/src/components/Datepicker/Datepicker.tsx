@@ -290,7 +290,7 @@ const options: Intl.DateTimeFormatOptions = {
     hour: "2-digit",
     minute: "2-digit",
 };
-const Formatter = new Intl.DateTimeFormat("en-us", options);
+const Formatter = new Intl.DateTimeFormat("en-US", options);
 
 function formatDate(
     date: Date,

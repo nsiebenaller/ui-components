@@ -150,5 +150,8 @@
             "react-app"
         ]
     },
-    "homepage": "https://nsiebenaller.github.io/ui-components-demo"
+    "homepage": "https://nsiebenaller.github.io/ui-components-demo",
+    "devDependencies": {
+        "prettier": "^2.1.2"
+    }
 }

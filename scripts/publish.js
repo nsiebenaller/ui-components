@@ -1,5 +1,5 @@
 const { fstat } = require("fs");
-const prettier = require("prettier");
+//const prettier = require("prettier");
 
 const package = require("../src/package/package.json");
 
@@ -7,7 +7,7 @@ const package = require("../src/package/package.json");
 const v = package.version.split(".");
 const new_version = `${v[0]}.${v[1]}.${parseInt(v[2]) + 1}`;
 package.version = new_version;
-const newPackage = prettier.format(JSON.stringify(package));
+const newPackage = JSON.stringify(package); //prettier.format(JSON.stringify(package));
 
 const fs = require("fs");
 const path = require("path");
