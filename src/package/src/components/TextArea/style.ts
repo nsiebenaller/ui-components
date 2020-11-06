@@ -26,7 +26,7 @@ export const TextArea = styled.textarea`
     outline: 0;
     transition: border 0.2s ease-out;
     background: ${(props: Props) =>
-        props.disabled ? colors["grey-200"] : "white"};
+        props.disabled ? colors["grey-300"] : "white"};
     min-height: 17px;
     resize: ${(props: Props) => (props.noResize ? "none" : "both")};
     &:hover,

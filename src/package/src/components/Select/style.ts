@@ -71,7 +71,7 @@ export const Input = styled.input`
         return "pointer";
     }};
     background: ${(props: Props) =>
-        props.disabled ? colors["grey-200"] : "white"};
+        props.disabled ? colors["grey-300"] : "white"};
     &:hover,
     &:focus {
         border: ${(props: Props) => {

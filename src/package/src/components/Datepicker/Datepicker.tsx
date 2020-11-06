@@ -16,6 +16,7 @@ import GlobalState from "../../helpers/GlobalState";
 import DomUtil from "../../helpers/DomUtil";
 import Calendar from "./Calendar";
 import Time from "./Time";
+import Timestamp from "../../helpers/Timestamp";
 
 interface Props {
     /** *Optional* - Currently selected date */
@@ -53,6 +54,9 @@ interface Props {
 
     /** *Optional* - Displays a time icon to help selecting times */
     showTimeHelper?: boolean;
+
+    /** *Optional* - Timezone to cast to, displays the value as the timezone and returns dates in that format (default: local timezone) */
+    timeZone?: string;
 }
 export default function Datepicker(props: Props) {
     const inputRef = useRef<HTMLDivElement>(null);
@@ -111,7 +115,9 @@ export default function Datepicker(props: Props) {
         if (!value || !(value instanceof Date) || isNaN(value.getTime()))
             return;
 
-        setDateString(formatDate(value, includeTime, includeSec));
+        setDateString(
+            formatDate(value, props.timeZone, includeTime, includeSec)
+        );
     }, [props.value]);
 
     useEffect(() => {
@@ -177,8 +183,17 @@ export default function Datepicker(props: Props) {
             return;
         }
         const date = new Date(cleanDateString(dateString));
-        if (props.onChange) props.onChange(date);
-        setDateString(formatDate(date, props.includeTime, props.includeSec));
+        const t = new Timestamp(date, props.timeZone);
+
+        if (props.onChange) props.onChange(t.toDate());
+        setDateString(
+            formatDate(
+                t.toDate(),
+                props.timeZone,
+                props.includeTime,
+                props.includeSec
+            )
+        );
     };
 
     const handleCalendarChange = (e: Date | Date[]) => {
@@ -187,15 +202,31 @@ export default function Datepicker(props: Props) {
             if (props.defaultMin) e.setMinutes(props.defaultMin);
             if (props.defaultSec) e.setSeconds(props.defaultSec);
 
-            if (props.onChange) props.onChange(e);
-            setDateString(formatDate(e, props.includeTime, props.includeSec));
+            const t = new Timestamp(e, props.timeZone);
+            if (props.onChange) props.onChange(t.toDate());
+            setDateString(
+                formatDate(
+                    t.toDate(),
+                    props.timeZone,
+                    props.includeTime,
+                    props.includeSec
+                )
+            );
         }
     };
 
     const handleTimeChange = (e: Date) => {
         if (props.disabled) return;
-        if (props.onChange) props.onChange(e);
-        setDateString(formatDate(e, props.includeTime, props.includeSec));
+        const t = new Timestamp(e, props.timeZone);
+        if (props.onChange) props.onChange(t.toDate());
+        setDateString(
+            formatDate(
+                t.toDate(),
+                props.timeZone,
+                props.includeTime,
+                props.includeSec
+            )
+        );
     };
 
     const placeholder =
@@ -283,27 +314,41 @@ function cleanDateString(dateString: string | undefined | null): string {
     return dateString.replace(/[^ -~]+/g, "");
 }
 
-const options: Intl.DateTimeFormatOptions = {
+const baseOptions: Intl.DateTimeFormatOptions = {
     year: "numeric",
     month: "numeric",
     day: "numeric",
+};
+const timeOptions: Intl.DateTimeFormatOptions = {
     hour: "2-digit",
     minute: "2-digit",
 };
-const Formatter = new Intl.DateTimeFormat("en-US", options);
-
+const secOptions: Intl.DateTimeFormatOptions = {
+    second: "2-digit",
+};
 function formatDate(
     date: Date,
+    timeZone?: string,
     includeTime?: boolean,
     includeSec?: boolean
 ): string {
-    if (includeTime) {
-        if (includeSec) {
-            return date.toLocaleString("en-US");
+    try {
+        let options: Intl.DateTimeFormatOptions = { ...baseOptions };
+        if (includeTime) {
+            options = { ...options, ...timeOptions };
+            if (includeSec) {
+                options = { ...options, ...secOptions };
+            }
         }
-        return Formatter.format(date);
+        if (timeZone) {
+            options = { ...options, timeZone };
+        }
+        const formatter = new Intl.DateTimeFormat("en-US", options);
+        return formatter.format(date);
+    } catch (err) {
+        console.error(err);
     }
-    return date.toLocaleDateString("en-US");
+    return "";
 }
 
 function getPlaceholder(includeTime?: boolean, includeSec?: boolean): string {

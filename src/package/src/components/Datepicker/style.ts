@@ -25,7 +25,7 @@ export const ButtonContainer = styled.div`
         return `1px solid ${colors["grey-500"]}`;
     }};
     background: ${(props: Props) => {
-        if (props.disabled) return colors["grey-200"];
+        if (props.disabled) return colors["grey-300"];
         return "white";
     }};
     border-left: 1px solid transparent !important;
@@ -90,8 +90,9 @@ export const Input = styled.input`
     margin: 0;
     outline: 0;
     transition: all 0.2s ease-out;
-    background: ${(props: Props) =>
-        props.disabled ? colors["grey-200"] : "white"};
+    background: ${(props: Props) => {
+        return props.disabled ? colors["grey-300"] : "white";
+    }};
     &:hover,
     &:focus {
         border: ${(props: Props) => {

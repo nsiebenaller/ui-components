@@ -3,7 +3,7 @@ export default class Timestamp {
     timeZone: string;
     diff: number;
 
-    constructor(date?: Date | number | string) {
+    constructor(date?: Date | number | string, timeZone?: string) {
         let d = new Date();
         if (date) {
             d = new Date(date);
@@ -14,6 +14,7 @@ export default class Timestamp {
         this.inner = d;
         this.timeZone = this.getNativeTimezone();
         this.diff = 0;
+        if (timeZone) this.setTimezone(timeZone);
     }
 
     format(options?: Intl.DateTimeFormatOptions) {
@@ -21,15 +22,18 @@ export default class Timestamp {
             timeZone: this.timeZone,
             ...options,
         });
-        return formatter.format(this.getInner());
+        return formatter.format(this.toDate());
     }
 
     // Getters
-    getRawInner(): Date {
+    getInner(): Date {
         return this.inner;
     }
-    getInner(): Date {
-        return new Date(this.inner.getTime() + this.diff);
+    getTime(): number {
+        return this.inner.getTime() + this.diff;
+    }
+    toDate(): Date {
+        return new Date(this.getTime());
     }
 
     // Setters
